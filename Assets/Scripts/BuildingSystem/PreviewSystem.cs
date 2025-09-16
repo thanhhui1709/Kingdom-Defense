@@ -28,6 +28,7 @@ public class PreviewSystem : MonoBehaviour
 
         previewObject = Instantiate(prefab);
         previewObject.name = prefab.name + "_Preview";
+        previewObject.layer=2;
 
         // gán transparent material
         AdjustPreviewMaterial(previewObject);
@@ -93,14 +94,14 @@ public class PreviewSystem : MonoBehaviour
     private void DisplayValidColor(bool validity)
     {
         Color c = validity ? Color.green : Color.red;
-        c.a = 0.5f; // alpha để transparent
+        c.a = 0.5f; 
 
         if (previewObject != null)
         {
             MeshRenderer[] renderers = previewObject.GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer renderer in renderers)
             {
-                foreach (Material mat in renderer.materials)
+                foreach (Material mat in renderer.sharedMaterials)
                 {
                     mat.color = c;
                 }
@@ -109,9 +110,9 @@ public class PreviewSystem : MonoBehaviour
 
         if (cellIndicator != null)
         {
-            Renderer r = cellIndicator.GetComponent<Renderer>();
+            SpriteRenderer r = cellIndicator.GetComponent<SpriteRenderer>();
             if (r != null)
-                r.material.color = c;
+                r.color = c;
         }
     }
 

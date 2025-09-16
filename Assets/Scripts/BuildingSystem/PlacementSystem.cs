@@ -140,8 +140,9 @@ public class PlacementSystem : MonoBehaviour
         GameObject newObject = Instantiate(database.objectData[selectedIndex].prefab);
         newObject.transform.position = grid.GetCellCenterWorld(gridPos) + offsetPos;
         List<Vector3Int> occupiedCells = gridData.CalculateOccupyCells(gridPos, database.objectData[selectedIndex].size);
+        
+        lastPreviewPos= gridPos;
         gridData.AddObject(gridPos, database.objectData[selectedIndex].size, newObject);
-
         persistence.SavePlacedObject(database.objectData[selectedIndex].id, occupiedCells, newObject.transform.position);
     }
 }

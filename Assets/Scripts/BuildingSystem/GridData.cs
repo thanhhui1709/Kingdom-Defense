@@ -27,7 +27,7 @@ public class GridData
                 GameObject existingObj = placedObjects[pos];
 
 
-                if (!existingObj.CompareTag("Buildable"))
+                if (!existingObj.CompareTag("Buildable")||gameObject.tag.Equals(existingObj.tag))
                 {
                     Debug.LogError($"Cell {pos} is already occupied by a non-buildable object: {existingObj.name}");
                     return false;

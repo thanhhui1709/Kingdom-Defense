@@ -38,22 +38,18 @@ MonoBehaviour:
     prefab: {fileID: 6298132914700461679, guid: 1b99ae418cb39524cb06faa67928a3e7, type: 3}
     size: {x: 1, y: 1}
   - name: Rock
-    id: 5
-    prefab: {fileID: 6298132914700461679, guid: 1b99ae418cb39524cb06faa67928a3e7, type: 3}
+    id: 6
+    prefab: {fileID: 6945526287825138377, guid: 8bcbff4cd998cb746a57db0cd4dfd781, type: 3}
     size: {x: 1, y: 1}
   - name: Castle
-    id: 6
+    id: 7
     prefab: {fileID: 5587452429698542319, guid: cc4059cb830a4e340a5f07d49359d4e1, type: 3}
     size: {x: 6, y: 3}
   - name: BlackSmithBuilding
-    id: 7
-    prefab: {fileID: 5587452429698542319, guid: cc4059cb830a4e340a5f07d49359d4e1, type: 3}
-    size: {x: 1, y: 1}
-  - name: BlackSmithBuilding
-    id: 7
+    id: 8
     prefab: {fileID: 373632410113315297, guid: 04a778715da20ec41bf45f36a8cc1973, type: 3}
     size: {x: 3, y: 2}
   - name: MilitaryBuilding
-    id: 8
+    id: 9
     prefab: {fileID: 7785714045759255942, guid: 50894d735d0f4fa48aa24bebd8cc9372, type: 3}
     size: {x: 4, y: 3}

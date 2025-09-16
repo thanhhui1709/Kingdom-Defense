@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 [Serializable]
 public class PlacedObjectData
@@ -15,7 +13,7 @@ public class PlacedObjectData
 
 public class PlacementPersistence
 {
-    private const string PlacedObjectsKey = "PlacedObjectsData";
+    private const string FileName = "PlacedObjectsData.json";
 
     [Serializable]
     private class PlacedObjectListWrapper
@@ -23,31 +21,30 @@ public class PlacementPersistence
         public List<PlacedObjectData> objects = new();
     }
 
+    private string FilePath => Path.Combine(Application.streamingAssetsPath, FileName);
+
     public void SavePlacedObject(int id, List<Vector3Int> position, Vector3 placedPos)
     {
         List<PlacedObjectData> placedObjects = LoadPlacedObjectsList();
         placedObjects.Add(new PlacedObjectData { id = id, occupiedPos = position, centerPos = placedPos });
-        string json = JsonUtility.ToJson(new PlacedObjectListWrapper { objects = placedObjects });
-#if UNITY_EDITOR
-        EditorPrefs.SetString(PlacedObjectsKey, json);
-#endif
+
+        SaveToFile(placedObjects);
+
     }
 
     public List<PlacedObjectData> LoadPlacedObjectsList()
     {
-#if UNITY_EDITOR
-        string json = EditorPrefs.GetString(PlacedObjectsKey, "");
+        if (!File.Exists(FilePath)) return new List<PlacedObjectData>();
+
+        string json = File.ReadAllText(FilePath);
         if (string.IsNullOrEmpty(json)) return new List<PlacedObjectData>();
+
         PlacedObjectListWrapper wrapper = JsonUtility.FromJson<PlacedObjectListWrapper>(json);
         return wrapper?.objects ?? new List<PlacedObjectData>();
-#else
-        return new List<PlacedObjectData>();
-#endif
     }
 
     public void LoadPlacedObjects(ObjectDataBaseSO database, Action<int, List<Vector3Int>, Vector3> instantiateCallback)
     {
-#if UNITY_EDITOR
         var placedObjects = LoadPlacedObjectsList();
         foreach (var obj in placedObjects)
         {
@@ -57,22 +54,19 @@ public class PlacementPersistence
                 instantiateCallback(idx, obj.occupiedPos, obj.centerPos);
             }
         }
-#endif
     }
+
     public void DeletePlacedObject(int id, List<Vector3Int> position)
     {
-
         List<PlacedObjectData> placedObjects = LoadPlacedObjectsList();
         PlacedObjectData objectToRemove = placedObjects.Find(o => o.id == id && ArePositionsEqual(o.occupiedPos, position));
         if (objectToRemove != null)
         {
             placedObjects.Remove(objectToRemove);
+            SaveToFile(placedObjects);
         }
-        string json = JsonUtility.ToJson(new PlacedObjectListWrapper { objects = placedObjects });
-#if UNITY_EDITOR
-        EditorPrefs.SetString(PlacedObjectsKey, json);
-#endif
     }
+
     private bool ArePositionsEqual(List<Vector3Int> a, List<Vector3Int> b)
     {
         if (a == null || b == null || a.Count != b.Count) return false;
@@ -82,10 +76,24 @@ public class PlacementPersistence
         }
         return true;
     }
+
     public void DeleteAllData()
     {
-#if UNITY_EDITOR
-        EditorPrefs.DeleteKey(PlacedObjectsKey);
-#endif
+        if (File.Exists(FilePath))
+        {
+            File.Delete(FilePath);
+        }
+    }
+
+    private void SaveToFile(List<PlacedObjectData> placedObjects)
+    {
+        var wrapper = new PlacedObjectListWrapper { objects = placedObjects };
+        string json = JsonUtility.ToJson(wrapper, true); // true = pretty print
+        if (!Directory.Exists(Application.streamingAssetsPath))
+        {
+            Directory.CreateDirectory(Application.streamingAssetsPath);
+        }
+        File.WriteAllText(FilePath, json);
+        Debug.Log("Placed objects saved to " + FilePath);
     }
 }
