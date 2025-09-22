@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,9 @@ public class PlacementSystem : MonoBehaviour
     private ObjectDataBaseSO database;
 
     [SerializeField]
+    private Tile tile;
+
+    [SerializeField]
     private GameObject gridVisualizer;
     private int selectedIndex = -1;
 
@@ -38,7 +42,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private PreviewSystem previewSystem;
     private Vector3Int lastPreviewPos;
-    private void Start()
+    private async void Awake()
     {
         //persistence.DeleteAllData();
         lastPreviewPos = Vector3Int.zero;
@@ -48,12 +52,18 @@ public class PlacementSystem : MonoBehaviour
         gridData = new GridData();
 
         StopPlacement();
-        persistence.LoadPlacedObjects(database, (idx, occupiedPos, pos) =>
+        await LoadMapAsync();
+
+    }
+    private async Task LoadMapAsync()
+    {
+        await persistence.LoadPlacedObjects(database, (idx, occupiedPos, pos) =>
         {
             GameObject go = Instantiate(database.objectData[idx].prefab);
             go.transform.SetParent(parentObject.transform);
             go.transform.position = pos;
         });
+        tile.LoadTile();
     }
 
     private void Update()
@@ -61,10 +71,13 @@ public class PlacementSystem : MonoBehaviour
         if (selectedIndex < 0) return;
         Vector3 mousePos = inputManager.SelectedMapPosition();
         Vector3Int gridPos = grid.WorldToCell(mousePos);
+        
 
         if (lastPreviewPos != gridPos)
         {
+            gridPos.y = 0;
             bool isValidPos = CheckValidPosition((Vector3Int)gridPos, selectedIndex);
+            Debug.Log($"Preview at {gridPos} is valid: {isValidPos}");
             previewSystem.UpdatePosition(grid.GetCellCenterWorld(gridPos), isValidPos);
         }
     }
@@ -83,7 +96,7 @@ public class PlacementSystem : MonoBehaviour
         selectedIndex = -1;
         gridVisualizer.SetActive(false);
         previewSystem.DestroyPreview();
-        inputManager.OnClicked -= PlaceObject;
+        inputManager.OnClicked -=  PlaceObject;
         inputManager.OnCancel -= StopPlacement;
 
         lastPreviewPos = Vector3Int.zero;
@@ -96,10 +109,10 @@ public class PlacementSystem : MonoBehaviour
         if (selectedIndex < 0) { Debug.LogError("ID not found in database"); return; }
         gridVisualizer.SetActive(true);
         previewSystem.ShowingPreview(database.objectData[selectedIndex].prefab, database.objectData[selectedIndex].size);
-        inputManager.OnClicked += PlaceObject;
+        inputManager.OnClicked +=  PlaceObject;
         inputManager.OnCancel += StopPlacement;
     }
-    public void DeleteObject()
+    public async Task DeleteObject()
     {
         if (selectedGameObject == null) { return; }
         Vector3 mousePos = inputManager.SelectedMapPosition();
@@ -109,7 +122,7 @@ public class PlacementSystem : MonoBehaviour
         ObjectData objectData = database.objectData.Find(x => x.prefab.name.Equals(cleanName));
 
         List<Vector3Int> occupiedCells = gridData.CalculateOccupyCells(gridPos, objectData.size);
-        persistence.DeletePlacedObject(objectData.id, occupiedCells);
+        await persistence.DeletePlacedObject(objectData.id, occupiedCells);
         Destroy(selectedGameObject);
         selectedGameObject = null;
         deleteButton.gameObject.SetActive(false);
@@ -125,7 +138,7 @@ public class PlacementSystem : MonoBehaviour
 
     public bool CheckValidPosition(Vector3Int gridPos, int selectedObjectIndex)
     {
-        return gridData.CanPlacePosition(gridPos, database.objectData[selectedObjectIndex].size, database.objectData[selectedObjectIndex].prefab);
+        return tile.IsCellFree(gridPos)&& gridData.CanPlacePosition(gridPos, database.objectData[selectedObjectIndex].size, database.objectData[selectedObjectIndex].prefab);
     }
 
     private void PlaceObject()
@@ -133,16 +146,18 @@ public class PlacementSystem : MonoBehaviour
         if (inputManager.IsPointerOverUI()) { return; }
         Vector3 mousePos = inputManager.SelectedMapPosition();
         Vector3Int gridPos = grid.WorldToCell(mousePos);
+        gridPos.y = 0;
 
         bool isValidPos = CheckValidPosition((Vector3Int)gridPos, selectedIndex);
         if (!isValidPos) return;
 
+        // Place the object and add to grid data
         GameObject newObject = Instantiate(database.objectData[selectedIndex].prefab);
         newObject.transform.position = grid.GetCellCenterWorld(gridPos) + offsetPos;
-        List<Vector3Int> occupiedCells = gridData.CalculateOccupyCells(gridPos, database.objectData[selectedIndex].size);
         
         lastPreviewPos= gridPos;
         gridData.AddObject(gridPos, database.objectData[selectedIndex].size, newObject);
-        persistence.SavePlacedObject(database.objectData[selectedIndex].id, occupiedCells, newObject.transform.position);
+        //List<Vector3Int> occupiedCells = gridData.CalculateOccupyCells(gridPos, database.objectData[selectedIndex].size);
+        //await persistence.SavePlacedObject(database.objectData[selectedIndex].id, occupiedCells, newObject.transform.position);
     }
 }

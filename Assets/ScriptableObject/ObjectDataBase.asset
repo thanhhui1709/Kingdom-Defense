@@ -53,3 +53,23 @@ MonoBehaviour:
     id: 9
     prefab: {fileID: 7785714045759255942, guid: 50894d735d0f4fa48aa24bebd8cc9372, type: 3}
     size: {x: 4, y: 3}
+  - name: Archer
+    id: 10
+    prefab: {fileID: 295986473561444131, guid: 526b535722eb5334ebbfb512689d5315, type: 3}
+    size: {x: 1, y: 1}
+  - name: Ballista
+    id: 11
+    prefab: {fileID: 7943674416711679487, guid: 22ee0491921c430438e386e49994402c, type: 3}
+    size: {x: 1, y: 1}
+  - name: Cannon
+    id: 12
+    prefab: {fileID: 2380547163063386895, guid: 23e09605a8d2c6241bbbc0ae8073edbe, type: 3}
+    size: {x: 1, y: 1}
+  - name: Poison
+    id: 13
+    prefab: {fileID: 2666662902481759127, guid: 8e6a638b9b36256409dff33ebb885118, type: 3}
+    size: {x: 1, y: 1}
+  - name: Wizard
+    id: 14
+    prefab: {fileID: 4345151714247071355, guid: b933aca7afc0c9e499880495f83cbcb5, type: 3}
+    size: {x: 1, y: 1}

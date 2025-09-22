@@ -47,9 +47,9 @@ public class PreviewSystem : MonoBehaviour
 
     private void AdjustPreviewMaterial(GameObject previewGO)
     {
-        MeshRenderer[] renderers = previewGO.GetComponentsInChildren<MeshRenderer>();
+        Renderer[] renderers = previewGO.GetComponentsInChildren<Renderer>();
 
-        foreach (MeshRenderer renderer in renderers)
+        foreach (Renderer renderer in renderers)
         {
             originalMaterials = renderer.materials;
 
@@ -98,8 +98,8 @@ public class PreviewSystem : MonoBehaviour
 
         if (previewObject != null)
         {
-            MeshRenderer[] renderers = previewObject.GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer renderer in renderers)
+            Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
+            foreach (Renderer renderer in renderers)
             {
                 foreach (Material mat in renderer.sharedMaterials)
                 {

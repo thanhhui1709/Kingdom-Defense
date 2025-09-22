@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [Serializable]
@@ -23,29 +24,29 @@ public class PlacementPersistence
 
     private string FilePath => Path.Combine(Application.streamingAssetsPath, FileName);
 
-    public void SavePlacedObject(int id, List<Vector3Int> position, Vector3 placedPos)
+    public async Task SavePlacedObject(int id, List<Vector3Int> position, Vector3 placedPos)
     {
-        List<PlacedObjectData> placedObjects = LoadPlacedObjectsList();
+        List<PlacedObjectData> placedObjects = await LoadPlacedObjectsList();
         placedObjects.Add(new PlacedObjectData { id = id, occupiedPos = position, centerPos = placedPos });
 
         SaveToFile(placedObjects);
 
     }
 
-    public List<PlacedObjectData> LoadPlacedObjectsList()
+    public async Task<List<PlacedObjectData>> LoadPlacedObjectsList()
     {
         if (!File.Exists(FilePath)) return new List<PlacedObjectData>();
 
-        string json = File.ReadAllText(FilePath);
+        string json = await File.ReadAllTextAsync(FilePath);
         if (string.IsNullOrEmpty(json)) return new List<PlacedObjectData>();
 
         PlacedObjectListWrapper wrapper = JsonUtility.FromJson<PlacedObjectListWrapper>(json);
         return wrapper?.objects ?? new List<PlacedObjectData>();
     }
 
-    public void LoadPlacedObjects(ObjectDataBaseSO database, Action<int, List<Vector3Int>, Vector3> instantiateCallback)
+    public async Task LoadPlacedObjects(ObjectDataBaseSO database, Action<int, List<Vector3Int>, Vector3> instantiateCallback)
     {
-        var placedObjects = LoadPlacedObjectsList();
+        var placedObjects = await LoadPlacedObjectsList();
         foreach (var obj in placedObjects)
         {
             int idx = database.objectData.FindIndex(x => x.id == obj.id);
@@ -56,9 +57,9 @@ public class PlacementPersistence
         }
     }
 
-    public void DeletePlacedObject(int id, List<Vector3Int> position)
+    public async Task DeletePlacedObject(int id, List<Vector3Int> position)
     {
-        List<PlacedObjectData> placedObjects = LoadPlacedObjectsList();
+        List<PlacedObjectData> placedObjects = await LoadPlacedObjectsList();
         PlacedObjectData objectToRemove = placedObjects.Find(o => o.id == id && ArePositionsEqual(o.occupiedPos, position));
         if (objectToRemove != null)
         {

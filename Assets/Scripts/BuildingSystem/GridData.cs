@@ -4,7 +4,24 @@ using UnityEngine;
 
 public class GridData
 {
-    Dictionary<Vector3Int, GameObject> placedObjects = new();
+    private Dictionary<Vector3Int, GameObject> placedObjects = new();
+
+
+    public void GetAllBuildableCells(Grid grid)
+    {
+        if(placedObjects.Count==0)
+        {
+            return;
+        }
+        List<Vector3Int> roadPositons = new List<Vector3Int>();
+        foreach (var pos in placedObjects.Keys)
+        {
+            if (placedObjects[pos].CompareTag("Road"))
+            {
+                roadPositons.Add(pos);
+            }
+        }
+    }
 
 
     public void AddObject(Vector3Int gridPos, Vector2Int size, GameObject gameObject)
@@ -78,11 +95,11 @@ public class GridData
         {
             for (int y = 0; y < size.y; y++)
             {
-                occupied.Add(new Vector3Int(startX + x, startZ + y));
+                occupied.Add(new Vector3Int(startX + x, 0, startZ + y));
             }
         }
 
         return occupied;
     }
-
+   
 }
