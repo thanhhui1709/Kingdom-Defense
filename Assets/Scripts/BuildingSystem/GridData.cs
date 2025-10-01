@@ -13,12 +13,12 @@ public class GridData
         {
             return;
         }
-        List<Vector3Int> roadPositons = new List<Vector3Int>();
+        List<Vector3Int> roadPositions = new List<Vector3Int>();
         foreach (var pos in placedObjects.Keys)
         {
             if (placedObjects[pos].CompareTag("Road"))
             {
-                roadPositons.Add(pos);
+                roadPositions.Add(pos);
             }
         }
     }

@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField]
     private float previewOffset = 0.6f;
 
-  
+
     private GameObject previewObject;
+
+    private List<GameObject> previewList;
     [SerializeField]
     private GameObject cellIndicator;
 
@@ -28,13 +33,33 @@ public class PreviewSystem : MonoBehaviour
 
         previewObject = Instantiate(prefab);
         previewObject.name = prefab.name + "_Preview";
-        previewObject.layer=2;
+        previewObject.layer = 2;
 
         // gán transparent material
         AdjustPreviewMaterial(previewObject);
 
         AdjustCursor(size);
     }
+    public void ShowingPreview(List<GameObject> list)
+    {
+        // Xóa preview cũ nếu còn
+        if (previewList != null)
+            previewList.ForEach(Destroy);
+        previewList = new List<GameObject>();
+        previewObject = new GameObject("PreviewGroup");
+        foreach (var prefab in list)
+        {
+            GameObject obj = Instantiate(prefab);
+            obj.name = prefab.name + "_Preview";
+            obj.layer = 2;
+            previewList.Add(obj);
+            // gán transparent material
+            AdjustPreviewMaterial(obj);
+            prefab.transform.SetParent(previewObject.transform);
+        }
+    }
+
+
 
     private void AdjustCursor(Vector2Int size)
     {
@@ -71,12 +96,27 @@ public class PreviewSystem : MonoBehaviour
         if (cellIndicator != null)
             cellIndicator.SetActive(false);
     }
+    public void HideAllPreview()
+    {
+        if (previewList != null)
+            previewList.ForEach(obj => obj.SetActive(false));
+        if (cellIndicator != null)
+            cellIndicator.SetActive(false);
+    }
 
     public void DestroyPreview()
     {
         if (previewObject != null)
             Destroy(previewObject);
 
+        if (cellIndicator != null)
+            cellIndicator.SetActive(false);
+    }
+    public void DestroyAllPreview()
+    {
+        if (previewList != null)
+            previewList.ForEach(Destroy);
+        previewList = null;
         if (cellIndicator != null)
             cellIndicator.SetActive(false);
     }
@@ -91,10 +131,10 @@ public class PreviewSystem : MonoBehaviour
         DisplayValidColor(validity);
     }
 
-    private void DisplayValidColor(bool validity)
+    public void DisplayValidColor(bool validity)
     {
         Color c = validity ? Color.green : Color.red;
-        c.a = 0.5f; 
+        c.a = 0.5f;
 
         if (previewObject != null)
         {
@@ -115,6 +155,26 @@ public class PreviewSystem : MonoBehaviour
                 r.color = c;
         }
     }
+    public void DisplayValidColorForMultipleObjects(bool validity)
+    {
+        Color c = validity ? Color.green : Color.red;
+        c.a = 0.5f;
+
+        if (previewList != null)
+        {
+            foreach (var previewObject in previewList)
+            {
+                Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
+                foreach (Renderer renderer in renderers)
+                {
+                    foreach (Material mat in renderer.sharedMaterials)
+                    {
+                        mat.color = c;
+                    }
+                }
+            }
+        }
+    }
 
     private void MoveCursor(Vector3 position)
     {
@@ -125,6 +185,6 @@ public class PreviewSystem : MonoBehaviour
     private void MovePreview(Vector3 position)
     {
         if (previewObject != null)
-            previewObject.transform.position =new Vector3(position.x,position.y+previewOffset,position.z);
+            previewObject.transform.position = new Vector3(position.x, position.y + previewOffset, position.z);
     }
 }

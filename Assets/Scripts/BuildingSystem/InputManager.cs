@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -16,7 +16,10 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private LayerMask normalLayer;
 
+    public bool isOnDrawMode;
     public event Action<GameObject> OnObjectSelected;
+    public event Action<GameObject> OnDrawing;
+    public event Action OnReleasedMouse;
 
     public event Action OnClicked, OnCancel;
 
@@ -26,7 +29,7 @@ public class InputManager : MonoBehaviour
 
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, buildModeLayer))
+        if (Physics.Raycast(ray, out hit, 100, normalLayer))
         {
             lastPosition = hit.point;
         }
@@ -35,6 +38,7 @@ public class InputManager : MonoBehaviour
     }
     public void OnSelectedGameObject()
     {
+        if(IsPointerOverUI()) return;
         GameObject selectedObject = null;
         Vector3 mousePos = Input.mousePosition;
         Ray ray = mainCamera.ScreenPointToRay(mousePos);
@@ -42,26 +46,64 @@ public class InputManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 100, normalLayer))
         {
             selectedObject = hit.collider.gameObject;
-            Debug.Log($"Selected Object: {selectedObject.name}");
-            OnObjectSelected?.Invoke(selectedObject);
+
+            if (selectedObject.CompareTag("Buildable"))
+            {
+                Debug.Log($"Selected Buildable: {selectedObject.name}");
+                OnObjectSelected?.Invoke(selectedObject);
+            }
+            else
+            {
+                Debug.Log($"Clicked on non-buildable: {selectedObject.name}");
+            }
         }
-       
     }
-  
+    private void CollectObjectsWhileDragging()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = mainCamera.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100, normalLayer))
+        {
+            GameObject obj = hit.collider.gameObject;
+            OnDrawing?.Invoke(obj);
+
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (isOnDrawMode)
         {
-            OnClicked?.Invoke();
-            OnSelectedGameObject();
-            Debug.Log("Clicked");
+            if (Input.GetMouseButton(0))
+            {
+                CollectObjectsWhileDragging();
+            }
+            if(Input.GetMouseButtonUp(0))
+            {
+                OnReleasedMouse?.Invoke();
+                Debug.Log("Finished Drawing");
+            }
         }
-        if (Input.GetMouseButtonDown(1))
+        else
         {
-            OnCancel?.Invoke();
-            Debug.Log("Canceled");
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnSelectedGameObject();
+                OnClicked?.Invoke();
+                Debug.Log("Clicked");
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                OnCancel?.Invoke();
+                Debug.Log("Canceled");
+            }
         }
+       
+
+       
+      
     }
 
     public bool IsPointerOverUI()
