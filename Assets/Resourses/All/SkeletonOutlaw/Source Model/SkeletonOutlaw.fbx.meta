@@ -3,7 +3,17 @@ guid: 9714af95a4d221243a0c56b2efde19e6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Axes__Untitled_001
+    second: {fileID: 2100000, guid: 0a543b8127e1a8249a8f23847ff903a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skeleton__Atlas_png
+    second: {fileID: 2100000, guid: b200a81a97e12d147b24bfa9c5ba6ce8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
