@@ -3,7 +3,37 @@ guid: 55be5ef0815f57e4bac7be59c76fd705
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: -1580535799172915004, guid: 3420453a442e5b844b9f172cad48bf34, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brown
+    second: {fileID: 2100000, guid: 267ff8b799ffc9c43a6c69a9c7c48f82, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BrownDark
+    second: {fileID: 7575915981058242857, guid: c54cbbbc4f1dfa44a8c49dd5a4d5878f, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GreenDark
+    second: {fileID: 2100000, guid: dcd80922262559b48a1be1f3674dc312, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: -4973734387028869240, guid: 9c9f1ffc24bede04b9fbe520b1409cb9, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PinkLight
+    second: {fileID: 322813181264140603, guid: 02b4c46b66a29e542ba38bfbc4b06628, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
