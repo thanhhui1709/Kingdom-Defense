@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80335eb8b15879c4393537ba750f428e, type: 3}
+  m_Name: ObjectDataBase
+  m_EditorClassIdentifier: 
+  objectData:
+  - name: Tile_Wood
+    id: 0
+    prefab: {fileID: 1115994154460955593, guid: 3bed741d4790171408d9e0a38612f11d, type: 3}
+    size: {x: 1, y: 1}
+  - name: Tile_Rock
+    id: 1
+    prefab: {fileID: 3750774565037590138, guid: 31a6a396f777c8742b956d48e673a81b, type: 3}
+    size: {x: 1, y: 1}
+  - name: Tree_Big
+    id: 2
+    prefab: {fileID: 1369258444634161940, guid: 56d2a763cb6f58d43a3a950517da6b4c, type: 3}
+    size: {x: 1, y: 1}
+  - name: Tree_Small
+    id: 3
+    prefab: {fileID: 69542627350216175, guid: 7089935336ac5784c981f0e4579e27d7, type: 3}
+    size: {x: 1, y: 1}
+  - name: Trees
+    id: 4
+    prefab: {fileID: 5786029278434183456, guid: 1af4cb73f0f34184ba8f57540ae7bb78, type: 3}
+    size: {x: 1, y: 1}
+  - name: Rock
+    id: 5
+    prefab: {fileID: 6298132914700461679, guid: 1b99ae418cb39524cb06faa67928a3e7, type: 3}
+    size: {x: 1, y: 1}
+  - name: Rock
+    id: 6
+    prefab: {fileID: 6945526287825138377, guid: 8bcbff4cd998cb746a57db0cd4dfd781, type: 3}
+    size: {x: 1, y: 1}
+  - name: Castle
+    id: 7
+    prefab: {fileID: 5587452429698542319, guid: cc4059cb830a4e340a5f07d49359d4e1, type: 3}
+    size: {x: 6, y: 3}
+  - name: BlackSmithBuilding
+    id: 8
+    prefab: {fileID: 373632410113315297, guid: 04a778715da20ec41bf45f36a8cc1973, type: 3}
+    size: {x: 3, y: 2}
+  - name: MilitaryBuilding
+    id: 9
+    prefab: {fileID: 7785714045759255942, guid: 50894d735d0f4fa48aa24bebd8cc9372, type: 3}
+    size: {x: 4, y: 3}
+  - name: Archer
+    id: 10
+    prefab: {fileID: 295986473561444131, guid: 526b535722eb5334ebbfb512689d5315, type: 3}
+    size: {x: 1, y: 1}
+  - name: Ballista
+    id: 11
+    prefab: {fileID: 7943674416711679487, guid: 22ee0491921c430438e386e49994402c, type: 3}
+    size: {x: 1, y: 1}
+  - name: Cannon
+    id: 12
+    prefab: {fileID: 2380547163063386895, guid: 23e09605a8d2c6241bbbc0ae8073edbe, type: 3}
+    size: {x: 1, y: 1}
+  - name: Poison
+    id: 13
+    prefab: {fileID: 2666662902481759127, guid: 8e6a638b9b36256409dff33ebb885118, type: 3}
+    size: {x: 1, y: 1}
+  - name: Wizard
+    id: 14
+    prefab: {fileID: 4345151714247071355, guid: b933aca7afc0c9e499880495f83cbcb5, type: 3}
+    size: {x: 1, y: 1}
