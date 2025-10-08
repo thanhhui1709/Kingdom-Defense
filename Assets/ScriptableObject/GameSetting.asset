@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b103bac1c0ff847b9953eeea5c62d6, type: 3}
   m_Name: GameSetting
   m_EditorClassIdentifier: 
-  cameraFov: 60
-  minCameraFov: 30
-  maxCameraFov: 90
+  cameraFov: 10
+  minOrthographicSize: 7
+  maxOrthographicSize: 16
   zoomSensitivity: 10
   screenEdgeSize: 20
-  cameraMoveSpeed: 20
+  cameraMoveSpeed: 50
   xMin: -10
   xMax: 10
-  yMin: 5
-  yMax: 20
-  zMin: -10
+  zMin: -50
   zMax: 10

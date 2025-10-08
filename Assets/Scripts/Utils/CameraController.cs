@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
-        cam.fieldOfView = gameSetting.CameraFov; // set default FOV
+        cam.orthographicSize = gameSetting.CameraFov; // set default FOV
     }
 
     private void Update()
@@ -25,10 +25,10 @@ public class CameraController : MonoBehaviour
         if (Mathf.Abs(scroll) > 0.01f)
         {
             
-            cam.fieldOfView -= scroll * gameSetting.ZoomSensitivity;
+            cam.orthographicSize -= scroll * gameSetting.ZoomSensitivity;
 
-         
-            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView,
+
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize,
                                           gameSetting.MinCameraFov,
                                           gameSetting.MaxCameraFov);
         }
@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, gameSetting.XMin, gameSetting.XMax);
         pos.z = Mathf.Clamp(pos.z, gameSetting.ZMin, gameSetting.ZMax);
-        pos.y = Mathf.Clamp(pos.y, gameSetting.YMin, gameSetting.YMax);
+       
         transform.position = pos;
     }
 }
