@@ -5,15 +5,21 @@ TagManager:
   serializedVersion: 3
   tags:
   - Projectile
+  - Buildable
+  - Road
+  - Construction
+  - Occupied
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - Tower
   - Enemy
+  - Placement
+  - 
   - 
   - 
   - 
