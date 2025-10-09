@@ -9,6 +9,8 @@ TagManager:
   - Road
   - Construction
   - Occupied
+  - Enemy
+  - Xplosion
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,6 @@ TagManager:
   - Tower
   - Enemy
   - Placement
-  - 
-  - 
   - 
   - 
   - 

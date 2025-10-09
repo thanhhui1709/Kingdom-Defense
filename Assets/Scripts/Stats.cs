@@ -1,39 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable] // Cho phép hiển thị trong Inspector
-public class Stats
+
+public class Stats: MonoBehaviour
 {
-    public float maxHealth = 100f;       // Máu tối đa
-    public float currentHealth;          // Máu hiện tại
-    public float moveSpeed = 5f;         // Tốc độ di chuyển (cho lính)
-    public float attackRange = 10f;      // Tầm đánh/tầm bắn
-    public float attackSpeed = 1f;       // Tốc độ đánh (giây giữa các lần tấn công)
-    public float damage = 20f;           // Sát thương gây ra
+    [SerializeField] private float heath;
+    [SerializeField] private float ammor;
+    [SerializeField] private float attackDamage;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float triggerRange;
 
-    [Header("UI")]
-    public Slider healthBar;             // Thanh máu (UI Slider)
+    public float Heath { get => heath; set => heath = value; }
+    public float Ammor { get => ammor; set => ammor = value; }
+    public float AttackDamage { get => attackDamage; set => attackDamage = value; }
+    public float AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public float AttackRange { get => attackRange; set => attackRange = value; }
+    public float TriggerRange { get => triggerRange; set => triggerRange = value; }
 
-    // Constructor để khởi tạo
-    public Stats()
-    {
-        currentHealth = maxHealth;
-    }
-
-    // Phương thức cập nhật thanh máu
-    public void UpdateHealthBar()
-    {
-        if (healthBar != null)
-        {
-            healthBar.value = currentHealth / maxHealth;
-        }
-    }
-
-    // Phương thức nhận sát thương
-    public void TakeDamage(float amount)
-    {
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        UpdateHealthBar();
-    }
 }
