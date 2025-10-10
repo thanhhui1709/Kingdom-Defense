@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Tower Skill", menuName = "Tower Skill/OrientedShot")]
@@ -10,5 +11,9 @@ public class OrientedShot : ATowerSkill
       go.TryGetComponent<OrientedArrow>(out OrientedArrow orientedArrow);
       orientedArrow.SetTarget(target);
     }
-
+    // implement later for multi-target attack
+    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> target)
+    {
+        throw new System.NotImplementedException();
+    }
 }

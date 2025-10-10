@@ -3,20 +3,23 @@ using UnityEngine;
 public class OrientedArrow : MonoBehaviour
 {
     private GameObject target;
+    private Rigidbody rb;
     [SerializeField] private float speed = 10f;
-    void Start()
+    void Awake()
     {
-        
+        rb=GetComponent<Rigidbody>();
+        if(rb==null) Debug.LogError("Rigidbody component is missing from the projectile.");
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (target != null)
-        {
-            Util.MoveToward(transform, target.transform, speed);
-            Util.RotateToward(transform, target.transform, 180f);
-        }
+        if (target == null) return;
+
+       Vector3 dir= Util.MoveToward(rb, target.transform, speed);
+       Quaternion targetRotation= Quaternion.LookRotation(dir*180, transform.up)*Quaternion.Euler(90,0,0);
+       rb.MoveRotation(targetRotation);
     }
     public void SetTarget(GameObject targetGO)
     {
