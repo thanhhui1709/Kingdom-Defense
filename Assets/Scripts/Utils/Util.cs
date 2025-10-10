@@ -12,7 +12,10 @@ public class Util
         {
             if(hit.gameObject.CompareTag(tag) && hit.gameObject != center.gameObject)
             {
-                existedTarget.Add(hit.gameObject);
+                if (!existedTarget.Contains(hit.gameObject))
+                {
+                    existedTarget.Add(hit.gameObject);
+                }
             }
         }
         return existedTarget;

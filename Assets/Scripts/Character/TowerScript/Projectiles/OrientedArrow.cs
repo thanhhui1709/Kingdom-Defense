@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using System.Linq;
 
-public class OrientedArrow : MonoBehaviour
+public class OrientedArrow : MonoBehaviour,IProjectile
 {
     private GameObject target;
     private Rigidbody rb;
@@ -21,10 +24,7 @@ public class OrientedArrow : MonoBehaviour
        Quaternion targetRotation= Quaternion.LookRotation(dir*180, transform.up)*Quaternion.Euler(90,0,0);
        rb.MoveRotation(targetRotation);
     }
-    public void SetTarget(GameObject targetGO)
-    {
-       target= targetGO;
-    }
+  
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject == target)
@@ -32,5 +32,10 @@ public class OrientedArrow : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("Hitted Target Object");
         }
+    }
+
+    public void Launch(Transform launchPoint, List<GameObject> target)
+    {
+        this.target = target.OrderBy(x=> Vector3.Distance(x.transform.position,launchPoint.position)).FirstOrDefault();
     }
 }

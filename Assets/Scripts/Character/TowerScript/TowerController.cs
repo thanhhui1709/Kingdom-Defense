@@ -9,7 +9,8 @@ public class TowerController : MonoBehaviour
     [SerializeField] private Stats stats;
     [SerializeField] private ATowerSkill towerSkill;
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private bool isMultiTarget;
+  
+  
     private HashSet<GameObject> targetEnemy=new();
     private float attackCooldown;
 
@@ -21,7 +22,7 @@ public class TowerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        targetEnemy=Util.FindGameObjectInRange(targetEnemy,transform,stats.TriggerRange,"Enemy");
+        targetEnemy=Util.FindGameObjectInRange(targetEnemy,transform,stats.AttackRange,"Enemy");
         RemoveDisableTarget();
         if (attackCooldown > 0)
         {
@@ -33,14 +34,8 @@ public class TowerController : MonoBehaviour
         {
             if (attackCooldown <= 0)
             {
-                if (isMultiTarget)
-                {
+               
                     towerSkill.DoAttack(transform, projectilePrefab, targetEnemy.ToList());
-                }
-                else
-                {
-                    towerSkill.DoAttack(transform, projectilePrefab, targetEnemy.First());
-                }
                     attackCooldown = 1f / stats.AttackSpeed;
             }
 
@@ -57,5 +52,7 @@ public class TowerController : MonoBehaviour
     {
         if(targetEnemy.Count==0) return;
         targetEnemy.RemoveWhere(x => !x.activeInHierarchy || Vector3.Distance(transform.position,x.transform.position)>stats.AttackRange);
+        Debug.Log("Remove enemy");
+        Debug.Log("After Remove: " + targetEnemy.Count);
     }
 }
