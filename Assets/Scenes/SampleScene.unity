@@ -355,7 +355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 86.54
+      value: 82
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -843,7 +843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 94.41
+      value: 109.4
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1131,7 +1131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 74.57
+      value: 65.74
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1283,7 +1283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 88.17
+      value: 82.84
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1536,7 +1536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 94.93
+      value: 111.5
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2349,6 +2349,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6161547250157671784, guid: b933aca7afc0c9e499880495f83cbcb5, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 5551972361978619668, guid: 401a92fc7bafa0c44b1cd694c8814dad, type: 3}
     - target: {fileID: 818197285560781297, guid: b933aca7afc0c9e499880495f83cbcb5, type: 3}
       propertyPath: attackRange
       value: 10
