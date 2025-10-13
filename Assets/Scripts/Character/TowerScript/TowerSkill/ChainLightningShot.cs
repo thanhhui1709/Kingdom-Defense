@@ -61,8 +61,19 @@ public class ChainLightningShot : ATowerSkill
     // Hàm phụ để tạo và vẽ tia sét (giữ nguyên)
     private void CreateLightningBolt(GameObject lightningPrefab, Vector3 startPos, Vector3 endPos)
     {
+        if(lightningPrefab == null)
+        {
+            Debug.LogError("lightningPrefab is not assigned.");
+            return;
+        }
         GameObject boltGO = Instantiate(lightningPrefab, startPos, Quaternion.identity);
-        LineRenderer lr = boltGO.GetComponent<LineRenderer>();
+        LineRenderer lr = boltGO.GetComponent<LineRenderer>(); 
+        if(lr == null)
+        {
+            Debug.LogError("LineRenderer component not found on the lightningPrefab.");
+            Destroy(boltGO);
+            return;
+        }
         lr.positionCount = 2;
         lr.SetPosition(0, startPos);
         lr.SetPosition(1, endPos);
