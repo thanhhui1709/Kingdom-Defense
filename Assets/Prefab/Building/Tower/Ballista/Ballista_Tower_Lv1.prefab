@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: -5907705273256678083}
-  towerSkill: {fileID: 0}
+  towerSkill: {fileID: 11400000, guid: 35827dccbef8d7c4e8017b4a56b08ee6, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
 --- !u!114 &-5907705273256678083
 MonoBehaviour:
