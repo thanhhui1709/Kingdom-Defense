@@ -65,8 +65,16 @@ PrefabInstance:
       value: Archer_Tower_Lv1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_TagString
-      value: Construction
+      value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -78,6 +86,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 353520972804662117}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1420278058942873542}
     - targetCorrespondingSourceObject: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4554792252677119595}
@@ -121,6 +132,33 @@ MonoBehaviour:
   stats: {fileID: 3789184190316394393}
   towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
+--- !u!54 &1420278058942873542
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295986473561444131}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3709763594364197639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
@@ -147,4 +185,4 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4730299872466990381, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}

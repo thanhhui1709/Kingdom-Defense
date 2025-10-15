@@ -7,10 +7,11 @@ TagManager:
   - Projectile
   - Buildable
   - Road
-  - Construction
   - Occupied
   - Enemy
   - Xplosion
+  - Tower
+  - Unit
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Tower
   - Enemy
   - Placement
-  - 
+  - Target
   - 
   - 
   - 
