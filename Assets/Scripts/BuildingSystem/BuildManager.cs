@@ -15,9 +15,6 @@ public class BuildManager : MonoBehaviour
     public GameObject towerSelectionPanel;
     // Prefab của nút bấm 
     public GameObject towerButtonPrefab;
-    // Đối tượng cha để chứa các nút (chính là Panel có Layout Group).
-    public Transform buttonContainer;
-
     // Biến tạm để lưu ô đất đã chọn.
     private Transform selectedBuildableTile;
 
@@ -41,7 +38,7 @@ public class BuildManager : MonoBehaviour
     void GenerateTowerButtons()
     {
         // Xóa các nút cũ nếu có
-        foreach (Transform child in buttonContainer)
+        foreach (Transform child in towerSelectionPanel.transform)
         {
             Destroy(child.gameObject);
         }
@@ -50,7 +47,7 @@ public class BuildManager : MonoBehaviour
         foreach (TowerData towerData in availableTowers)
         {
             // Tạo một bản sao của prefab nút
-            GameObject buttonGO = Instantiate(towerButtonPrefab, buttonContainer);
+            GameObject buttonGO = Instantiate(towerButtonPrefab, towerSelectionPanel.transform);
 
             // Tìm component TextMeshPro bên trong nút con
             TMPro.TextMeshProUGUI buttonText = buttonGO.GetComponentInChildren<TMPro.TextMeshProUGUI>();
