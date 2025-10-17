@@ -10,6 +10,7 @@ public class TowerController : MonoBehaviour
     [SerializeField] private ATowerSkill towerSkill;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private int maxTarget = 1;
+    [SerializeField] private GameObject shooter;
 
     private enum TowerState
     {
@@ -74,7 +75,7 @@ public class TowerController : MonoBehaviour
                 {
                     if (attackCooldown <= 0)
                     {
-                        towerSkill.DoAttack(transform, projectilePrefab, currentTarget.ToList());
+                        towerSkill.DoAttack(shooter.transform, projectilePrefab, currentTarget.ToList());
                         attackCooldown = 1f / stats.AttackSpeed;
                     }
                     else
