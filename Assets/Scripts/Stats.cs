@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class Stats: MonoBehaviour
 {
-    [SerializeField] private float heath;
-    [SerializeField] private float ammor;
-    [SerializeField] private float attackDamage;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float triggerRange;
+    [SerializeField] public float heath;
+    [SerializeField] public float ammor;
+    [SerializeField] public float attackDamage;
+    [SerializeField] public float attackSpeed;
+    [SerializeField] public float moveSpeed;
+    [SerializeField] public float attackRange;
+    [SerializeField] public float triggerRange;
 
     public float Heath { get => heath; set => heath = value; }
     public float Ammor { get => ammor; set => ammor = value; }
