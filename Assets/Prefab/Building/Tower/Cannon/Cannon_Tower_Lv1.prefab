@@ -75,6 +75,9 @@ PrefabInstance:
     - target: {fileID: 1873567483714858872, guid: 172b8c42a1f716642972552cd0114a62, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -179.475
+    - target: {fileID: 919132149155446097, guid: 172b8c42a1f716642972552cd0114a62, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -86,6 +89,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 172b8c42a1f716642972552cd0114a62, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3456170268799394106}
+      addedObject: {fileID: -7187610215930497195}
   m_SourcePrefab: {fileID: 100100000, guid: 172b8c42a1f716642972552cd0114a62, type: 3}
 --- !u!1 &2380547163063386895 stripped
 GameObject:
@@ -94,6 +98,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &-1966888359174692653
 MonoBehaviour:
+--- !u!54 &-7187610215930497195
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -126,3 +132,23 @@ MonoBehaviour:
   stats: {fileID: -1966888359174692653}
   towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

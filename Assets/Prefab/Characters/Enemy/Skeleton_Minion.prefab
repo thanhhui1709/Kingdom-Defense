@@ -58,15 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.87367
+      value: 21.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 1.86
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 36.83769
+      value: -28.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalRotation.w
@@ -360,6 +360,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Minion
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2196004506624635508, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -1.8710005
@@ -550,7 +554,22 @@ PrefabInstance:
       addedObject: {fileID: 2914762305354870673}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 903683655750956208}
+      addedObject: {fileID: 816141751445885856}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8865559169205025394}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2363289547786207736}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3485209118815564009}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2756992295360718803}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8281298809940148392}
   m_SourcePrefab: {fileID: 100100000, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
 --- !u!4 &4882465860427763544 stripped
 Transform:
@@ -596,7 +615,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662b31271f985d34b8fcd2b4fe50d31f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animData: []
+  animationMappings:
+  - type: 2
+    primaryParameterName: bool_HasDie
+    primaryParameterType: 0
+    hasSecondaryParameter: 0
+    secondaryParameterName: 
+    secondaryParameterType: 0
+  - type: 1
+    primaryParameterName: trig_Attack
+    primaryParameterType: 0
+    hasSecondaryParameter: 1
+    secondaryParameterName: int_AttackID
+    secondaryParameterType: 2
 --- !u!114 &2914762305354870673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,8 +640,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a26d4588dd672b419e80ab71710fd91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &903683655750956208
-BoxCollider:
+--- !u!54 &816141751445885856
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540222376654014055}
+  serializedVersion: 5
+  m_Mass: 10
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!136 &8865559169205025394
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -627,9 +685,73 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.38
+  m_Height: 2.344524
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9938257, z: -0.0023040771}
+--- !u!114 &2363289547786207736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540222376654014055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84be7047a571424baa536a9014a94f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startNode: {fileID: 0}
+  endNode: {fileID: 0}
+--- !u!114 &3485209118815564009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540222376654014055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 100
+  ammor: 10
+  attackDamage: 10
+  attackSpeed: 1
+  moveSpeed: 3
+  attackRange: 3
+  triggerRange: 10
+--- !u!114 &2756992295360718803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540222376654014055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57149ed0d9cc65147ad28b72b6ab9aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 0
+--- !u!114 &8281298809940148392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540222376654014055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee8f7e7fb4bcce4f9484a80b6261ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &8325190703793189210
 PrefabInstance:
   m_ObjectHideFlags: 0
