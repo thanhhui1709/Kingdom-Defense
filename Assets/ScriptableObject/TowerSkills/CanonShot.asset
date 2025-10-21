@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2e1949b56325b49b84a59f6f77f825, type: 3}
-  m_Name: BallistaShot
+  m_Script: {fileID: 11500000, guid: c437e00405e61654ab5d4456554536b0, type: 3}
+  m_Name: CanonShot
   m_EditorClassIdentifier: 
-  numberOfEnemy: 3
+  shootForce: 500
+  fireRate: 2
+  range: 10
+  muzzleOffsetDistance: 1.5

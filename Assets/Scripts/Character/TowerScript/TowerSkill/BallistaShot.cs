@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Tower Skill", menuName = "Tower Skill/BallistaShot")]
 public class BallistaShot : ATowerSkill
 {
-    [SerializeField] private int numberOfEnemy = 3;
+    [SerializeField] private int numberOfEnemy;
 
     public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets)
     {

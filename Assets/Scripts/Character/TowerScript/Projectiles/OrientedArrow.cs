@@ -8,6 +8,7 @@ public class OrientedArrow : MonoBehaviour,IProjectile
     private GameObject target;
     private Rigidbody rb;
     [SerializeField] private float speed = 10f;
+    public GameObject explosionEffect;
     void Awake()
     {
         rb=GetComponent<Rigidbody>();
@@ -30,6 +31,11 @@ public class OrientedArrow : MonoBehaviour,IProjectile
         if(other.gameObject == target)
         {
             Destroy(gameObject);
+            if(explosionEffect != null)
+            {
+
+                ObjectPoolManager.SpawnObject(explosionEffect, transform.position, Quaternion.identity,ObjectPoolManager.PoolType.Particle);
+            }
             Debug.Log("Hitted Target Object");
         }
     }
