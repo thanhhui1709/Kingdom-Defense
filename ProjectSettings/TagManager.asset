@@ -11,6 +11,8 @@ TagManager:
   - Occupied
   - Enemy
   - Xplosion
+  - Tree_small
+  - Tower
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Tower
   - Enemy
   - Placement
-  - 
+  - Target
   - 
   - 
   - 

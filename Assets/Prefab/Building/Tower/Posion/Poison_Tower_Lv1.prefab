@@ -48,13 +48,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8451839963971860093, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -5603218160757642424, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -5071301683078119986, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4501184853073657064, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
       propertyPath: m_Name
       value: Poison_Tower_Lv1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
       propertyPath: m_TagString
-      value: Construction
+      value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459470291752702430, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5342330795562717194, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,38 +90,50 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8078231962827906918}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4962563522069555780}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3104660065061118312}
+      addedObject: {fileID: 3764856722736562014}
+    - targetCorrespondingSourceObject: {fileID: 4459470291752702430, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 207766885542459597}
   m_SourcePrefab: {fileID: 100100000, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+--- !u!1 &1451199821330106136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4459470291752702430, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+  m_PrefabInstance: {fileID: 3008556378616633030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &207766885542459597
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451199821330106136}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.2446165, y: 15.347461, z: 5.5004463}
+  m_Center: {x: 0.07262468, y: 7.6013627, z: 0.16893971}
+--- !u!1 &2555091588870037317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8451839963971860093, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
+  m_PrefabInstance: {fileID: 3008556378616633030}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2666662902481759127 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
   m_PrefabInstance: {fileID: 3008556378616633030}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8078231962827906918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2666662902481759127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heath: 0
-  ammor: 0
-  attackDamage: 0
-  attackSpeed: 2
-  moveSpeed: 0
-  attackRange: 10
-  triggerRange: 10
 --- !u!114 &4962563522069555780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,27 +146,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 8078231962827906918}
   towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
-  projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
---- !u!135 &-3104660065061118312
-SphereCollider:
+  projectilePrefab: {fileID: 6745793394025541538, guid: d5aab9a57c500b5478e827a1535647b3, type: 3}
+  maxTarget: 1
+  shooter: {fileID: 2555091588870037317}
+--- !u!114 &3764856722736562014
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2666662902481759127}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 100
+  ammor: 10
+  attackDamage: 10
+  attackSpeed: 1
+  moveSpeed: 0
+  attackRange: 10
+  triggerRange: 10
+  money: 0
+--- !u!114 &8078231962827906918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
