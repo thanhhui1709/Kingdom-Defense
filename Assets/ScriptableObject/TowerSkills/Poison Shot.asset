@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c423b6f0d4e3d4345b4b8e02397ddcff, type: 3}
-  m_Name: SingleOrientedShot
+  m_Script: {fileID: 11500000, guid: 332549ded0d30cb46b8de4a788c1b1cb, type: 3}
+  m_Name: Poison Shot
   m_EditorClassIdentifier: 
-  numberOfShoot: 1
+  poisonProjectilePrefab: {fileID: 6745793394025541538, guid: d5aab9a57c500b5478e827a1535647b3, type: 3}
+  offset: {x: 1.49, y: 12.14, z: -0.02}

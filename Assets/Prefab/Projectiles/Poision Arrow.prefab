@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       propertyPath: m_Name
-      value: Archer_shell_LVL_1
+      value: Poision Arrow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -64,7 +64,7 @@ PrefabInstance:
       addedObject: {fileID: 26726957646605065}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -9077075266249903755}
+      addedObject: {fileID: -810171176422031121}
   m_SourcePrefab: {fileID: 100100000, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
 --- !u!1 &7812923760696459432 stripped
 GameObject:
@@ -86,7 +86,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -115,11 +115,11 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-9077075266249903755
+--- !u!114 &-810171176422031121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,7 +128,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7812923760696459432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f8a93ead4cba8469f2156b64db1d6a, type: 3}
+  m_Script: {fileID: 11500000, guid: e1cd27220162241438efc924cb46db96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 5
+  effectDuration: 1
+  slowFactor: 0.3
+  debuffColor: {r: 0, g: 1, b: 0, a: 1}
