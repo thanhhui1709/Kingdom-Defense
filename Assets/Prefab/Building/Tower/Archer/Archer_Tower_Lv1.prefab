@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.0937357
+      value: 16.32
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0374794
+      value: 0.05000305
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.716269
+      value: -23.490835
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -60,6 +60,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4288488473237179757, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -1292718650836204049, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_Name
       value: Archer_Tower_Lv1
@@ -73,8 +81,16 @@ PrefabInstance:
       value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       propertyPath: m_TagString
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371241699678949578, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -88,10 +104,10 @@ PrefabInstance:
       addedObject: {fileID: 353520972804662117}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1420278058942873542}
+      addedObject: {fileID: 3880173621571741435}
     - targetCorrespondingSourceObject: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4554792252677119595}
+      addedObject: {fileID: 8661569852034748739}
   m_SourcePrefab: {fileID: 100100000, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
 --- !u!1 &295986473561444131 stripped
 GameObject:
@@ -113,7 +129,7 @@ MonoBehaviour:
   heath: 100
   ammor: 10
   attackDamage: 100
-  attackSpeed: 2
+  attackSpeed: 1
   moveSpeed: 0
   attackRange: 10
   triggerRange: 10
@@ -132,40 +148,36 @@ MonoBehaviour:
   stats: {fileID: 3789184190316394393}
   towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
---- !u!54 &1420278058942873542
-Rigidbody:
+  maxTarget: 1
+--- !u!114 &3880173621571741435
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295986473561444131}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerLevel: 1
+  statsList:
+  - cost: 0
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
 --- !u!1 &3709763594364197639 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4296818485830314357, guid: a79cd287e40d34d40b267c29a94f8ea6, type: 3}
   m_PrefabInstance: {fileID: 638077318475969138}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &4554792252677119595
-MeshCollider:
+--- !u!65 &8661569852034748739
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -182,7 +194,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4730299872466990381, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 4.0374327, y: 15.037826, z: 3.9481907}
+  m_Center: {x: 0.010355473, y: 7.441095, z: 0.13191676}
