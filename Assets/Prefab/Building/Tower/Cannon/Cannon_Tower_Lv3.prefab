@@ -59,5 +59,75 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7877798831048382010}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6978034197084822758}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -662157244601223794}
   m_SourcePrefab: {fileID: 100100000, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+--- !u!1 &5963778395517074789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+  m_PrefabInstance: {fileID: 6774241821414162484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &-7877798831048382010
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963778395517074789}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!114 &-6978034197084822758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963778395517074789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: -662157244601223794}
+  towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
+  projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
+--- !u!114 &-662157244601223794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963778395517074789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 0
+  ammor: 0
+  attackDamage: 0
+  attackSpeed: 0
+  moveSpeed: 0
+  attackRange: 0
+  triggerRange: 0
