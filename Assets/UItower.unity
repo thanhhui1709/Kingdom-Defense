@@ -130,9 +130,10 @@ GameObject:
   - component: {fileID: 3987161}
   - component: {fileID: 3987164}
   - component: {fileID: 3987163}
+  - component: {fileID: 3987165}
   - component: {fileID: 3987162}
   m_Layer: 5
-  m_Name: Mage
+  m_Name: Balista
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +202,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3987163}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3987165}
+        m_TargetAssemblyTypeName: BuildButton, Assembly-CSharp
+        m_MethodName: OnClickBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3987163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +253,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3987160}
   m_CullTransparentMesh: 1
+--- !u!114 &3987165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69988d4fb88109a43a770e8049c2bcc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 7943674416711679487, guid: 22ee0491921c430438e386e49994402c, type: 3}
+  spawnParent: {fileID: 0}
+  defaultBuildPoint: {fileID: 0}
 --- !u!1 &49697879
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,8 +629,9 @@ GameObject:
   - component: {fileID: 345856476}
   - component: {fileID: 345856475}
   - component: {fileID: 345856474}
+  - component: {fileID: 345856477}
   m_Layer: 5
-  m_Name: Balista
+  m_Name: Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -671,7 +700,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 345856475}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 345856477}
+        m_TargetAssemblyTypeName: BuildButton, Assembly-CSharp
+        m_MethodName: OnClickBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &345856475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,6 +751,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345856472}
   m_CullTransparentMesh: 1
+--- !u!114 &345856477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345856472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69988d4fb88109a43a770e8049c2bcc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 4345151714247071355, guid: b933aca7afc0c9e499880495f83cbcb5, type: 3}
+  spawnParent: {fileID: 0}
+  defaultBuildPoint: {fileID: 0}
 --- !u!1 &374841242
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,6 +778,7 @@ GameObject:
   - component: {fileID: 374841246}
   - component: {fileID: 374841245}
   - component: {fileID: 374841244}
+  - component: {fileID: 374841247}
   m_Layer: 5
   m_Name: Acher
   m_TagString: Untagged
@@ -792,7 +849,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 374841245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 374841247}
+        m_TargetAssemblyTypeName: BuildButton, Assembly-CSharp
+        m_MethodName: OnClickBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &374841245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,6 +900,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374841242}
   m_CullTransparentMesh: 1
+--- !u!114 &374841247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374841242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69988d4fb88109a43a770e8049c2bcc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 295986473561444131, guid: 526b535722eb5334ebbfb512689d5315, type: 3}
+  spawnParent: {fileID: 0}
+  defaultBuildPoint: {fileID: 0}
 --- !u!1 &378347058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,9 +1319,10 @@ GameObject:
   - component: {fileID: 604374654}
   - component: {fileID: 604374657}
   - component: {fileID: 604374656}
+  - component: {fileID: 604374658}
   - component: {fileID: 604374655}
   m_Layer: 5
-  m_Name: Canon
+  m_Name: Poison
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1306,7 +1391,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 604374656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 604374658}
+        m_TargetAssemblyTypeName: BuildButton, Assembly-CSharp
+        m_MethodName: OnClickBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &604374656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1345,6 +1442,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604374653}
   m_CullTransparentMesh: 1
+--- !u!114 &604374658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604374653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69988d4fb88109a43a770e8049c2bcc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 2666662902481759127, guid: 8e6a638b9b36256409dff33ebb885118, type: 3}
+  spawnParent: {fileID: 0}
+  defaultBuildPoint: {fileID: 0}
 --- !u!1 &868512702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1435,9 +1547,10 @@ GameObject:
   - component: {fileID: 1013479392}
   - component: {fileID: 1013479395}
   - component: {fileID: 1013479394}
+  - component: {fileID: 1013479396}
   - component: {fileID: 1013479393}
   m_Layer: 5
-  m_Name: Poison
+  m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1506,7 +1619,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1013479394}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1013479396}
+        m_TargetAssemblyTypeName: BuildButton, Assembly-CSharp
+        m_MethodName: OnClickBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1013479394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1545,6 +1670,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013479391}
   m_CullTransparentMesh: 1
+--- !u!114 &1013479396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013479391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69988d4fb88109a43a770e8049c2bcc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 2380547163063386895, guid: 23e09605a8d2c6241bbbc0ae8073edbe, type: 3}
+  spawnParent: {fileID: 0}
+  defaultBuildPoint: {fileID: 0}
 --- !u!1 &1122665198
 GameObject:
   m_ObjectHideFlags: 0
