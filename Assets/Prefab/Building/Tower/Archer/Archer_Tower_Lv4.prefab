@@ -48,16 +48,111 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7548349626171578495, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -2132710778581253517, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       propertyPath: m_Name
       value: Archer_Tower_Lv4
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       propertyPath: m_TagString
-      value: Construction
+      value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338122477350290390, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 346412502438438275}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6038144689480924783}
+    - targetCorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5186273804871068106}
   m_SourcePrefab: {fileID: 100100000, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+--- !u!1 &4062900219597444883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+  m_PrefabInstance: {fileID: 3792941182535559746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &346412502438438275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 100
+  ammor: 10
+  attackDamage: 100
+  attackSpeed: 2
+  moveSpeed: 0
+  attackRange: 10
+  triggerRange: 10
+--- !u!114 &6038144689480924783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
+  projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
+  maxTarget: 1
+--- !u!1 &6123571586118172547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+  m_PrefabInstance: {fileID: 3792941182535559746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5186273804871068106
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123571586118172547}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.3811264, y: 15.531588, z: 6.0264835}
+  m_Center: {x: -0.03539276, y: 7.671506, z: -0.18014824}

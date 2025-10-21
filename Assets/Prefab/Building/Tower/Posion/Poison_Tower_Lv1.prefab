@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
       propertyPath: m_TagString
-      value: Construction
+      value: Tower
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,13 +62,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8078231962827906918}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4962563522069555780}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -3104660065061118312}
+      addedObject: {fileID: 5617920236047292749}
   m_SourcePrefab: {fileID: 100100000, guid: 2e71043bad1196543bb059cc543058b3, type: 3}
 --- !u!1 &2666662902481759127 stripped
 GameObject:
@@ -77,6 +71,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &8078231962827906918
 MonoBehaviour:
+--- !u!54 &5617920236047292749
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,6 +113,13 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2666662902481759127}
   m_Material: {fileID: 0}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -130,3 +133,10 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

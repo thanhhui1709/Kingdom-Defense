@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SingleOrientedShot
   m_EditorClassIdentifier: 
   numberOfShoot: 1
+  offset: {x: 0, y: 12, z: 0}
