@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using UnityEngine.EventSystems;
 
 public class BuildManager : MonoBehaviour
 {
     [Header("Tower Data")]
     // Danh sách chứa tất cả các loại trụ có thể xây.
+    // Chúng ta sẽ kéo các file TowerData vào đây trong Inspector.
     public List<TowerData> availableTowers = new List<TowerData>();
 
     [Header("UI References")]
@@ -21,11 +22,6 @@ public class BuildManager : MonoBehaviour
     public GameObject demolishPanel;
     public Button sellButton;
     private BuildableTile selectedTileForDemolish; // Lưu lại ô đất được chọn để phá
-
-    [Header("Upgrade")]
-    public Button upgradeButton;
-
-    public LayerMask targetLayer;
 
     void Start()
     {
@@ -80,35 +76,22 @@ public class BuildManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit,100,targetLayer))
+            if (Physics.Raycast(ray, out hit))
             {
-               
-
-                // Lấy component BuildableTile trên vật thể bị click
-                BuildableTile tile = hit.collider.GetComponent<BuildableTile>();
-
-                if (tile != null)
+                // Click vào ô có thể xây
+                if (hit.collider.CompareTag("Buildable"))
                 {
-                    // Nếu ô đất ĐÃ CÓ trụ, hiện UI phá hủy
-                    if (tile.towerOnTile != null)
-                    {
-                        selectedTileForDemolish = tile; // Lưu tham chiếu ô đất
-                        ShowDemolishPanel(true);
-                        ShowTowerSelectionPanel(false); // Đảm bảo panel xây bị tắt
-                    }
-                    // Nếu ô đất CHƯA CÓ trụ (có thể xây), hiện UI xây dựng
-                    else
-                    {
-                        selectedBuildableTile = hit.transform; // Lưu transform của ô đất
-                        ShowTowerSelectionPanel(true);
-                        ShowDemolishPanel(false); // Đảm bảo panel bán bị tắt
-                    }
+                    selectedBuildableTile = hit.transform;
+                    ShowTowerSelectionPanel(true);
+                    ShowDemolishPanel(false); // Đảm bảo panel bán bị tắt
                 }
-                else
+                // Click vào ô đã có trụ 
+                else if (hit.collider.CompareTag("Occupied"))
                 {
-                    // Click vào vật thể khác không phải ô đất có thể xây
-                    ShowTowerSelectionPanel(false);
-                    ShowDemolishPanel(false);
+                    // Lấy script BuildableTile từ ô đất được click
+                    selectedTileForDemolish = hit.collider.GetComponent<BuildableTile>();
+                    ShowDemolishPanel(true);
+                    ShowTowerSelectionPanel(false); // Đảm bảo panel xây bị tắt
                 }
             }
             else
@@ -117,14 +100,13 @@ public class BuildManager : MonoBehaviour
                 ShowTowerSelectionPanel(false);
                 ShowDemolishPanel(false);
             }
-
         }
     }
 
     // Hàm hiển thị/ẩn bảng chọn.
     public void ShowTowerSelectionPanel(bool show, Vector3 worldPosition = default)
     {
-        towerSelectionPanel.SetActive(show);
+        towerSelectionPanel.SetActive(show);      
     }
 
     // Hàm này được gọi khi một nút chọn trụ được nhấn.
@@ -133,10 +115,10 @@ public class BuildManager : MonoBehaviour
         if (selectedBuildableTile != null)
         {
             // Tạo trụ
-            GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity,ObjectPoolManager.PoolType.Tower);
-
+            GameObject newTower = Instantiate(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity);
+          
             // Đánh dấu ô đất là đã bị chiếm
-            selectedBuildableTile.tag = "Tower";
+            selectedBuildableTile.tag = "Occupied";
             // Lấy script của ô đất và lưu tham chiếu đến trụ vừa xây
             selectedBuildableTile.GetComponent<BuildableTile>().towerOnTile = newTower;
 
@@ -151,22 +133,8 @@ public class BuildManager : MonoBehaviour
     // Hàm để hiện/ẩn panel bán trụ
     void ShowDemolishPanel(bool show)
     {
-        if (show)
-        {
-            LevelController levelController = selectedTileForDemolish.towerOnTile.GetComponent<LevelController>();
-            if (levelController != null)
-            {
-                upgradeButton.onClick.AddListener(levelController.LevelUp);
-            }
-        }
-        else
-        {
-            upgradeButton.onClick.RemoveAllListeners();
-        }
         demolishPanel.SetActive(show);
-        upgradeButton.gameObject.SetActive(show);
     }
-    
 
     // Hàm được gọi khi nút "SellButton" được nhấn
     void SellTower()
@@ -175,7 +143,7 @@ public class BuildManager : MonoBehaviour
         GameObject towerToSell = selectedTileForDemolish.towerOnTile;
 
         // Phá hủy GameObject của trụ
-        ObjectPoolManager.ReturnObject(towerToSell);
+        Destroy(towerToSell);
 
         // Reset lại ô đất
         selectedTileForDemolish.tag = "Buildable"; // Đổi tag lại như cũ

@@ -1,108 +1,136 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-[RequireComponent(typeof(Animator))]
 public class AnimationController : MonoBehaviour
 {
-    [SerializeField]
-    private List<AnimationMapping> animationMappings;
-    private Animator animator;
-    private Dictionary<AnimationType, AnimationMapping> mappingDict;
 
-    void Awake()
+    [SerializeField]
+    private List<AnimationData> animData;
+    private Animator animator;
+    void Start()
     {
         animator = GetComponent<Animator>();
-
-        mappingDict = new Dictionary<AnimationType, AnimationMapping>();
-        foreach (var mapping in animationMappings)
-        {
-            if (!mappingDict.ContainsKey(mapping.type))
-            {
-                mappingDict.Add(mapping.type, mapping);
-            }
-        }
     }
 
-    // --- CÁC HÀM GỌI ANIMATION ---
-
-    // Dành cho các animation đơn giản như Die (chỉ cần Trigger)
-    public void Play(AnimationType type)
+    // Update is called once per frame
+    void Update()
     {
-        if (mappingDict.TryGetValue(type, out AnimationMapping mapping))
+        if (Input.GetButtonDown("Jump"))
         {
-            if (mapping.primaryParameterType == ParameterType.Trigger)
-            {
-                animator.SetTrigger(mapping.primaryParameterName);
-            }
+            animator.SetTrigger("trig_Attack");
+            animator.SetInteger("AttackIndex", Random.Range(0, 2));
+        }
+
+    }
+    /// <summary>
+    /// Play animation bằng cách set parameter
+    /// </summary>
+    /// <param name="name">Tên parameter trong Animator</param>
+    /// <param name="type">Kiểu parameter</param>
+    /// <param name="value">Giá trị (nếu cần)</param>
+    /// 
+    public void PlayAnimation(AnimationType type, ParameterType paramType, object value = null)
+    {
+        switch (type) { 
+            case AnimationType.Walk:
+                string animName = animData.FirstOrDefault(a => a.type == AnimationType.Walk)?.names.FirstOrDefault();
+                if (!string.IsNullOrEmpty(animName))
+                {
+                    TriggerAnimation(animName, paramType, value);
+                }
+                break;
+            case AnimationType.Run:
+                string animNameRun = animData.FirstOrDefault(a => a.type == AnimationType.Run)?.names.FirstOrDefault();
+                if (!string.IsNullOrEmpty(animNameRun))
+                {
+                    TriggerAnimation(animNameRun, paramType, value);
+                }
+                break;
+            case AnimationType.Attack:
+                string animNameAttack = animData.FirstOrDefault(a => a.type == AnimationType.Attack)?.names.FirstOrDefault();
+                if (!string.IsNullOrEmpty(animNameAttack))
+                {
+                    TriggerAnimation(animNameAttack, paramType, value);
+                }
+
+                break;
+            case AnimationType.Die:
+                string animNameDie = animData.FirstOrDefault(a => a.type == AnimationType.Die)?.names.FirstOrDefault();
+                if (!string.IsNullOrEmpty(animNameDie))
+                {
+                    TriggerAnimation(animNameDie, paramType, value);
+                }
+                break;
+
+
+        }
+    }
+    private void TriggerAnimation(string name, ParameterType type, object value = null)
+    {
+        string findName = animData.SelectMany(a => a.names).FirstOrDefault(n => n.Equals(name));
+        if (string.IsNullOrEmpty(findName))
+        {
+            Debug.LogWarning("Animation name not found in list: " + name);
+            return;
+        }
+
+        switch (type)
+        {
+            case ParameterType.Trigger:
+                animator.SetTrigger(name);
+                break;
+
+            case ParameterType.Bool:
+                if (value is bool boolVal)
+                {
+                    animator.SetBool(name, boolVal);
+                }
+                else
+                {
+                    Debug.LogWarning($"Expected bool for parameter '{name}', but got {value?.GetType()}");
+                }
+                break;
+
+            case ParameterType.Int:
+                if (value is int intVal)
+                {
+                    animator.SetInteger(name, intVal);
+                }
+                else
+                {
+                    Debug.LogWarning($"Expected int for parameter '{name}', but got {value?.GetType()}");
+                }
+                break;
+
+            case ParameterType.Float:
+                if (value is float floatVal)
+                {
+                    animator.SetFloat(name, floatVal);
+                }
+                else
+                {
+                    Debug.LogWarning($"Expected float for parameter '{name}', but got {value?.GetType()}");
+                }
+                break;
         }
     }
 
-    // Dành cho các animation như Walk (chỉ cần Bool)
-    public void Play(AnimationType type, bool value)
-    {
-        if (mappingDict.TryGetValue(type, out AnimationMapping mapping))
-        {
-            if (mapping.primaryParameterType == ParameterType.Bool)
-            {
-                animator.SetBool(mapping.primaryParameterName, value);
-            }
-        }
-    }
-    public void Play(AnimationType type, float value)
-    {
-        if (mappingDict.TryGetValue(type, out AnimationMapping mapping))
-        {
-            if (mapping.primaryParameterType == ParameterType.Float)
-            {
-                animator.SetFloat(mapping.primaryParameterName, value);
-            }
-        }
-    }
 
-    // Dành cho các animation phức tạp như Attack (cần cả Trigger và Int)
-    public void Play(AnimationType type, int value)
-    {
-        if (mappingDict.TryGetValue(type, out AnimationMapping mapping))
-        {
-            // 1. Kích hoạt Trigger chính (nếu có)
-            if (mapping.primaryParameterType == ParameterType.Trigger)
-            {
-                animator.SetTrigger(mapping.primaryParameterName);
-            }
-
-            // 2. Set parameter phụ (nếu có và đúng kiểu)
-            if (mapping.hasSecondaryParameter && mapping.secondaryParameterType == ParameterType.Int)
-            {
-                animator.SetInteger(mapping.secondaryParameterName, value);
-            }
-        }
-    }
 }
-
 public enum AnimationType
 {
-    Walk,
-    Attack,
-    Die
+    Idle, Walk, Run, Attack, Die
 }
-
 public enum ParameterType
 {
     Trigger, Bool, Int, Float
 }
-
 [System.Serializable]
-public class AnimationMapping
+public class AnimationData
 {
     public AnimationType type;
-
-    [Header("Primary Parameter")]
-    public string primaryParameterName;
-    public ParameterType primaryParameterType;
-
-    [Header("Secondary Parameter (Optional)")]
-    [Tooltip("Tick vào đây nếu animation này cần kích hoạt một parameter thứ hai.")]
-    public bool hasSecondaryParameter;
-    public string secondaryParameterName;
-    public ParameterType secondaryParameterType;
+    public List<string> names;
 }
+

@@ -8,10 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -8824675769440258382, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.434397
@@ -52,107 +48,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -3937978070708571637, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: -891974430404359667, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_Name
       value: Archer_Tower_Lv3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_TagString
-      value: Tower
-      objectReference: {fileID: 0}
-    - target: {fileID: 1254789552957135688, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      propertyPath: m_Layer
-      value: 9
+      value: Construction
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3477037175844829349}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2107264887265957695}
-    - targetCorrespondingSourceObject: {fileID: -891974430404359667, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 647697530400860847}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
---- !u!1 &3980073374128764349 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -891974430404359667, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-  m_PrefabInstance: {fileID: 4945830205998186416}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &647697530400860847
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3980073374128764349}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.2604065, y: 15.180448, z: 5.278755}
-  m_Center: {x: 0.053937912, y: 7.495936, z: -0.019249916}
---- !u!1 &5215862777329353441 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
-  m_PrefabInstance: {fileID: 4945830205998186416}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3477037175844829349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5215862777329353441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heath: 100
-  ammor: 10
-  attackDamage: 100
-  attackSpeed: 2
-  moveSpeed: 0
-  attackRange: 10
-  triggerRange: 10
---- !u!114 &2107264887265957695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5215862777329353441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
-  projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
-  maxTarget: 1

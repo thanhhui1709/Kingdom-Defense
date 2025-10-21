@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.86
+      value: -14.21793
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -86,7 +86,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -132,4 +132,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  explosionEffect: {fileID: 0}
