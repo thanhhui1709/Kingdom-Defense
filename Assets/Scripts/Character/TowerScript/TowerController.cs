@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 
 public class TowerController : MonoBehaviour
 {
-    [SerializeField] private Stats stats;
+                     private Stats stats;
     [SerializeField] private ATowerSkill towerSkill;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private int maxTarget = 1;
@@ -75,7 +75,7 @@ public class TowerController : MonoBehaviour
                 {
                     if (attackCooldown <= 0)
                     {
-                        towerSkill.DoAttack(shooter.transform, projectilePrefab, currentTarget.ToList());
+                        towerSkill.DoAttack(shooter.transform, projectilePrefab, currentTarget.ToList(),stats.AttackDamage);
                         attackCooldown = 1f / stats.AttackSpeed;
                     }
                     else

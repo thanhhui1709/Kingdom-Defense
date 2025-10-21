@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface  IProjectile 
 {
-    public void Launch(Transform launchPoint, List<GameObject> target);
+    public void Launch(Transform launchPoint, List<GameObject> target,float damage);
 }

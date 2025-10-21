@@ -13,7 +13,7 @@ public class PoisonShot : ATowerSkill
 
 
     // Chữ ký hàm này đã đúng, nó nhận vào một List<GameObject>
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets)
+    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets, float damage)
     {
         // Kiểm tra điều kiện cơ bản
         if (poisonProjectilePrefab == null || targets == null || targets.Count == 0)
@@ -35,7 +35,7 @@ public class PoisonShot : ATowerSkill
             // Bây giờ:  
             // Truyền trực tiếp cả danh sách 'targets' vào hàm Launch.
             // Script của viên đạn (PoisonSlowProjectile) sẽ tự xử lý việc chọn mục tiêu đầu tiên từ danh sách này.
-            projectileLogic.Launch(shooter, targets);
+            projectileLogic.Launch(shooter, targets, damage);
         }
         else
         {

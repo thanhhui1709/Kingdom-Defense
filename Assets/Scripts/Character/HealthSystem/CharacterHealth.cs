@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Stats))]
 public class CharacterHealth : MonoBehaviour, IHealthSystem
@@ -32,16 +32,46 @@ public class CharacterHealth : MonoBehaviour, IHealthSystem
         currentHealth = Mathf.Clamp(currentHealth + healAmount, 0, maxHealth);
     }
 
-    public void TakeDamage(float damageAmount, int ammor)
-    {
-        float takenDamage = Util.CalculateDamage(damageAmount, ammor);
-        currentHealth = Mathf.Clamp(currentHealth - takenDamage, 0, maxHealth);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="damageAmount"> số damage nhận</param>
+    /// <param name="ammorIgnore"> Số giáp bỏ qua</param>
+    public void TakeDamage(float damageAmount,float ammorIgnore)
+    {
+        ammorIgnore = Mathf.Clamp(ammorIgnore, 0, stats.Ammor*1.2f);
+        float takenDamage = Util.CalculateDamage(damageAmount, stats.Ammor- ammorIgnore);
+        currentHealth = Mathf.Clamp(currentHealth - takenDamage, 0, maxHealth);
+        Debug.Log("" + gameObject.name + " took " + takenDamage + " damage. Current Health: " + currentHealth); 
         if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
 
+    }
+    /// <summary>
+    /// gây sát thương mặc định không bỏ qua giáp
+    public void TakeDamage(float damageAmount)
+    {
+        float takenDamage = Util.CalculateDamage(damageAmount, stats.Ammor);
+        currentHealth = Mathf.Clamp(currentHealth - takenDamage, 0, maxHealth);
+        Debug.Log("" + gameObject.name + " took " + takenDamage + " damage. Current Health: " + currentHealth); 
+        if (currentHealth <= 0 && !isDead)
+        {
+            Die();
+        }
+
+    }
+    public void TakeAbsoluteDamage(float takenDamage)
+    {
+  
+        currentHealth = Mathf.Clamp(currentHealth - takenDamage, 0, maxHealth);
+        Debug.Log("" + gameObject.name + " took " + takenDamage + " damage. Current Health: " + currentHealth);
+        if (currentHealth <= 0 && !isDead)
+        {
+            Die();
+        }
     }
 
     public void Die()

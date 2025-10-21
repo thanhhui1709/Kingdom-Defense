@@ -12,7 +12,7 @@ public class CannonShot : ATowerSkill
     // Giữ nguyên biến offset, bạn có thể phải dùng giá trị lớn hơn 20f
     public float muzzleOffsetDistance = 1.5f;
 
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets)
+    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets, float damage)
     {
         if (targets == null || targets.Count == 0 || projectile == null) return;
 

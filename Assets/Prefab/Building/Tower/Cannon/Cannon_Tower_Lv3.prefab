@@ -53,8 +53,36 @@ PrefabInstance:
       value: Cannon_Tower_Lv3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_TagString
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 1745035119669197898, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3718408260257044234, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860302996382567554, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6880242162524650395, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046889192226579917, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514981918342558423, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,13 +90,12 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -7877798831048382010}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -6978034197084822758}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: -662157244601223794}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1121825161934207786}
   m_SourcePrefab: {fileID: 100100000, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
 --- !u!1 &5963778395517074789 stripped
@@ -76,37 +103,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
   m_PrefabInstance: {fileID: 6774241821414162484}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &-7877798831048382010
-MeshCollider:
---- !u!54 &1121825161934207786
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5963778395517074789}
-  m_Material: {fileID: 0}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &-6978034197084822758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +118,8 @@ MonoBehaviour:
   stats: {fileID: -662157244601223794}
   towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
+  maxTarget: 1
+  shooter: {fileID: 0}
 --- !u!114 &-662157244601223794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,9 +139,30 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 0
   triggerRange: 0
+  money: 0
+--- !u!54 &1121825161934207786
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963778395517074789}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

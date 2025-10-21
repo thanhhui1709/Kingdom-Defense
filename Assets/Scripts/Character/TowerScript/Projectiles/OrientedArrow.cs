@@ -7,6 +7,7 @@ public class OrientedArrow : MonoBehaviour,IProjectile
 {
     private GameObject target;
     private Rigidbody rb;
+    private float damage;
     [SerializeField] private float speed = 10f;
     public GameObject explosionEffect;
     void Awake()
@@ -36,12 +37,17 @@ public class OrientedArrow : MonoBehaviour,IProjectile
 
                 ObjectPoolManager.SpawnObject(explosionEffect, transform.position, Quaternion.identity,ObjectPoolManager.PoolType.Particle);
             }
-            Debug.Log("Hitted Target Object");
+            CharacterHealth enemyHealth = other.GetComponent<CharacterHealth>();
+            if(enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+            }
         }
     }
 
-    public void Launch(Transform launchPoint, List<GameObject> target)
+    public void Launch(Transform launchPoint, List<GameObject> target, float damage)
     {
         this.target = target.OrderBy(x=> Vector3.Distance(x.transform.position,launchPoint.position)).FirstOrDefault();
+        this.damage = damage;
     }
 }

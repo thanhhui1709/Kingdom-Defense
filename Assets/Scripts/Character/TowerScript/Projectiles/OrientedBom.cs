@@ -7,7 +7,7 @@ public class OrientedBom : MonoBehaviour, IProjectile
 {
     private GameObject target;
     private Rigidbody rb;
-
+    private float damage;
     [SerializeField] private float speed = 8f;        // tốc độ bay của bom
     [SerializeField] private float explosionRadius = 3f; // bán kính nổ
     [SerializeField] private float explosionForce = 500f; // lực nổ
@@ -65,9 +65,10 @@ public class OrientedBom : MonoBehaviour, IProjectile
         Destroy(gameObject);
     }
 
-    public void Launch(Transform launchPoint, List<GameObject> targets)
+    public void Launch(Transform launchPoint, List<GameObject> targets,float damage)
     {
         // Chọn target gần nhất
         this.target = targets.OrderBy(x => Vector3.Distance(x.transform.position, launchPoint.position)).FirstOrDefault();
+        this.damage = damage;
     }
 }
