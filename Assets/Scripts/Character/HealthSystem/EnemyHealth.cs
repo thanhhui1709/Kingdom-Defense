@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Stats))]
-public class CharacterHealth : MonoBehaviour, IHealthSystem
+public class EnemyHealth : MonoBehaviour, IHealthSystem
 {
     private Stats stats;
     private bool isDead = false;
@@ -78,5 +78,6 @@ public class CharacterHealth : MonoBehaviour, IHealthSystem
     {
         isDead = true;
         gameObject.SetActive(false);
+        GameEvent.Instance.OnTriggerEnemyDie(stats.Money);
     }
 }

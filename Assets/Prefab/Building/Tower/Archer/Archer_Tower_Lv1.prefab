@@ -133,6 +133,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 10
   triggerRange: 10
+  money: 0
 --- !u!114 &353520972804662117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,10 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 3789184190316394393}
   towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
   maxTarget: 1
+  shooter: {fileID: 295986473561444131}
 --- !u!114 &3880173621571741435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +164,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerLevel: 1
   statsList:
-  - cost: 0
+  - cost: 100
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 175
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 250
     heath: 100
     ammor: 10
     attackDamage: 10

@@ -86,6 +86,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6038144689480924783}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5883031964581681205}
     - targetCorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5186273804871068106}
@@ -114,6 +117,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 10
   triggerRange: 10
+  money: 0
 --- !u!114 &6038144689480924783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,10 +130,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
   towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
   maxTarget: 1
+  shooter: {fileID: 4062900219597444883}
+--- !u!114 &-5883031964581681205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerLevel: 4
+  statsList:
+  - cost: 100
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 175
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 250
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
 --- !u!1 &6123571586118172547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}

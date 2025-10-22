@@ -716,7 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heath: 200
+  heath: 500
   ammor: 10
   attackDamage: 10
   attackSpeed: 1

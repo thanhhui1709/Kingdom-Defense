@@ -3,24 +3,24 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Stats))]
-[RequireComponent(typeof(CharacterHealth))]
+[RequireComponent(typeof(EnemyHealth))]
 public class PoisonDamageEffect : MonoBehaviour
 {
     // CÁC THÔNG SỐ HIỆN TẠI VÀ MẠNH NHẤT ĐANG ÁP DỤNG TRÊN KẺ ĐỊCH
     private float currentMaxDamagePerTick; // Sát thương mỗi tick cao nhất đã nhận
     private float currentMaxSlowFactor;    // Hệ số làm chậm cao nhất đã nhận (ví dụ: 0.3)
 
-    [HideInInspector] public float duration; // Thời gian hiệu lực (của lần trúng cuối)
     [HideInInspector] public float damageTickRate;
     [HideInInspector] public int maxStacks;
-    [HideInInspector] public Color poisonColor; 
+    [HideInInspector] public Color poisonColor= new Color(0.5f, 1f, 0.5f,0.5f);
+    [HideInInspector] public float duration=0.5f;
 
  
     private Stats stats;
-    private CharacterHealth enemyHealth;
-    private Renderer objectRenderer;
+    private EnemyHealth enemyHealth;
+    private Renderer[] objectRenderer;
     private float originalSpeed;
-    private Color originalColor;
+    private Color[] originalColor;
     private float effectTimer;
     private float damageTimer;
     private int currentStacks = 0;
@@ -31,15 +31,20 @@ public class PoisonDamageEffect : MonoBehaviour
     void Awake()
     {
         stats = GetComponent<Stats>();
-        enemyHealth = GetComponent<CharacterHealth>();
-        objectRenderer = GetComponentInChildren<Renderer>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        objectRenderer = GetComponentsInChildren<Renderer>();
 
         originalSpeed = stats.MoveSpeed;
 
         if (objectRenderer != null)
         {
-            originalColor = objectRenderer.material.color;
+            originalColor = new Color[objectRenderer.Length];
+            for (int i = 0; i < objectRenderer.Length; i++)
+            {
+                originalColor[i] = objectRenderer[i].material.color;
+            }
         }
+     
     }
     // ... (Hàm Update() giữ nguyên, sử dụng currentMaxDamagePerTick)
     void Update()
@@ -85,6 +90,7 @@ public class PoisonDamageEffect : MonoBehaviour
         // C. Kiểm tra Thời gian Dài nhất (Chỉ reset nếu thời gian mới dài hơn hoặc là thời gian hết hạn)
         // Ta dùng thời gian của viên đạn mới để reset duration
         effectTimer = newDuration;
+        duration=newDuration;
 
         // 2. CỘNG DỒN VÀ RESET
 
@@ -95,13 +101,24 @@ public class PoisonDamageEffect : MonoBehaviour
         }
 
         // Luôn reset bộ đếm sát thương
-        damageTimer = 0f;
+        if (currentStacks == 0)
+        {
+            damageTimer = 0f;
+        }
 
         // 3. Đổi màu vật thể (Chỉ đổi màu Stack đầu tiên)
         if (currentStacks == 1 && objectRenderer != null)
         {
-            objectRenderer.material.color = poisonColor;
+            foreach (var renderer in objectRenderer)
+            {
+                renderer.material.color = poisonColor;
+            }
         }
+    }
+    public void RefreshEffect()
+    {
+        effectTimer = duration;
+
     }
 
     // Sửa lại hàm này để sử dụng currentMaxSlowFactor
@@ -121,7 +138,10 @@ public class PoisonDamageEffect : MonoBehaviour
         }
         if (objectRenderer != null)
         {
-            objectRenderer.material.color = originalColor;
+            for (int i = 0; i < objectRenderer.Length; i++)
+            {
+                objectRenderer[i].material.color = originalColor[i];
+            }
         }
         Destroy(this);
     }

@@ -117,11 +117,45 @@ PrefabInstance:
       addedObject: {fileID: -3545146841436755010}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3d406de078b87147bba3818533208e6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -2151724917030209548}
+      addedObject: {fileID: -2903360343793367516}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3d406de078b87147bba3818533208e6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8318924029608609481}
+      addedObject: {fileID: 5587350028848958973}
+    - targetCorrespondingSourceObject: {fileID: -8494924291911662053, guid: d3d406de078b87147bba3818533208e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3900495459127524803}
   m_SourcePrefab: {fileID: 100100000, guid: d3d406de078b87147bba3818533208e6, type: 3}
+--- !u!1 &1164950279103136190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8221363169187375746, guid: d3d406de078b87147bba3818533208e6, type: 3}
+  m_PrefabInstance: {fileID: 7075887448962362172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7505650618179988775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8494924291911662053, guid: d3d406de078b87147bba3818533208e6, type: 3}
+  m_PrefabInstance: {fileID: 7075887448962362172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3900495459127524803
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7505650618179988775}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.272502, y: 14.931561, z: 4.6680202}
+  m_Center: {x: 0.076873794, y: 7.364697, z: 0.32077587}
 --- !u!1 &7995001996266886765 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d3d406de078b87147bba3818533208e6, type: 3}
@@ -139,57 +173,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
   towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
-  shooter: {fileID: 0}
---- !u!64 &-2151724917030209548
-MeshCollider:
+  shooter: {fileID: 1164950279103136190}
+--- !u!114 &-2903360343793367516
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7995001996266886765}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
---- !u!54 &8318924029608609481
-Rigidbody:
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 500
+  ammor: 100
+  attackDamage: 100
+  attackSpeed: 0.4
+  moveSpeed: 0
+  attackRange: 20
+  triggerRange: 20
+  money: 300
+--- !u!114 &5587350028848958973
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7995001996266886765}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerLevel: 2
+  statsList:
+  - cost: 100
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 175
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 250
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0

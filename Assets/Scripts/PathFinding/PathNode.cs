@@ -4,20 +4,29 @@ using UnityEngine;
 
 public class PathNode : MonoBehaviour
 {
-    public List<GameObject> neighborObjects = new();
+  
     public Vector3 position => transform.position;
 
 
-    [HideInInspector]
     public List<PathNode> neighbors;
 
     void Awake()
     {
         neighbors = new List<PathNode>();
-        foreach (var obj in neighborObjects)
+      
+        FindNeighbor();
+    }
+
+    private void FindNeighbor()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 5.5f);
+        foreach (var hitCollider in hitColliders)
         {
-            if (obj != null)
-                neighbors.Add(obj.GetComponent<PathNode>());
+            PathNode neighborNode = hitCollider.GetComponent<PathNode>();
+            if (neighborNode != null && neighborNode != this)
+            {
+                neighbors.Add(neighborNode);
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ public class LevelController : MonoBehaviour
     private List<LevelStats> statsList = new List<LevelStats>();
     private int currentLevel = 0;
 
-    public Button upgradeButton;
+
     void Start()
     {
         stats = GetComponent<Stats>();

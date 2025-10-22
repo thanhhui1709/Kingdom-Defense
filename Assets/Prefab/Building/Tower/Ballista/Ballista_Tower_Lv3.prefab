@@ -140,46 +140,19 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3030927630128129680}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -8127467256564733173}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4810018011686588143}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6605738924027015314}
   m_SourcePrefab: {fileID: 100100000, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
 --- !u!1 &3167842110322617169 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
   m_PrefabInstance: {fileID: 2825734216535283200}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &3030927630128129680
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3167842110322617169}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &-8127467256564733173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,11 +185,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: -8127467256564733173}
   towerSkill: {fileID: 11400000, guid: 12287254d249b0a469f707522986dfa3, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
   maxTarget: 4
   shooter: {fileID: 1295754914263494537}
+--- !u!114 &-6605738924027015314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167842110322617169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerLevel: 3
+  statsList:
+  - cost: 100
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 175
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 250
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
 --- !u!4 &4991466028682246243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2129576295874924957, guid: 6dbf73e3694dca344b44732a93f38f4f, type: 3}
