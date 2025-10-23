@@ -13,7 +13,7 @@ public class ChainLightningShot : ATowerSkill
     [Tooltip("Đặt Layer của kẻ địch vào đây để tối ưu hóa việc tìm kiếm.")]
     [SerializeField] private LayerMask enemyLayer; // Biến mới để chỉ định Layer của địch
 
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targetsInRange)
+    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targetsInRange, float damage)
     {
         if (targetsInRange.Count == 0) return;
 

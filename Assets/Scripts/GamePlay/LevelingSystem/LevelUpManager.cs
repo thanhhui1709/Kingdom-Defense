@@ -28,6 +28,7 @@ public class LevelUpManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     // Retrieves LevelUpData based on type and current level ==> return game object of next level

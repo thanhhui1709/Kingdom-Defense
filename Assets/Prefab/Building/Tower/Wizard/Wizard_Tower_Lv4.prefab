@@ -48,13 +48,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7474091395768759877, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -4608430862115086896, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -3675129323043791161, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
       propertyPath: m_Name
       value: Wizard_Tower_Lv4
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
       propertyPath: m_TagString
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 5313164974854254562, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388529552064361470, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423843639255950593, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,37 +90,87 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1710321079072532339}
+      addedObject: {fileID: 1778804622543003181}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3972691941383364175}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4435939034448452325}
   m_SourcePrefab: {fileID: 100100000, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
 --- !u!1 &2562767383480554526 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
   m_PrefabInstance: {fileID: 3409698302946306383}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &1710321079072532339
-Rigidbody:
+--- !u!114 &1778804622543003181
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2562767383480554526}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerSkill: {fileID: 11400000, guid: 5ebde201de94ce24a9d07c39946cc2de, type: 2}
+  projectilePrefab: {fileID: 5551972361978619668, guid: 401a92fc7bafa0c44b1cd694c8814dad, type: 3}
+  maxTarget: 1
+  shooter: {fileID: 7416735818345203373}
+--- !u!114 &3972691941383364175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2562767383480554526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 800
+  ammor: 75
+  attackDamage: 50
+  attackSpeed: 2
+  moveSpeed: 0
+  attackRange: 15
+  triggerRange: 15
+  money: 400
+--- !u!114 &4435939034448452325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2562767383480554526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerLevel: 4
+  statsList:
+  - cost: 100
+    heath: 200
+    ammor: 10
+    attackDamage: 5
+    attackSpeed: 0.1
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 200
+    heath: 200
+    ammor: 10
+    attackDamage: 5
+    attackSpeed: 0.1
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+--- !u!1 &7416735818345203373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5313164974854254562, guid: dfbf18414bf8d91448b400b2df3a1309, type: 3}
+  m_PrefabInstance: {fileID: 3409698302946306383}
+  m_PrefabAsset: {fileID: 0}

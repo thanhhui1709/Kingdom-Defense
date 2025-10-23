@@ -716,13 +716,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heath: 100
+  heath: 500
   ammor: 10
   attackDamage: 10
   attackSpeed: 1
   moveSpeed: 3
   attackRange: 3
   triggerRange: 10
+  money: 0
 --- !u!114 &2756992295360718803
 MonoBehaviour:
   m_ObjectHideFlags: 0

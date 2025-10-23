@@ -240,6 +240,155 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &970833222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 970833224}
+  - component: {fileID: 970833223}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &970833223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970833222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375b8b9d5f7ae32419bb39736f9e6964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArcherTowerData:
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 1
+    prefab: {fileID: 295986473561444131, guid: 526b535722eb5334ebbfb512689d5315, type: 3}
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 1
+    prefab: {fileID: 2016874508122696362, guid: d183b058b3a1dfb4baa5861b381d6b4e, type: 3}
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 1
+    prefab: {fileID: 5215862777329353441, guid: 741f974e3064dd544ab1185da3cc2153, type: 3}
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 1
+    prefab: {fileID: 4062900219597444883, guid: 6d30f1183ef58e94db32ea1c6c65d3fc, type: 3}
+  BallistaTowerData:
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 1
+    prefab: {fileID: 7943674416711679487, guid: 22ee0491921c430438e386e49994402c, type: 3}
+  - type: 0
+    level: 2
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 2515600292005129992, guid: dc765e406e97a8349aa713f9949d14e1, type: 3}
+  - type: 0
+    level: 3
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 3167842110322617169, guid: 2569e0079bb8184499de0009bcf3a390, type: 3}
+  - type: 0
+    level: 4
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 1266101520924010885, guid: d69a74ee7aa72eb46a6f8b50db3b5bea, type: 3}
+  CannonTowerData:
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 2380547163063386895, guid: 23e09605a8d2c6241bbbc0ae8073edbe, type: 3}
+  - type: 0
+    level: 2
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 2515600292005129992, guid: dc765e406e97a8349aa713f9949d14e1, type: 3}
+  - type: 0
+    level: 3
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 3167842110322617169, guid: 2569e0079bb8184499de0009bcf3a390, type: 3}
+  - type: 0
+    level: 4
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 1266101520924010885, guid: d69a74ee7aa72eb46a6f8b50db3b5bea, type: 3}
+  WizardTowerData:
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 4345151714247071355, guid: b933aca7afc0c9e499880495f83cbcb5, type: 3}
+  - type: 0
+    level: 2
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 8120656552344001503, guid: 553b6944ab299d64a8dacc8b04c8a75b, type: 3}
+  - type: 0
+    level: 3
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 6538685744925403962, guid: 010a9812b231b7a4997b78c6765d1d6f, type: 3}
+  - type: 0
+    level: 4
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 2562767383480554526, guid: 90d2729d78c1b484b9f1c3e942e15a89, type: 3}
+  PoisonTowerData:
+  - type: 0
+    level: 1
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 2666662902481759127, guid: 8e6a638b9b36256409dff33ebb885118, type: 3}
+  - type: 0
+    level: 2
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 1937194448078517976, guid: 02e033293dde30c4aa8cf2bb9f8e497a, type: 3}
+  - type: 0
+    level: 3
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 4121326691152958263, guid: 5eadb5525361c2a4a936349ca1cb8cae, type: 3}
+  - type: 0
+    level: 4
+    cost: 0
+    isUnlocked: 0
+    prefab: {fileID: 2520964551037964958, guid: 3e5f8c035c67ea945804a13a97e551a8, type: 3}
+--- !u!4 &970833224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970833222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.57577, y: 0, z: -4.31808}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1353189130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -436,3 +585,4 @@ SceneRoots:
   - {fileID: 1361121832}
   - {fileID: 183256436}
   - {fileID: 1353189130}
+  - {fileID: 970833224}

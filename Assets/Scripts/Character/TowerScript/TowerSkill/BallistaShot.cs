@@ -7,7 +7,7 @@ public class BallistaShot : ATowerSkill
 {
     [SerializeField] private int numberOfEnemy;
 
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets)
+    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets,float damage)
     {
         if (targets == null || targets.Count == 0) return;
 
@@ -29,7 +29,7 @@ public class BallistaShot : ATowerSkill
                 continue;
             }
 
-            projectileComp.Launch(shooter, new List<GameObject> { target });
+            projectileComp.Launch(shooter, new List<GameObject> { target }, damage);
         }
     }
 }

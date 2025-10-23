@@ -48,13 +48,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7212592657350682407, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -6662905164502116183, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -5328908207854868161, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Name
       value: Cannon_Tower_Lv4
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_TagString
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532414052260568504, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655651104226935037, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004442112754211019, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,37 +90,30 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1431413815755105373}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -5713305920920699199}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7043202131718135327}
-      addedObject: {fileID: 4446816695472551772}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3061264412336745440}
+    - targetCorrespondingSourceObject: {fileID: -5328908207854868161, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3510108496962067045}
   m_SourcePrefab: {fileID: 100100000, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
---- !u!1 &7588703837290691769 stripped
+--- !u!1 &6024406765992569047 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+  m_CorrespondingSourceObject: {fileID: -5328908207854868161, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
   m_PrefabInstance: {fileID: 7318653130459562472}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1431413815755105373
-MeshCollider:
---- !u!54 &4446816695472551772
-Rigidbody:
+--- !u!65 &3510108496962067045
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7588703837290691769}
+  m_GameObject: {fileID: 6024406765992569047}
   m_Material: {fileID: 0}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -103,10 +124,14 @@ Rigidbody:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 3
+  m_Size: {x: 4.272502, y: 14.931561, z: 4.6680202}
+  m_Center: {x: 0.076873794, y: 7.364697, z: 0.32077587}
+--- !u!1 &7588703837290691769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+  m_PrefabInstance: {fileID: 7318653130459562472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &-5713305920920699199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,9 +144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: -7043202131718135327}
   towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
+  maxTarget: 1
+  shooter: {fileID: 9112661172314855729}
 --- !u!114 &-7043202131718135327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,17 +160,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heath: 0
-  ammor: 0
-  attackDamage: 0
-  attackSpeed: 0
+  heath: 500
+  ammor: 100
+  attackDamage: 100
+  attackSpeed: 0.4
   moveSpeed: 0
-  attackRange: 0
-  triggerRange: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  attackRange: 20
+  triggerRange: 20
+  money: 300
+--- !u!114 &3061264412336745440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7588703837290691769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerLevel: 4
+  statsList:
+  - cost: 100
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 175
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 250
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+--- !u!1 &9112661172314855729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7212592657350682407, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+  m_PrefabInstance: {fileID: 7318653130459562472}
+  m_PrefabAsset: {fileID: 0}

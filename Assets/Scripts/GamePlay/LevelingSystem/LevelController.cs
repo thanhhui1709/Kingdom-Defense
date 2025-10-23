@@ -16,7 +16,7 @@ public class LevelController : MonoBehaviour
     private List<LevelStats> statsList = new List<LevelStats>();
     private int currentLevel = 0;
 
-    public Button upgradeButton;
+
     void Start()
     {
         stats = GetComponent<Stats>();
@@ -29,6 +29,7 @@ public class LevelController : MonoBehaviour
         if (currentLevel == statsList.Count)
         {
             Upgrade();
+           
             return;
         }
         LevelStats levelStats = statsList[currentLevel];
@@ -51,6 +52,7 @@ public class LevelController : MonoBehaviour
         if (nextLevelObject != null)
         {
             GameObject newTower = ObjectPoolManager.SpawnObject(nextLevelObject, transform.position, transform.rotation, ObjectPoolManager.PoolType.Tower);
+            GameEvent.Instance.OnTriggerTowerLevelUp(newTower);
             ObjectPoolManager.ReturnObject(gameObject);
         }
     }
