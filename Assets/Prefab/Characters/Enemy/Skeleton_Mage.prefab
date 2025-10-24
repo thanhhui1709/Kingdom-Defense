@@ -356,6 +356,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton_Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2196004506624635508, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.0000002358449
@@ -546,6 +550,27 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2275398359076234426}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2860984453932722569}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7011396336207486640}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7244087348922925403}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5679212604014531723}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1188627257250291847}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5202082288255947206}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1418801099801225702}
   m_SourcePrefab: {fileID: 100100000, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
 --- !u!4 &903208173761505808 stripped
 Transform:
@@ -579,6 +604,143 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &2860984453932722569
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
+--- !u!136 &7011396336207486640
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5765376
+  m_Height: 2.5127482
+  m_Direction: 1
+  m_Center: {x: -0.008029461, y: 1.3027635, z: -0.014429569}
+--- !u!114 &7244087348922925403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a26d4588dd672b419e80ab71710fd91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRadius: 0.3
+--- !u!114 &-5679212604014531723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662b31271f985d34b8fcd2b4fe50d31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationMappings:
+  - type: 3
+    primaryParameterName: bool_HasDie
+    primaryParameterType: 1
+    hasSecondaryParameter: 0
+    secondaryParameterName: 
+    secondaryParameterType: 0
+    numberOfVariants: 0
+  - type: 2
+    primaryParameterName: trig_Attack
+    primaryParameterType: 0
+    hasSecondaryParameter: 0
+    secondaryParameterName: 
+    secondaryParameterType: 0
+    numberOfVariants: 0
+--- !u!114 &1188627257250291847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heath: 500
+  ammor: 10
+  attackDamage: 10
+  attackSpeed: 1
+  moveSpeed: 3
+  attackRange: 3
+  triggerRange: 10
+  money: 0
+--- !u!114 &5202082288255947206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d84be7047a571424baa536a9014a94f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1418801099801225702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551875180090516271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee8f7e7fb4bcce4f9484a80b6261ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &1823745089887316900
 PrefabInstance:
   m_ObjectHideFlags: 0
