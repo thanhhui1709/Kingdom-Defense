@@ -31,9 +31,8 @@ public class BuildManager : MonoBehaviour
     {
         towerSelectionPanel.SetActive(false);
         demolishPanel.SetActive(false); // Ẩn panel bán trụ
-
         GenerateTowerButtons();
-
+        GameEvent.Instance.SubscribeTowerLevelUp(OnBuildableTileChanged);
         // Gán sự kiện cho nút bán trụ
         sellButton.onClick.AddListener(SellTower);
     }
@@ -186,5 +185,15 @@ public class BuildManager : MonoBehaviour
 
         // Ẩn panel đi
         ShowDemolishPanel(false);
+    }
+    public void OnBuildableTileChanged(GameObject gameObject)
+    {
+        selectedTileForDemolish.towerOnTile = gameObject;
+        upgradeButton.onClick.RemoveAllListeners();
+        LevelController levelController = gameObject.GetComponent<LevelController>();
+        if (levelController != null)
+        {
+            upgradeButton.onClick.AddListener(levelController.LevelUp);
+        }
     }
 }

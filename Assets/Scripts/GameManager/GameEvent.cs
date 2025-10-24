@@ -22,8 +22,16 @@ public class GameEvent : MonoBehaviour
 
     private Action<int> onEnemyDie;
 
+    private Action<GameObject> onTowerLevelUp;
 
-
+    public void SubscribeTowerLevelUp(Action<GameObject> callback)
+    {
+        onTowerLevelUp += callback;
+    }
+    public void OnTriggerTowerLevelUp(GameObject tower)
+    {
+        onTowerLevelUp?.Invoke(tower);
+    }
 
     public void SubscribeEnemyDie(Action<int> callback)
     {
