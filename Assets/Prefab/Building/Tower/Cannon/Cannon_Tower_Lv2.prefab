@@ -125,11 +125,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3900495459127524803}
   m_SourcePrefab: {fileID: 100100000, guid: d3d406de078b87147bba3818533208e6, type: 3}
---- !u!1 &1164950279103136190 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8221363169187375746, guid: d3d406de078b87147bba3818533208e6, type: 3}
-  m_PrefabInstance: {fileID: 7075887448962362172}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7505650618179988775 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8494924291911662053, guid: d3d406de078b87147bba3818533208e6, type: 3}
@@ -176,7 +171,7 @@ MonoBehaviour:
   towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
-  shooter: {fileID: 1164950279103136190}
+  shooter: {fileID: 8281504776518351256}
 --- !u!114 &-2903360343793367516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,3 +230,8 @@ MonoBehaviour:
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
+--- !u!1 &8281504776518351256 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1215772418024952484, guid: d3d406de078b87147bba3818533208e6, type: 3}
+  m_PrefabInstance: {fileID: 7075887448962362172}
+  m_PrefabAsset: {fileID: 0}

@@ -5,63 +5,68 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Cannon Shot", menuName = "Tower Skill/CannonShot")]
 public class CannonShot : ATowerSkill
 {
-    public float shootForce = 500f;
-    public float fireRate = 1f;
-    public float range = 10f;
+    [SerializeField] private float projectileSpeed = 20f;
+    [SerializeField] private float aimHeightOffset = 0.5f;
 
-    // Giữ nguyên biến offset, bạn có thể phải dùng giá trị lớn hơn 20f
-    public float muzzleOffsetDistance = 1.5f;
+    [Header("Giới hạn tầm bắn")]
+    [SerializeField] private float minRange = 2f;
+    [SerializeField] private float muzzleOffset = 2f;
 
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets, float damage)
+    public override void DoAttack(Transform shooter, GameObject projectilePrefab, List<GameObject> targets, float damage)
     {
-        if (targets == null || targets.Count == 0 || projectile == null) return;
+        if (targets == null || targets.Count == 0 || projectilePrefab == null)
+            return;
 
-        GameObject target = targets[0];
+        GameObject target = targets.FirstOrDefault();
         if (target == null) return;
 
-        // --- Tìm Cannon_1 (Đối tượng được quay) ---
-        Transform cannon1 = shooter.GetComponentsInChildren<Transform>(true)
-                                       .FirstOrDefault(t => t.name == "Cannon_1");
-        if (cannon1 == null)
-        {
-            Debug.LogError("Không tìm thấy Cannon_1!");
+        
+        float distance = Vector3.Distance(shooter.position, target.transform.position);
+        if (distance < minRange)
             return;
-        }
-
-        // --- Tìm Cannon_2 (Đối tượng mà bạn muốn lấy vị trí, dù nó ở tâm) ---
-        Transform cannon2 = shooter.GetComponentsInChildren<Transform>(true)
-                                       .FirstOrDefault(t => t.name == "Cannon_2");
-        if (cannon2 == null)
-        {
-            Debug.LogError("Không tìm thấy Cannon_2!");
-            return;
-        }
-
-      
-        Vector3 directionToTarget = (target.transform.position - cannon1.position).normalized;
-        if (directionToTarget != Vector3.zero)
-        {
-            cannon1.rotation = Quaternion.LookRotation(directionToTarget);
-        }
-
-      
-        Vector3 fireDirection = cannon1.forward;
-
-        Vector3 basePos = cannon2.position;
-
-        Vector3 spawnPos = basePos + fireDirection * muzzleOffsetDistance;
-
-      
-        Quaternion spawnRot = cannon1.rotation;
 
        
-        GameObject bullet = GameObject.Instantiate(projectile, spawnPos, spawnRot);
+        Vector3 flatDir = target.transform.position - shooter.position;
+        flatDir.y = 0f;
+        if (flatDir.sqrMagnitude > 0.001f)
+            shooter.rotation = Quaternion.LookRotation(flatDir.normalized, Vector3.up);
 
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        if (rb != null)
+     
+        Transform barrel = shooter.Find("Cannon_2"); 
+        Vector3 spawnPos;
+        Quaternion spawnRot;
+
+        if (barrel != null)
         {
-           
-            rb.AddForce(fireDirection * shootForce);
+            spawnPos = barrel.position + barrel.up * muzzleOffset; 
+            spawnRot = barrel.rotation;
         }
+        else
+        {
+          
+            spawnPos = shooter.position + shooter.up * muzzleOffset;
+            spawnRot = shooter.rotation;
+        }
+
+      
+        GameObject projectile = Object.Instantiate(projectilePrefab, spawnPos, spawnRot);
+
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("CannonShot: projectilePrefab cần có Rigidbody!");
+            Object.Destroy(projectile);
+            return;
+        }
+
+       
+        Vector3 aimTarget = target.transform.position + Vector3.up * aimHeightOffset;
+        Vector3 shootDir = (aimTarget - spawnPos).normalized;
+
+        rb.linearVelocity = shootDir * projectileSpeed;
+        projectile.transform.forward = shootDir;
+
+       
+        Object.Destroy(projectile, 6f);
     }
 }

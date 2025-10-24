@@ -5065,7 +5065,7 @@ Rigidbody:
   m_GameObject: {fileID: 5266378106977556716}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -5098,7 +5098,7 @@ MonoBehaviour:
   SparksVfx: {fileID: 9054779525929060691}
   detonationCord: {fileID: 8968268478674411238}
   Xplosion: {fileID: 1237870669895136310, guid: 960d5c25a2b942f4a9e1c14877178d06, type: 3}
-  timer: 3
+  timer: 1
   PlayOnStart: 1
 --- !u!114 &-6768391420619597162
 MonoBehaviour:
