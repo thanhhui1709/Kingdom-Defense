@@ -7,10 +7,9 @@ public class CannonShot : ATowerSkill
 {
     [SerializeField] private float projectileSpeed = 20f;
     [SerializeField] private float aimHeightOffset = 0.5f;
-
-    [Header("Giới hạn tầm bắn")]
     [SerializeField] private float minRange = 2f;
-    [SerializeField] private float muzzleOffset = 2f;
+    [SerializeField] private float muzzleOffset = 4f;
+    [SerializeField] private float projectileLifeTime = 6f;
 
     public override void DoAttack(Transform shooter, GameObject projectilePrefab, List<GameObject> targets, float damage)
     {
@@ -20,38 +19,42 @@ public class CannonShot : ATowerSkill
         GameObject target = targets.FirstOrDefault();
         if (target == null) return;
 
-        
+        // --- Quay tháp về phía mục tiêu ---
+        Vector3 flatDir = target.transform.position - shooter.position;
+        flatDir.y = 0f;
+
+        if (flatDir.sqrMagnitude > 0.001f)
+            shooter.rotation = Quaternion.LookRotation(flatDir.normalized, Vector3.up);
+
+        // --- Kiểm tra tầm bắn ---
         float distance = Vector3.Distance(shooter.position, target.transform.position);
         if (distance < minRange)
             return;
 
-       
-        Vector3 flatDir = target.transform.position - shooter.position;
-        flatDir.y = 0f;
-        if (flatDir.sqrMagnitude > 0.001f)
-            shooter.rotation = Quaternion.LookRotation(flatDir.normalized, Vector3.up);
-
-     
-        Transform barrel = shooter.Find("Cannon_2"); 
+        // --- Xác định vị trí sinh viên đạn ---
+        Transform barrel = shooter.Find("Cannon_2");
         Vector3 spawnPos;
         Quaternion spawnRot;
 
         if (barrel != null)
         {
-            spawnPos = barrel.position + barrel.up * muzzleOffset; 
+           
+            spawnPos = barrel.position + barrel.up * muzzleOffset;
             spawnRot = barrel.rotation;
         }
         else
         {
-          
             spawnPos = shooter.position + shooter.up * muzzleOffset;
             spawnRot = shooter.rotation;
         }
 
-      
-        GameObject projectile = Object.Instantiate(projectilePrefab, spawnPos, spawnRot);
+        
+        Debug.DrawLine(barrel != null ? barrel.position : shooter.position, spawnPos, Color.red, 2f);
 
+       
+        GameObject projectile = Object.Instantiate(projectilePrefab, spawnPos, spawnRot);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
+
         if (rb == null)
         {
             Debug.LogError("CannonShot: projectilePrefab cần có Rigidbody!");
@@ -59,14 +62,13 @@ public class CannonShot : ATowerSkill
             return;
         }
 
-       
+        
         Vector3 aimTarget = target.transform.position + Vector3.up * aimHeightOffset;
         Vector3 shootDir = (aimTarget - spawnPos).normalized;
 
         rb.linearVelocity = shootDir * projectileSpeed;
         projectile.transform.forward = shootDir;
 
-       
-        Object.Destroy(projectile, 6f);
+        Object.Destroy(projectile, projectileLifeTime);
     }
 }
