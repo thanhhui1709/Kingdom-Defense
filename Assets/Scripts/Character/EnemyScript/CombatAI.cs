@@ -159,8 +159,8 @@ public class CombatAI : MonoBehaviour
         // TODO: Viết logic tấn công của bạn ở đây
         // Ví dụ: quay mặt về mục tiêu, chạy animation tấn công, tạo ra đạn...
         transform.LookAt(currentTarget.transform);
-        int attackIndex = Random.Range(0, 2); // Giả sử có 2 kiểu tấn công
-        anim.Play(AnimationType.Attack, attackIndex); // Giả sử 1 là chỉ số của đòn tấn công
+     
+        anim.PlaySpecialAnimation(AnimationType.Attack); 
         Debug.Log("Attacking " + currentTarget.name);
     }
 

@@ -6,11 +6,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageManager : MonoBehaviour
+public class SpawnEnemyWave : MonoBehaviour
 {
     [Header("Wave")]
     [SerializeField] private float activeTime = 7f;
     [SerializeField] private List<EnemyWave> enemyWaves;
+
+    [Header("PathNode Enemy Move As Path")]
+    [SerializeField] private List<PathNode> pathNodes;
 
     private EnemyWave currentWave;
     private int currentWaveIndex = 0;
@@ -54,7 +57,14 @@ public class StageManager : MonoBehaviour
     {
         for (int i = 0; i < wave.numberPerWave; i++)
         {
-            var enemy = Instantiate(wave.enemyPrefab);
+            var enemy = ObjectPoolManager.SpawnObject(wave.enemyPrefab,transform.position,Quaternion.identity,ObjectPoolManager.PoolType.Enemy);
+
+            // Pass the path nodes to the enemy's movement script
+            MovementController enemyMovement = enemy.GetComponent<MovementController>();
+            if (enemyMovement!=null)
+            {
+             enemyMovement.SetPath(pathNodes);
+            }
             yield return new WaitForSeconds(wave.delaySpawnPrefab); // Delay between each enemy in wave
         }
         //StartCoroutine(SpawnDropItem(wave)); // Spawn drop items after all enemies are spawned
