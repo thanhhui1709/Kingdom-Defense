@@ -37,6 +37,10 @@ public class MovementController : MonoBehaviour
             UpdatePathMovement();
         }
     }
+    public bool IsMovingOnPath()
+    {
+        return isMovingOnPath;
+    }
 
     //-----------------------------------------------------
     // CÁC HÀM NHẬN LỆNH TỪ BÊN NGOÀI
@@ -103,7 +107,7 @@ public class MovementController : MonoBehaviour
     {
         if (path == null || currentPathIndex >= path.Count)
         {
-            StopMovement();
+            StopMovement(); // <-- Dòng này sẽ set isMovingOnPath = false
             return;
         }
 
