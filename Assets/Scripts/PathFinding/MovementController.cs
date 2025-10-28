@@ -137,9 +137,7 @@ public class MovementController : MonoBehaviour
         InternalMoveTowards(targetPos);
     }
 
-    /// <summary>
-    /// MỚI: Phiên bản nội bộ của MoveTowards để tránh xung đột cờ isMovingOnPath
-    /// </summary>
+   
     private void InternalMoveTowards(Vector3 targetPosition)
     {
         // 1. Tính toán hướng di chuyển trên mặt phẳng XZ

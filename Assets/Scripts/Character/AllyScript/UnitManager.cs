@@ -16,6 +16,7 @@ public class UnitManager : MonoBehaviour
 
     [Header("Selection Box")]
     [SerializeField] private Image selectionBoxImage; // UI Image cho hộp chọn
+    [SerializeField] private GameObject clickIndicator;
     private Vector2 startDragPosition;
 
     private Camera mainCamera;
@@ -119,6 +120,14 @@ public class UnitManager : MonoBehaviour
             else if (Physics.Raycast(ray, out RaycastHit hitGround, 1000f, groundLayer))
             {
                 CommandMove(hitGround.point);
+                Vector3 spawnPos = hitGround.point + new Vector3(0, 0.7f, 0);
+
+                ObjectPoolManager.SpawnObject(
+                    clickIndicator,
+                    spawnPos,
+                    Quaternion.identity,
+                    ObjectPoolManager.PoolType.Particle
+                );
             }
         }
     }
@@ -169,13 +178,31 @@ public class UnitManager : MonoBehaviour
     private void UpdateSelectionBox(Vector2 currentMousePos)
     {
         RectTransform rect = selectionBoxImage.rectTransform;
+
+
+        // Tính toán góc dưới-trái và kích thước
         float width = currentMousePos.x - startDragPosition.x;
         float height = currentMousePos.y - startDragPosition.y;
 
-        rect.anchoredPosition = startDragPosition + new Vector2(width / 2, height / 2);
+        float xMin = startDragPosition.x;
+        float yMin = startDragPosition.y;
+
+        // Xử lý khi kéo ngược (phải sang trái, hoặc trên xuống dưới)
+        if (width < 0)
+        {
+            xMin = currentMousePos.x;
+        }
+        if (height < 0)
+        {
+            yMin = currentMousePos.y;
+        }
+
+        // Đặt vị trí (anchor position) là góc dưới-trái
+        rect.anchoredPosition = new Vector2(xMin, yMin);
+
+        // Đặt kích thước là giá trị tuyệt đối
         rect.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
     }
-
     private Rect GetSelectionRect(Vector2 start, Vector2 end)
     {
         float xMin = Mathf.Min(start.x, end.x);

@@ -13,7 +13,7 @@ public class PathNodeManager : MonoBehaviour
         else Instance = this;
 
         // Tải tất cả các node trong Scene vào danh sách
-        allNodes = FindObjectsOfType<PathNode>().ToList();
+        allNodes= FindObjectsOfType<PathNode>().ToList();
         if (allNodes.Count == 0)
         {
             Debug.LogError("PathNodeManager không tìm thấy PathNode nào!");
