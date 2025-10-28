@@ -18,7 +18,7 @@ MonoBehaviour:
   zoomSensitivity: 10
   screenEdgeSize: 20
   cameraMoveSpeed: 50
-  xMin: -10
-  xMax: 10
-  zMin: -50
-  zMax: 10
+  xMin: -50
+  xMax: 50
+  zMin: -100
+  zMax: 37

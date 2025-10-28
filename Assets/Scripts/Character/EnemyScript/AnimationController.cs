@@ -60,7 +60,7 @@ public class AnimationController : MonoBehaviour
     }
 
     // Dành cho các animation phức tạp như Attack (cần cả Trigger và Int)
-    public void Play(AnimationType type, int value)
+    public void PlaySpecialAnimation(AnimationType type)
     {
         if (mappingDict.TryGetValue(type, out AnimationMapping mapping))
         {
@@ -73,6 +73,7 @@ public class AnimationController : MonoBehaviour
             // 2. Set parameter phụ (nếu có và đúng kiểu)
             if (mapping.hasSecondaryParameter && mapping.secondaryParameterType == ParameterType.Int)
             {
+                int value = Random.Range(0, mapping.numberOfVariants);
                 animator.SetInteger(mapping.secondaryParameterName, value);
             }
         }
@@ -105,4 +106,6 @@ public class AnimationMapping
     public bool hasSecondaryParameter;
     public string secondaryParameterName;
     public ParameterType secondaryParameterType;
+    [Tooltip("Tick vào đây nếu animation này cần kích hoạt một parameter thứ hai.")]
+    public int numberOfVariants; // Chỉ áp dụng nếu secondaryParameterType là Int
 }

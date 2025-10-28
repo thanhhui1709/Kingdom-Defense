@@ -4,12 +4,13 @@ using System.Linq; // Cần thêm Linq để dùng OrderBy
 [RequireComponent(typeof(Collider))]
 public class AutoHitbox : MonoBehaviour
 {
+    [Tooltip("Bán kính tối thiểu để đảm bảo nhân vật ổn định về mặt vật lý.")]
+    public float minRadius = 0.3f; // Giữ lại biến này, nó vẫn rất hữu ích
     // Sử dụng [ContextMenu] để tạo một nút trong Inspector có thể nhấn được
     // Giúp bạn chạy logic này bất cứ khi nào bạn muốn trong Editor mode.
     [ContextMenu("Adjust Collider to Fit All Meshes")]
     private void AdjustColliderToBounds()
     {
-        // Lấy tất cả SkinnedMeshRenderer trong các object con
         var skinnedRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         if (skinnedRenderers.Length == 0)
         {
@@ -17,39 +18,48 @@ public class AutoHitbox : MonoBehaviour
             return;
         }
 
-        // Tạo một Bounds bao quanh tất cả các mesh
-        // Bắt đầu với bounds của mesh đầu tiên
         Bounds combinedBounds = skinnedRenderers[0].bounds;
         for (int i = 1; i < skinnedRenderers.Length; i++)
-        {
-            // Mở rộng Bounds để nó bao gồm cả bounds của các mesh tiếp theo
             combinedBounds.Encapsulate(skinnedRenderers[i].bounds);
-        }
 
         Collider col = GetComponent<Collider>();
 
-        // Chuyển đổi center từ world space về local space của object
         Vector3 localCenter = transform.InverseTransformPoint(combinedBounds.center);
-
-        // Chuyển đổi size từ world space về local space.
-        // Đây là cách đơn giản và hoạt động tốt nếu object không bị xoay lệch trục.
         Vector3 localSize = transform.InverseTransformVector(combinedBounds.size);
-        // Lấy giá trị tuyệt đối vì scale âm có thể tạo size âm
         localSize = new Vector3(Mathf.Abs(localSize.x), Mathf.Abs(localSize.y), Mathf.Abs(localSize.z));
 
 
         if (col is BoxCollider box)
         {
+            // BoxCollider có thể giữ nguyên logic cũ
             box.center = localCenter;
             box.size = localSize;
             Debug.Log("BoxCollider adjusted.", this);
         }
         else if (col is CapsuleCollider capsule)
         {
-            capsule.center = localCenter;
+            // --- SỬA LỖI LOGIC TẠI ĐÂY ---
+
+            // 1. Chiều cao vẫn lấy từ localSize
             capsule.height = localSize.y;
-            capsule.radius = Mathf.Max(localSize.x, localSize.z) / 2f;
-            Debug.Log("CapsuleCollider adjusted.", this);
+
+            // 2. Bán kính vẫn lấy từ localSize.x/z VÀ so sánh với minRadius
+            float calculatedRadius = Mathf.Max(localSize.x, localSize.z) / 2f;
+            capsule.radius = Mathf.Max(calculatedRadius, minRadius);
+
+            // 3. Tính toán lại tâm (Center)
+            // Bỏ qua localCenter.y!
+            // Tâm của một capsule đứng trên đất phải ở Y = (Height / 2)
+            // Giữ lại X và Z của localCenter để nó vừa khít theo chiều ngang
+            capsule.center = new Vector3(
+                localCenter.x,
+                capsule.height / 2f, // Đây là mấu chốt!
+                localCenter.z
+            );
+
+            // --- KẾT THÚC SỬA LỖI ---
+
+            Debug.Log($"CapsuleCollider adjusted. Center: {capsule.center}, Height: {capsule.height}, Radius: {capsule.radius}");
         }
     }
 
