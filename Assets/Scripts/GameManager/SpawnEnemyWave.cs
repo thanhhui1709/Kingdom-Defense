@@ -106,7 +106,7 @@ public class SpawnEnemyWave : MonoBehaviour
         while (currentWaveIndex < enemyWaves.Count)
         {
             yield return StartCoroutine(SpawnWave(currentWave)); // Wait until the wave is done
-            yield return new WaitUntil(() => CheckWaveClear(currentWave));
+            //yield return new WaitUntil(() => CheckWaveClear(currentWave));
             SetNextCurrentWave();
             //GameManager.instance.SaveGame();
             yield return new WaitForSeconds(currentWave.delayForTheNextWave);
