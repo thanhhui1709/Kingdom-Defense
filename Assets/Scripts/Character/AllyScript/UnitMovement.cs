@@ -30,11 +30,10 @@ public class UnitMovement : MonoBehaviour
         if (isMovingOnPath)
         {
             UpdatePathMovement();
-            // 1. Lấy tốc độ di chuyển trên mặt phẳng (bỏ qua trục Y)
+        
             Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
             float currentSpeed = horizontalVelocity.magnitude;
 
-            // 2. "Báo cáo" tốc độ này cho Animator MỖI FRAME
             animationController.Play(AnimationType.Walk, currentSpeed);
             Debug.Log("Current Speed: " + currentSpeed);
         }

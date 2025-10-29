@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(Stats), typeof(MovementController))]
 public class CombatAI : MonoBehaviour
@@ -88,8 +89,18 @@ public class CombatAI : MonoBehaviour
                 {
                     Debug.Log("targeting Tower.");
                     currentTarget = towers.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
+                }// Neu khong co tower thi tim nha chinh
+                else
+                {
+                    var bases = inRangeTargets.FirstOrDefault(t => t.CompareTag("Castle"));
+                    if (bases != null)
+                    {
+                        Debug.Log("targeting Castle.");
+                        currentTarget = bases;
+                    }
                 }
             }
+            
         }
     }
 

@@ -16,7 +16,6 @@ public class Unit : MonoBehaviour
     private Stats stats;
     private PathFinding pathFinder;
 
-    [SerializeField] private GameObject selectionVisual;
 
     // MỚI: Thêm Layer của địch để quét
     [Header("AI Behavior")]
@@ -40,7 +39,7 @@ public class Unit : MonoBehaviour
         health = GetComponent<UnitHealth>();
         anim = GetComponent<AnimationController>();
 
-        if (selectionVisual != null) selectionVisual.SetActive(false);
+     
     }
 
     void Start()
@@ -176,13 +175,13 @@ public class Unit : MonoBehaviour
 
     public void Select()
     {
-        if (selectionVisual != null) selectionVisual.SetActive(true);
+       
         health.ShowHealthBar();
     }
 
     public void Deselect()
     {
-        if (selectionVisual != null) selectionVisual.SetActive(false);
+     
         health.HideHealthBar();
     }
 
