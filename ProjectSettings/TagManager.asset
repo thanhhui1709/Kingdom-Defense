@@ -13,6 +13,8 @@ TagManager:
   - Xplosion
   - Tree_small
   - Tower
+  - Unit
+  - Obstacle
   layers:
   - Default
   - TransparentFX
