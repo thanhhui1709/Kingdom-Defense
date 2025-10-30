@@ -23,10 +23,14 @@ public class TowerController : MonoBehaviour
     private HashSet<GameObject> currentTarget = new();
     private float attackCooldown;
 
+
+
     void Start()
     {
         stats = GetComponent<Stats>();
+        
     }
+ 
 
     // Update is called once per frame
     void Update()
@@ -91,15 +95,19 @@ public class TowerController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stats.AttackRange);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, stats.AttackRange);
+    //}
     private void RemoveDisableTarget()
     {
         if (currentTarget.Count < maxTarget) return;
         currentTarget.RemoveWhere(x => !x.activeInHierarchy || Vector3.Distance(transform.position, x.transform.position) > stats.AttackRange);
 
+    }
+    public HashSet<GameObject> GetCurrentTargets()
+    {
+        return currentTarget;
     }
 }
