@@ -5112,7 +5112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee5c4e8f23ae38240aa686eb0d56341a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
   explosionRadius: 3
   explosionForce: 500
-  explosionEffect: {fileID: 0}
+  explosionEffect: {fileID: 1237870669895136310, guid: 960d5c25a2b942f4a9e1c14877178d06, type: 3}

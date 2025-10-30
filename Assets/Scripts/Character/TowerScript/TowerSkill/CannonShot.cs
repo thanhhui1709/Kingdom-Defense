@@ -7,7 +7,7 @@ public class CannonShot : ATowerSkill
 {
     [SerializeField] private float projectileSpeed = 20f;
     [SerializeField] private float aimHeightOffset = 0.5f;
-    [SerializeField] private float minRange = 2f;
+    [SerializeField] private float minRange = 4f;
     [SerializeField] private float muzzleOffset = 4f;
     [SerializeField] private float projectileLifeTime = 6f;
 
@@ -52,7 +52,7 @@ public class CannonShot : ATowerSkill
         Debug.DrawLine(barrel != null ? barrel.position : shooter.position, spawnPos, Color.red, 2f);
 
        
-        GameObject projectile = Object.Instantiate(projectilePrefab, spawnPos, spawnRot);
+        GameObject projectile = ObjectPoolManager.SpawnObject(projectilePrefab, spawnPos, spawnRot,ObjectPoolManager.PoolType.TowerProjectile);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
         if (rb == null)
@@ -60,6 +60,12 @@ public class CannonShot : ATowerSkill
             Debug.LogError("CannonShot: projectilePrefab cần có Rigidbody!");
             Object.Destroy(projectile);
             return;
+        }
+        Stats shooterStats=shooter.GetComponentInParent<Stats>();
+        IProjectile projectile1 = projectile.GetComponent<IProjectile>();
+        if (projectile1 != null && shooterStats!=null)
+        {
+            projectile1.Launch(barrel,targets,shooterStats.AttackDamage);
         }
 
         

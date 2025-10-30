@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System.Linq;
+using System.Collections;
 
+// Giả định IProjectile và Util tồn tại
 public class OrientedBom : MonoBehaviour, IProjectile
 {
     private GameObject target;
     private Rigidbody rb;
-    private float damage;
-    [SerializeField] private float speed = 8f;        // tốc độ bay của bom
-    [SerializeField] private float explosionRadius = 3f; // bán kính nổ
-    [SerializeField] private float explosionForce = 500f; // lực nổ
-    [SerializeField] private GameObject explosionEffect;  // prefab hiệu ứng nổ
+
+   
+    private float damage ;
+
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float explosionRadius = 5f;
+    [SerializeField] private float explosionForce = 500f;
+    [SerializeField] private GameObject explosionEffect;
 
     void Awake()
     {
@@ -23,20 +27,15 @@ public class OrientedBom : MonoBehaviour, IProjectile
     {
         if (target == null) return;
 
-        // Tính hướng di chuyển
         Vector3 dir = Util.MoveToward(rb, target.transform, speed);
-
-        // Di chuyển bom về phía target
         rb.MovePosition(rb.position + dir * speed * Time.fixedDeltaTime);
-
-        // Xoay bom hướng về target
         Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
         rb.MoveRotation(targetRotation);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject == target)
+        if (collision.gameObject == target)
         {
             Explode();
         }
@@ -44,31 +43,50 @@ public class OrientedBom : MonoBehaviour, IProjectile
 
     private void Explode()
     {
-        // Hiệu ứng nổ
         if (explosionEffect != null)
         {
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
 
-        // Tìm tất cả object trong bán kính nổ
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Debug.Log("Bom nổ! Đã tìm thấy " + colliders.Length + " collider trong bán kính.");
+
         foreach (Collider nearby in colliders)
         {
+            EnemyHealth health = nearby.GetComponent<EnemyHealth>();
+            if (health != null)
+            {
+                // Sử dụng giá trị damage đã được truyền vào từ TowerController
+                health.TakeDamage(damage);
+                Debug.Log("SUCCESS: " + nearby.gameObject.name + " đã nhận sát thương: " + damage);
+            }
+
             Rigidbody rbNearby = nearby.GetComponent<Rigidbody>();
             if (rbNearby != null)
             {
                 rbNearby.AddExplosionForce(explosionForce, transform.position, explosionRadius);
             }
         }
+        StartCoroutine(WaitToDestroy(1f));
+        Debug.Log("Bomb đã hoàn thành chức năng và bị hủy!");
 
-        Debug.Log("Bomb exploded!");
-        Destroy(gameObject);
+    }
+    IEnumerator WaitToDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay); 
+        ObjectPoolManager.ReturnObject(gameObject);
+    
     }
 
-    public void Launch(Transform launchPoint, List<GameObject> targets,float damage)
+    
+    public void Launch(Transform launchPoint, List<GameObject> targets, float damage)
     {
-        // Chọn target gần nhất
+      
         this.target = targets.OrderBy(x => Vector3.Distance(x.transform.position, launchPoint.position)).FirstOrDefault();
+
+        
         this.damage = damage;
+
+        Debug.Log("Bom đã được Launch với sát thương được thiết lập: " + this.damage);
     }
 }
