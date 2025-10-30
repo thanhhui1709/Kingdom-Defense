@@ -1,0 +1,219 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3792941182535559746
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8548064
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0000009536743
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.2792416
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7548349626171578495, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -2132710778581253517, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Name
+      value: Archer_Tower_Lv4
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_TagString
+      value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338122477350290390, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 346412502438438275}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6038144689480924783}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5883031964581681205}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1672731443755265962}
+    - targetCorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5186273804871068106}
+  m_SourcePrefab: {fileID: 100100000, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+--- !u!1 &4062900219597444883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+  m_PrefabInstance: {fileID: 3792941182535559746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &346412502438438275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 843bd72e7cb0fd24b9418e057e0f9ba1, type: 3}
+  heath: 100
+  ammor: 10
+  attackDamage: 100
+  attackSpeed: 2
+  moveSpeed: 0
+  attackRange: 10
+  triggerRange: 10
+  money: 0
+--- !u!114 &6038144689480924783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
+  projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
+  maxTarget: 1
+  shooter: {fileID: 4062900219597444883}
+--- !u!114 &-5883031964581681205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerNameKey: 
+  evolutionLevel: 1
+  statsList:
+  - cost: 100
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 175
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 250
+    heath: 100
+    ammor: 10
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+--- !u!114 &1672731443755265962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062900219597444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25682741f63de914f8e829d5168e6c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
+--- !u!1 &6123571586118172547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}
+  m_PrefabInstance: {fileID: 3792941182535559746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5186273804871068106
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123571586118172547}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.3811264, y: 15.531588, z: 6.0264835}
+  m_Center: {x: -0.03539276, y: 7.671506, z: -0.18014824}
