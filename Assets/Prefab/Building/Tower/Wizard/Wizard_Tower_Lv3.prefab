@@ -97,6 +97,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 690199585589951056}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1450705415494882140}
   m_SourcePrefab: {fileID: 100100000, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
 --- !u!1 &6538685744925403962 stripped
 GameObject:
@@ -131,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: fd2c82a3c61e65142925ff285b5c3aca, type: 3}
   heath: 800
   ammor: 75
   attackDamage: 50
@@ -151,7 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerLevel: 3
+  towerNameKey: 
+  evolutionLevel: 1
   statsList:
   - cost: 100
     heath: 200
@@ -169,6 +174,20 @@ MonoBehaviour:
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
+--- !u!114 &1450705415494882140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538685744925403962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25682741f63de914f8e829d5168e6c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!1 &8620609615401077500 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6782998152746034025, guid: 64ff915e892da5748894f63582bfcdae, type: 3}

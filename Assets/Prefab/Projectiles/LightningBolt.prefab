@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5354483408216093376}
   - component: {fileID: 8601874726917856133}
-  - component: {fileID: 8158320091940431731}
+  - component: {fileID: 1776766777825176776}
   m_Layer: 0
   m_Name: LightningBolt
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.00369, y: -0.00001, z: 0.11187}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,14 +81,6 @@ LineRenderer:
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
-  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -96,7 +88,16 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
+        time: 0.0024147034
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.120772935
         value: 1
         inSlope: 0
         outSlope: 0
@@ -113,6 +114,15 @@ LineRenderer:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
+      - serializedVersion: 3
+        time: 0.22222221
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.3865631
         value: 1
@@ -140,21 +150,30 @@ LineRenderer:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
+      - serializedVersion: 3
+        time: 0.83091784
+        value: 1.0106952
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.75432086, b: 0, a: 1}
-      key1: {r: 0.8792453, g: 0.5744654, b: 0.1177857, a: 1}
-      key2: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0.67058825}
+      key2: {r: 1, g: 1, b: 1, a: 0.67058825}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 38781
+      ctime1: 65535
       ctime2: 65535
       ctime3: 0
       ctime4: 0
@@ -162,7 +181,7 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 65304
+      atime1: 28720
       atime2: 65535
       atime3: 0
       atime4: 0
@@ -172,7 +191,7 @@ LineRenderer:
       m_Mode: 0
       m_ColorSpace: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -184,7 +203,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &8158320091940431731
+--- !u!114 &1776766777825176776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,7 +212,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5551972361978619668}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8df6dc6c848df47468be955abc5c78a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 60ee439e84d08bf41b99cbe3e5b82f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 0.2
+  segments: 20
+  amplitude: 0.5
+  frequency: 1
+  speed: 3
+  up: {x: 0, y: 1, z: 0}
+  usePerpendicular: 1
+  useWorldSpace: 1

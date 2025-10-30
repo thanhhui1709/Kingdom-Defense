@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(Stats), typeof(MovementController))]
 public class CombatAI : MonoBehaviour
@@ -88,8 +89,18 @@ public class CombatAI : MonoBehaviour
                 {
                     Debug.Log("targeting Tower.");
                     currentTarget = towers.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
+                }// Neu khong co tower thi tim nha chinh
+                else
+                {
+                    var bases = inRangeTargets.FirstOrDefault(t => t.CompareTag("Castle"));
+                    if (bases != null)
+                    {
+                        Debug.Log("targeting Castle.");
+                        currentTarget = bases;
+                    }
                 }
             }
+            
         }
     }
 
@@ -159,8 +170,8 @@ public class CombatAI : MonoBehaviour
         // TODO: Viết logic tấn công của bạn ở đây
         // Ví dụ: quay mặt về mục tiêu, chạy animation tấn công, tạo ra đạn...
         transform.LookAt(currentTarget.transform);
-        int attackIndex = Random.Range(0, 2); // Giả sử có 2 kiểu tấn công
-        anim.Play(AnimationType.Attack, attackIndex); // Giả sử 1 là chỉ số của đòn tấn công
+     
+        anim.PlaySpecialAnimation(AnimationType.Attack); 
         Debug.Log("Attacking " + currentTarget.name);
     }
 
