@@ -8,7 +8,7 @@ public class OrientedBom : MonoBehaviour, IProjectile
 {
     private GameObject target;
     private Rigidbody rb;
-
+    public LayerMask layer;
    
     private float damage ;
 
