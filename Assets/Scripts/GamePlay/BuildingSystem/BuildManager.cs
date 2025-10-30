@@ -6,194 +6,150 @@ using UnityEngine.EventSystems;
 public class BuildManager : MonoBehaviour
 {
     [Header("Tower Data")]
-    // Danh sách chứa tất cả các loại trụ có thể xây.
     public List<TowerData> availableTowers = new List<TowerData>();
 
-    [Header("UI References")]
-    // Panel chính để chứa các nút.
-    public GameObject towerSelectionPanel;
-    // Prefab của nút bấm 
-    public GameObject towerButtonPrefab;
-    // Biến tạm để lưu ô đất đã chọn.
-    private Transform selectedBuildableTile;
+    [Header("Core References")]
+    [SerializeField] private InGameUIManager uiManager;
+    [SerializeField] private LayerMask targetLayer;
 
-    [Header("Demolish UI References")]
-    public GameObject demolishPanel;
-    public Button sellButton;
-    private BuildableTile selectedTileForDemolish; // Lưu lại ô đất được chọn để phá
-
-    [Header("Upgrade")]
-    public Button upgradeButton;
-
-    public LayerMask targetLayer;
+    // Lưu lại các ô đất được chọn cho logic
+    private Transform selectedBuildableTile; // Ô đất trống để xây
+    private BuildableTile selectedTileForDemolish; // Ô đất có trụ để nâng cấp/bán
 
     void Start()
     {
-        towerSelectionPanel.SetActive(false);
-        demolishPanel.SetActive(false); // Ẩn panel bán trụ
-        GenerateTowerButtons();
-        GameEvent.Instance.SubscribeTowerLevelUp(OnBuildableTileChanged);
-        // Gán sự kiện cho nút bán trụ
-        sellButton.onClick.AddListener(SellTower);
-    }
+        // Yêu cầu UIManager tạo các nút, truyền vào danh sách trụ và CHÍNH NÓ
+        uiManager.PopulateBuyTowerMenu(availableTowers, this);
 
-    // Hàm này sẽ tự động tạo các nút chọn trụ.
-    void GenerateTowerButtons()
-    {
-        // Xóa các nút cũ nếu có
-        foreach (Transform child in towerSelectionPanel.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        // Tạo nút mới cho mỗi loại trụ trong danh sách
-        foreach (TowerData towerData in availableTowers)
-        {
-            // Tạo một bản sao của prefab nút
-            GameObject buttonGO = Instantiate(towerButtonPrefab, towerSelectionPanel.transform);
-
-            // Tìm component TextMeshPro bên trong nút con
-            TMPro.TextMeshProUGUI buttonText = buttonGO.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            if (buttonText != null)
-            {
-                // Gán tên của trụ từ TowerData vào chữ của nút
-                buttonText.text = towerData.towerName;
-            }
-
-            // Gán sự kiện OnClick cho nút
-            Button newButton = buttonGO.GetComponent<Button>();
-            TowerData currentTowerData = towerData;
-            newButton.onClick.AddListener(() => SelectAndPlaceTower(currentTowerData));
-        }
+        // Lắng nghe sự kiện trụ được nâng cấp/tiến hóa
+        GameEvent.Instance.SubscribeTowerLevelUp(OnTowerUpgradedOrEvolved);
     }
 
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit,100,targetLayer))
+            if (Physics.Raycast(ray, out hit, 100, targetLayer))
             {
-               
-
-                // Lấy component BuildableTile trên vật thể bị click
                 BuildableTile tile = hit.collider.GetComponent<BuildableTile>();
 
                 if (tile != null)
                 {
-                    // Nếu ô đất ĐÃ CÓ trụ, hiện UI phá hủy
                     if (tile.towerOnTile != null)
                     {
-                        selectedTileForDemolish = tile; // Lưu tham chiếu ô đất
-                        ShowDemolishPanel(true);
-                        ShowTowerSelectionPanel(false); // Đảm bảo panel xây bị tắt
+                        // Click vào trụ đã xây:
+                        selectedTileForDemolish = tile; // Lưu lại
+                        selectedBuildableTile = null;   // Xóa chọn ô trống
+                        uiManager.ShowUpgradePanel(tile); // Yêu cầu UI hiện panel nâng cấp
+                        uiManager.ToggleBuyTowerPanel(false); // Ẩn panel mua
                     }
-                    // Nếu ô đất CHƯA CÓ trụ (có thể xây), hiện UI xây dựng
                     else
                     {
-                        selectedBuildableTile = hit.transform; // Lưu transform của ô đất
-                        ShowTowerSelectionPanel(true);
-                        ShowDemolishPanel(false); // Đảm bảo panel bán bị tắt
+                        // Click vào ô trống:
+                        selectedBuildableTile = hit.transform; // Lưu lại
+                        selectedTileForDemolish = null;       // Xóa chọn trụ
+                        uiManager.ToggleBuyTowerPanel(true);  // Yêu cầu UI hiện panel mua
+                        uiManager.ToggleUpgradeTowerPanel(false); // Ẩn panel nâng cấp
                     }
                 }
                 else
                 {
-                    // Click vào vật thể khác không phải ô đất có thể xây
-                    ShowTowerSelectionPanel(false);
-                    ShowDemolishPanel(false);
+                    // Click ra ngoài
+                    DeselectAll();
                 }
             }
             else
             {
-                // Nếu click ra ngoài, tắt cả 2 panel
-                ShowTowerSelectionPanel(false);
-                ShowDemolishPanel(false);
-            }
-
-        }
-    }
-
-    // Hàm hiển thị/ẩn bảng chọn.
-    public void ShowTowerSelectionPanel(bool show, Vector3 worldPosition = default)
-    {
-        towerSelectionPanel.SetActive(show);
-    }
-
-    // Hàm này được gọi khi một nút chọn trụ được nhấn.
-    void SelectAndPlaceTower(TowerData towerToBuild)
-    {
-        if (selectedBuildableTile != null)
-        {
-            // Tạo trụ
-            GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity,ObjectPoolManager.PoolType.Tower);
-
-            // Đánh dấu ô đất là đã bị chiếm
-            selectedBuildableTile.tag = "Tower";
-            // Lấy script của ô đất và lưu tham chiếu đến trụ vừa xây
-            selectedBuildableTile.GetComponent<BuildableTile>().towerOnTile = newTower;
-
-
-            // Tắt collider để không hiện menu xây nữa
-            // selectedBuildableTile.GetComponent<Collider>().enabled = false; // Dòng này không cần nữa, vì ta dùng tag "Occupied"
-
-            ShowTowerSelectionPanel(false);
-        }
-    }
-
-    // Hàm để hiện/ẩn panel bán trụ
-    void ShowDemolishPanel(bool show)
-    {
-        if (show)
-        {
-            LevelController levelController = selectedTileForDemolish.towerOnTile.GetComponent<LevelController>();
-            if (levelController != null)
-            {
-                upgradeButton.onClick.AddListener(levelController.LevelUp);
+                // Click ra ngoài
+                DeselectAll();
             }
         }
-        else
+    }
+
+    // Hàm public để UIManager có thể lấy ô đất đang chọn
+    public BuildableTile GetSelectedTileForDemolish()
+    {
+        return selectedTileForDemolish;
+    }
+
+    /// <summary>
+    /// Bỏ chọn tất cả và ẩn mọi UI
+    /// </summary>
+    private void DeselectAll()
+    {
+        selectedBuildableTile = null;
+        selectedTileForDemolish = null;
+        uiManager.ToggleBuyTowerPanel(false);
+        uiManager.ToggleUpgradeTowerPanel(false);
+    }
+
+    /// <summary>
+    /// Hàm xử lý sự kiện khi trụ thay đổi (do tiến hóa hoặc lên cấp)
+    /// </summary>
+    private void OnTowerUpgradedOrEvolved(GameObject newOrUpdatedTower)
+    {
+        // 1. Kiểm tra xem có đang chọn ô nào không
+        if (selectedTileForDemolish == null) return;
+
+        // 2. Kiểm tra xem trụ mới/cập nhật có phải là trụ đang chọn không
+        // (So sánh vị trí là cách an toàn nhất vì trụ cũ có thể đã bị destroy)
+        if (Vector3.Distance(newOrUpdatedTower.transform.position, selectedTileForDemolish.transform.position) < 0.1f)
         {
-            upgradeButton.onClick.RemoveAllListeners();
+            // 3. CẬP NHẬT THAM CHIẾU
+            selectedTileForDemolish.towerOnTile = newOrUpdatedTower;
+
+            // 4. Yêu cầu UI cập nhật lại thông tin
+            uiManager.ShowUpgradePanel(selectedTileForDemolish);
         }
-        demolishPanel.SetActive(show);
-        upgradeButton.gameObject.SetActive(show);
     }
-    
 
-    // Hàm được gọi khi nút "SellButton" được nhấn
-    void SellTower()
+    // --- Logic Xây ---
+    public void SelectAndPlaceTower(TowerData towerToBuild)
     {
-        // Lấy ra trụ đang nằm trên ô đất đã chọn
-        GameObject towerToSell = selectedTileForDemolish.towerOnTile;
+        if (selectedBuildableTile == null) return;
 
-        // Phá hủy GameObject của trụ
-        ObjectPoolManager.ReturnObject(towerToSell);
+        // (Logic kiểm tra tiền)
+        // if (GameManager.Instance.Money < towerToBuild.buildCost) return;
 
-        // Reset lại ô đất
-        selectedTileForDemolish.tag = "Buildable"; // Đổi tag lại như cũ
-        selectedTileForDemolish.towerOnTile = null; // Xóa tham chiếu
+        GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity, ObjectPoolManager.PoolType.Tower);
 
-        // (Tùy chọn) Hoàn tiền cho người chơi
-        // PlayerStats.Money += towerData.getSellValue();
+        BuildableTile tileScript = selectedBuildableTile.GetComponent<BuildableTile>();
+        tileScript.towerOnTile = newTower;
 
-        // Ẩn panel đi
-        ShowDemolishPanel(false);
+        DeselectAll();
     }
-    public void OnBuildableTileChanged(GameObject gameObject)
+
+    // --- Logic Nâng Cấp & Bán ---
+    public void UpgradeSelectedTower()
     {
-        selectedTileForDemolish.towerOnTile = gameObject;
-        upgradeButton.onClick.RemoveAllListeners();
-        LevelController levelController = gameObject.GetComponent<LevelController>();
+        if (selectedTileForDemolish == null || selectedTileForDemolish.towerOnTile == null) return;
+
+        LevelController levelController = selectedTileForDemolish.towerOnTile.GetComponent<LevelController>();
         if (levelController != null)
         {
-            upgradeButton.onClick.AddListener(levelController.LevelUp);
+            levelController.LevelUp();
+            // LevelUp() sẽ tự bắn sự kiện -> OnTowerUpgradedOrEvolved() sẽ bắt
         }
+    }
+
+    public void SellSelectedTower()
+    {
+        if (selectedTileForDemolish == null) return;
+
+        GameObject towerToSell = selectedTileForDemolish.towerOnTile;
+
+        // (Logic hoàn tiền)
+        // Stats towerStats = towerToSell.GetComponent<Stats>();
+        // GameManager.Instance.AddMoney(towerStats.GetSellValue());
+
+        ObjectPoolManager.ReturnObject(towerToSell);
+        selectedTileForDemolish.towerOnTile = null;
+
+        DeselectAll();
     }
 }
