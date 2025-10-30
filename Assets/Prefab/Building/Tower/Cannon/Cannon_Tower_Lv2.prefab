@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerNameKey: 
-  evolutionLevel: 1
+  towerNameKey: Cannon_Tower
+  evolutionLevel: 2
   statsList:
   - cost: 100
     heath: 100
@@ -235,11 +235,6 @@ MonoBehaviour:
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
---- !u!1 &8281504776518351256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1215772418024952484, guid: d3d406de078b87147bba3818533208e6, type: 3}
-  m_PrefabInstance: {fileID: 7075887448962362172}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &-5331390117765686269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,3 +249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+--- !u!1 &8281504776518351256 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1215772418024952484, guid: d3d406de078b87147bba3818533208e6, type: 3}
+  m_PrefabInstance: {fileID: 7075887448962362172}
+  m_PrefabAsset: {fileID: 0}

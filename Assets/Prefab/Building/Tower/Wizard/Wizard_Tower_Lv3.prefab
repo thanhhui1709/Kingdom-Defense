@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.612541
+      value: -0.5823746
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000019073486
+      value: 0.05000305
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.92652
+      value: -42.935253
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
       propertyPath: m_LocalRotation.w
@@ -100,7 +100,39 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1450705415494882140}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5608692044896422237}
+    - targetCorrespondingSourceObject: {fileID: 1985890703936721205, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4345767491513184568}
   m_SourcePrefab: {fileID: 100100000, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
+--- !u!1 &5616042377641412446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1985890703936721205, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
+  m_PrefabInstance: {fileID: 6232838789933127275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4345767491513184568
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5616042377641412446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.725564, y: 21.634418, z: 5.519132}
+  m_Center: {x: -0.019836409, y: 10.733472, z: 0.000019326806}
 --- !u!1 &6538685744925403962 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
@@ -120,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerSkill: {fileID: 11400000, guid: 5ebde201de94ce24a9d07c39946cc2de, type: 2}
   projectilePrefab: {fileID: 5551972361978619668, guid: 401a92fc7bafa0c44b1cd694c8814dad, type: 3}
-  maxTarget: 1
+  maxTarget: 3
   shooter: {fileID: 8620609615401077500}
 --- !u!114 &3530706596849380340
 MonoBehaviour:
@@ -155,8 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerNameKey: 
-  evolutionLevel: 1
+  towerNameKey: Wizard_Tower
+  evolutionLevel: 3
   statsList:
   - cost: 100
     heath: 200
@@ -188,6 +220,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+--- !u!114 &5608692044896422237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538685744925403962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce9df8f8dd1bc0468ce4188fabb4598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shooterTransform: {fileID: 7936006280270340309}
+  projectilePrefab: {fileID: 5551972361978619668, guid: 401a92fc7bafa0c44b1cd694c8814dad, type: 3}
+--- !u!4 &7936006280270340309 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4061444705847948990, guid: 64ff915e892da5748894f63582bfcdae, type: 3}
+  m_PrefabInstance: {fileID: 6232838789933127275}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8620609615401077500 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6782998152746034025, guid: 64ff915e892da5748894f63582bfcdae, type: 3}

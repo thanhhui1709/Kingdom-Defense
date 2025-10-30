@@ -88,6 +88,7 @@ public class LevelController : MonoBehaviour
 
         subLevel++; // Tăng cấp nội bộ
         UpdateLevelState(); // Cập nhật lại trạng thái
+        
 
         // Bắn sự kiện để UIManager cập nhật (vì prefab không đổi)
         GameEvent.Instance.OnTriggerTowerLevelUp(gameObject);
@@ -118,6 +119,8 @@ public class LevelController : MonoBehaviour
                 transform.rotation,
                 ObjectPoolManager.PoolType.Tower
             );
+
+            newTower.tag = "Tower"; 
 
             // Bắn sự kiện (BuildManager và UIManager sẽ bắt sự kiện này)
             GameEvent.Instance.OnTriggerTowerLevelUp(newTower);
