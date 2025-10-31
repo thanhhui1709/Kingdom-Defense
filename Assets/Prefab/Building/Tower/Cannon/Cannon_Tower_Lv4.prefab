@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerNameKey: 
-  evolutionLevel: 1
+  towerNameKey: Cannon_Tower
+  evolutionLevel: 4
   statsList:
   - cost: 100
     heath: 100
