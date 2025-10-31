@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6367273701244389767}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8751683171997276310, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -85,23 +85,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8591600659090016061, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -6323517250463799867, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -5997576207594410641, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -2956021341180753486, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -1265010066589875126, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Name
@@ -109,7 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_TagString
@@ -117,19 +117,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1106515073692884238, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2182363576674557739, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7724411816146216878, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724411816146216878, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 8357525399185679087, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -177,6 +181,8 @@ MonoBehaviour:
   attackRange: 17
   triggerRange: 17
   money: 0
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!114 &-2667350274627466107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +199,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
   maxTarget: 3
   shooter: {fileID: 6507453961551258975}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &-3966603804504739397
 MonoBehaviour:
   m_ObjectHideFlags: 0

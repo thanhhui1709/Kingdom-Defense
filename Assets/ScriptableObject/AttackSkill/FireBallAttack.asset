@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a9d284de24e8ae4d827f0387a2b92b0, type: 3}
+  m_Name: FireBallAttack
+  m_EditorClassIdentifier: 
+  numberOfShoot: 1
+  fireRate: 0
+  projectile: {fileID: 6070664012787949308, guid: 031dd98a2eb88ea40880bc68e0e239a2, type: 3}
+  moveSpeed: 10
+  offfsetPos: {x: 0, y: 0, z: 0}
+  offsetRotation: {x: 0, y: 0, z: 0, w: 0}

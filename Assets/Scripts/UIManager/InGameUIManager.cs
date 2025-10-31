@@ -21,10 +21,22 @@ public class UpgradeTowerUI
     public Image healthFill;
 }
 
+
 public class InGameUIManager : MonoBehaviour
 {
+    // Lớp nội bộ để lưu trữ nút và giá tiền của nó
+    private class UnitButtonInfo
+    {
+        public Button button;
+        public int cost;
+    }
+    [Header("Buy Unit Settings")]
+    [Tooltip("Tham chiếu đến script SpawnUnit trong Scene")]
+    [SerializeField] private SpawnUnit spawnUnit;
+    [SerializeField] private GameObject unitButtonPrefab; // Prefab của nút mua lính
+    [SerializeField] private Transform buyUnitButtonContainer; // Layout Group chứa các nút
+
     [Header("Panel References")]
-    [SerializeField] private GameObject buyUnitPanel;
     [SerializeField] private UpgradeTowerUI upgradeTowerUI;
 
     [Header("Buy Tower Settings")]
@@ -39,13 +51,14 @@ public class InGameUIManager : MonoBehaviour
 
     // Biến lưu trụ đang được chọn để lắng nghe sự kiện
     private TowerHealth currentSelectedTowerHealth;
+    private List<UnitButtonInfo> unitButtons = new List<UnitButtonInfo>();
 
     void Start()
     {
         // Ẩn tất cả các panel khi bắt đầu
         ToggleBuyTowerPanel(false);
-        ToggleBuyUnitPanel(false); // Bạn có thể đổi thành true nếu muốn
         ToggleUpgradeTowerPanel(false);
+        PopulateUnitSpawnMenu();
 
         // Lưu ý: BuildManager sẽ tự gán nó khi gọi PopulateBuyTowerMenu
     }
@@ -68,7 +81,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void ToggleBuyUnitPanel(bool isActive)
     {
-        buyUnitPanel.SetActive(isActive);
+        buyUnitButtonContainer.gameObject.SetActive(isActive);
     }
 
     public void ToggleUpgradeTowerPanel(bool isActive)
@@ -161,15 +174,16 @@ public class InGameUIManager : MonoBehaviour
     /// <summary>
     /// Hiển thị và điền dữ liệu cho panel Nâng Cấp/Bán.
     /// </summary>
+    // Trong class InGameUIManager.cs
+
     public void ShowUpgradePanel(BuildableTile tile)
     {
         GameObject towerOnTile = tile.towerOnTile;
         if (towerOnTile == null) return;
 
-        // Lấy các component logic từ trụ
         LevelController levelController = towerOnTile.GetComponent<LevelController>();
         Stats towerStats = towerOnTile.GetComponent<Stats>();
-        TowerHealth towerHealth = towerOnTile.GetComponent<TowerHealth>(); // LẤY HEALTH
+        TowerHealth towerHealth = towerOnTile.GetComponent<TowerHealth>();
 
         if (levelController == null || towerStats == null || towerHealth == null)
         {
@@ -177,55 +191,135 @@ public class InGameUIManager : MonoBehaviour
             return;
         }
 
-        // --- 1. Xử lý ĐĂNG KÝ sự kiện Health ---
-
-        // Hủy đăng ký trụ CŨ (nếu có)
+        // (Logic đăng ký sự kiện thanh máu giữ nguyên...)
         UnsubscribeFromTowerHealth();
-
-        // Lưu và đăng ký trụ MỚI
         currentSelectedTowerHealth = towerHealth;
         currentSelectedTowerHealth.OnHealthChanged += UpdatePanelHealthBar;
-
-        // Cập nhật thanh máu lần đầu tiên ngay khi mở
         UpdatePanelHealthBar(towerHealth.CurrentHealth, towerHealth.MaxHealth);
 
-        // --- 2. Điền dữ liệu UI ---
-        // (Giả sử Stats có biến towerName và sprite)
-        upgradeTowerUI.towerName.text = towerOnTile.name.Substring(0,towerOnTile.name.Length-7);
+        // --- 1. ĐIỀN DỮ LIỆU (ĐÃ CẬP NHẬT) ---
+        upgradeTowerUI.towerName.text = towerOnTile.name;
         upgradeTowerUI.avatar.sprite = towerStats.sprite;
 
-        // (Giả sử Stats có hàm GetSellValue())
-        int sellCost = (int)(towerStats.Money*0.7);
+        // Hiển thị 70% giá trị bán
+        int sellCost = (int)(towerStats.TotalInvestedMoney * 0.7f);
         upgradeTowerUI.sellCostText.text = sellCost.ToString();
 
-        // --- 3. Kiểm tra trạng thái nâng cấp ---
+        // --- 2. KIỂM TRA TRẠNG THÁI NÂNG CẤP (ĐÃ CẬP NHẬT) ---
+        int playerMoney = Currency.Instance.GetBalance();
+        int nextLevelCost = levelController.GetNextLevelCost();
+
         if (levelController.IsReadyToEvolve() && levelController.IsAtMaxEvolution())
         {
-            // Đã max cả sub-level VÀ max cả tiến hóa
             upgradeTowerUI.upgradeCostText.text = "MAX";
             upgradeTowerUI.upgradeButton.interactable = false;
         }
         else
         {
-            // Vẫn còn nâng cấp được (sub-level hoặc tiến hóa)
-            upgradeTowerUI.upgradeCostText.text = levelController.GetNextLevelCost().ToString();
-            upgradeTowerUI.upgradeButton.interactable = true;
+            upgradeTowerUI.upgradeCostText.text = nextLevelCost.ToString();
+
+            // Vô hiệu hóa nút nếu không đủ tiền
+            upgradeTowerUI.upgradeButton.interactable = (playerMoney >= nextLevelCost);
         }
 
-        // --- 4. Thiết lập sự kiện (phải có buildManager) ---
+        // --- 3. THIẾT LẬP SỰ KIỆN (Giữ nguyên) ---
         if (buildManager == null)
         {
-            Debug.LogError("BuildManager chưa được gán cho UIManager! Hãy đảm bảo PopulateBuyTowerMenu được gọi trong Start.");
+            Debug.LogError("BuildManager chưa được gán cho UIManager!");
             return;
         }
-
         upgradeTowerUI.upgradeButton.onClick.RemoveAllListeners();
         upgradeTowerUI.upgradeButton.onClick.AddListener(buildManager.UpgradeSelectedTower);
 
         upgradeTowerUI.sellButton.onClick.RemoveAllListeners();
         upgradeTowerUI.sellButton.onClick.AddListener(buildManager.SellSelectedTower);
 
-        // --- 5. Hiển thị panel ---
+        // --- 4. HIỂN THỊ PANEL (Giữ nguyên) ---
         ToggleUpgradeTowerPanel(true);
+    }
+    public void PopulateUnitSpawnMenu()
+    {
+        if (spawnUnit == null)
+        {
+            Debug.LogError("Chưa gán SpawnUnit cho InGameUIManager!");
+            return;
+        }
+
+        // 1. Lấy dữ liệu từ "Database"
+        List<UnitData> units = UnitManager.Instance.GetAvailableUnits();
+
+        // 2. Xóa các nút cũ
+        foreach (Transform child in buyUnitButtonContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 3. Tạo các nút mới
+        foreach (UnitData unit in units)
+        {
+            // Chỉ tạo nút cho lính đã được mở khóa
+            if (!unit.isUnlocked)
+            {
+                continue;
+            }
+
+            GameObject buttonGO = Instantiate(unitButtonPrefab, buyUnitButtonContainer);
+            Button newButton = buttonGO.GetComponentInChildren<Button>();
+
+          
+
+            // 4. Điền dữ liệu vào nút
+            // (Giả sử prefab của bạn có các component này)
+
+            Image iconImg = buttonGO.transform.Find("KnightBtn/Icon").GetComponentInChildren<Image>();
+            TMP_Text costText = buttonGO.transform.Find("Price/CostText").GetComponentInChildren<TMP_Text>();
+
+            iconImg.sprite = unit.icon;
+            costText.text = unit.cost.ToString();
+
+            // tao unit button infor
+            UnitButtonInfo unitButtonInfo = new()
+            {
+                button = newButton,
+                cost =unit.cost
+
+
+            };
+            unitButtons.Add(unitButtonInfo);
+
+
+            // 5. Gán sự kiện OnClick
+            newButton.onClick.AddListener(() =>
+            {
+                // Khi nhấn nút, gọi hàm logic trong SpawnUnit
+                spawnUnit.AttemptToSpawnUnit(unit);
+            });
+            // --- THÊM MỚI ---
+            // Chạy kiểm tra 1 lần ngay lập tức
+            UpdateAllButtonStates();
+
+            // Bắt đầu 1 bộ đếm lặp, gọi hàm "UpdateAllButtonStates"
+            // lặp lại mỗi 0.25 giây.
+            InvokeRepeating(nameof(UpdateAllButtonStates), 0.25f, 0.25f);
+            // --- KẾT THÚC THÊM MỚI ---
+        }
+    }
+    private void UpdateAllButtonStates()
+    {
+        // 1. Lấy số tiền hiện tại
+        int currentMoney = Currency.Instance.GetBalance();
+
+        // 2. Cập nhật các nút mua lính
+        foreach (UnitButtonInfo info in unitButtons)
+        {
+            if (info.button != null) // Kiểm tra an toàn
+            {
+                // Nút chỉ có thể nhấn nếu tiền >= giá
+                info.button.interactable = (currentMoney >= info.cost);
+            }
+        }
+
+        // 3. (Tương lai) Cập nhật các nút mua trụ
+        // foreach (UnitButtonInfo info in towerButtons) { ... }
     }
 }

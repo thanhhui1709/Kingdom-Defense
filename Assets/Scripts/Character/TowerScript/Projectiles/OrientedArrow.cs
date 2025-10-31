@@ -45,9 +45,9 @@ public class OrientedArrow : MonoBehaviour,IProjectile
         }
     }
 
-    public void Launch(Transform launchPoint, List<GameObject> target, float damage)
+    public void Launch(List<GameObject> target, float damage)
     {
-        this.target = target.OrderBy(x=> Vector3.Distance(x.transform.position,launchPoint.position)).FirstOrDefault();
+        this.target = target.OrderBy(x=> Vector3.Distance(x.transform.position,transform.position)).FirstOrDefault();
         this.damage = damage;
     }
 }

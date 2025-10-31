@@ -1200,7 +1200,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4237678713561417744}
   serializedVersion: 5
-  m_Mass: 10
+  m_Mass: 50
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1301,6 +1301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   heath: 100
   ammor: 10
   attackDamage: 10
@@ -1309,6 +1310,7 @@ MonoBehaviour:
   attackRange: 5
   triggerRange: 7
   money: 30
+  totalInvestedMoney: 0
 --- !u!114 &3338762526867192611
 MonoBehaviour:
   m_ObjectHideFlags: 0

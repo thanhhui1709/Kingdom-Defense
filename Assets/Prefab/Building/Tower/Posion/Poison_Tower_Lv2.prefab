@@ -48,11 +48,43 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6760584356554072413, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -6532159450686868108, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -2708542401092827402, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -2669635724691823831, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
       propertyPath: m_Name
       value: Poison_Tower_Lv2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_TagString
+      value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 1638125045851221350, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383806499753665695, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383806499753665695, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}
       propertyPath: m_TagString
       value: Tower
       objectReference: {fileID: 0}
@@ -97,6 +129,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6745793394025541538, guid: d5aab9a57c500b5478e827a1535647b3, type: 3}
   maxTarget: 1
   shooter: {fileID: 3751130836491113770}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &6677857004005581851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +153,8 @@ MonoBehaviour:
   attackRange: 10
   triggerRange: 10
   money: 0
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!114 &7213573771703982944
 MonoBehaviour:
   m_ObjectHideFlags: 0

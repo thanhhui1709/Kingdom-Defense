@@ -50,11 +50,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6835891189525546521, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -6835891189525546521, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: -4794581096408881527, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_Name
@@ -62,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_TagString
@@ -70,11 +74,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1096938400272152473, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2060884476256281862, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -122,6 +126,8 @@ MonoBehaviour:
   attackRange: 10
   triggerRange: 10
   money: 0
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!114 &-8258784653923495060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +144,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
   maxTarget: 1
   shooter: {fileID: 2016874508122696362}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &-7354001152335525957
 MonoBehaviour:
   m_ObjectHideFlags: 0

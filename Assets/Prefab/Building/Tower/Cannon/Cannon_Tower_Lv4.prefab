@@ -50,15 +50,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7212592657350682407, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -6662905164502116183, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -5328908207854868161, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -5328908207854868161, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Name
@@ -66,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_TagString
@@ -74,15 +78,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2532414052260568504, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6655651104226935037, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8004442112754211019, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8579222528973238389, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -180,6 +184,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
   shooter: {fileID: 5051225906193602881}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &-7043202131718135327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +208,8 @@ MonoBehaviour:
   attackRange: 20
   triggerRange: 20
   money: 300
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!114 &3061264412336745440
 MonoBehaviour:
   m_ObjectHideFlags: 0

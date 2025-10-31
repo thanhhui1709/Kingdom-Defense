@@ -14,7 +14,7 @@ public class PremiumPoisonShell : MonoBehaviour, IProjectile
 
     private float damage;
     private Rigidbody rb;
-    public void Launch(Transform launchPoint, List<GameObject> target, float damage)
+    public void Launch(List<GameObject> target, float damage)
     {
         targetPos = target.FirstOrDefault().transform;
         targetPos.position = new Vector3(targetPos.position.x, 0, targetPos.position.z);

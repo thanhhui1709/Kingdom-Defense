@@ -29,7 +29,7 @@ public class BallistaShot : ATowerSkill
                 continue;
             }
 
-            projectileComp.Launch(shooter, new List<GameObject> { target }, damage);
+            projectileComp.Launch(new List<GameObject> { target }, damage);
         }
     }
 }

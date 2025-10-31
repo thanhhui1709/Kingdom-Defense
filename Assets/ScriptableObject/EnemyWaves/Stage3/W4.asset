@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: W4
   m_EditorClassIdentifier: 
   waveData:
-  - enemyPrefab: {fileID: 3837514653413292261, guid: eef44996e3aebbc47bd198f5aff10466, type: 3}
-    numberPerWave: 1
+  - enemyPrefab: {fileID: 205376564983567453, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+    numberPerWave: 2
     delaySpawnPrefab: 1
     delayForTheNextWaveData: 0
   delayForTheNextWave: 0

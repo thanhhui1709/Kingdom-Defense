@@ -50,19 +50,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6177917558566940711, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -5867987268465927417, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7496188427117012, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 553384111633344381, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Name
@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_TagString
@@ -78,11 +78,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1570676635014270620, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570676635014270620, guid: c59432643883658429ceac6cd684a3a0, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 6336736949555969838, guid: c59432643883658429ceac6cd684a3a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -164,6 +168,8 @@ MonoBehaviour:
   attackRange: 15
   triggerRange: 15
   money: 400
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!114 &5406559565738133759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +186,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5551972361978619668, guid: 401a92fc7bafa0c44b1cd694c8814dad, type: 3}
   maxTarget: 2
   shooter: {fileID: 8925347352775262707}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &8460708897215649274
 MonoBehaviour:
   m_ObjectHideFlags: 0

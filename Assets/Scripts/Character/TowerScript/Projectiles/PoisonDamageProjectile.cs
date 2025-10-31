@@ -28,7 +28,7 @@ public class PoisonDamageProjectile : MonoBehaviour, IProjectile
 
     public Color debuffColor = Color.green;
 
-    public void Launch(Transform launchPoint, List<GameObject> targets,float damage)
+    public void Launch(List<GameObject> targets,float damage)
     {
         if (targets != null && targets.Count > 0 && targets[0] != null)
         {

@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_TagString
@@ -86,27 +86,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1745035119669197898, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3718408260257044234, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6860302996382567554, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6880242162524650395, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7046889192226579917, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046889192226579917, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 8514981918342558423, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -180,6 +184,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
   shooter: {fileID: 5059069850543602814}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &-662157244601223794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +208,8 @@ MonoBehaviour:
   attackRange: 20
   triggerRange: 20
   money: 300
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!114 &924023304922949653
 MonoBehaviour:
   m_ObjectHideFlags: 0

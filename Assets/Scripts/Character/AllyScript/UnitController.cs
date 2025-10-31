@@ -2,9 +2,9 @@
 using UnityEngine.UI; // Cần cho UI
 using System.Collections.Generic;
 
-public class UnitManager : MonoBehaviour
+public class UnitController : MonoBehaviour
 {
-    public static UnitManager Instance { get; private set; }
+    public static UnitController Instance { get; private set; }
 
     public List<Unit> allUnits = new List<Unit>();
     public HashSet<Unit> selectedUnits = new HashSet<Unit>();

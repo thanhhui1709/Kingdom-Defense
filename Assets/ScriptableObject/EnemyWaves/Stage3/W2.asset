@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveData:
   - enemyPrefab: {fileID: 3410437373876898271, guid: 6441525018c9f1c42ad6b079c52cac5d, type: 3}
-    numberPerWave: 1
+    numberPerWave: 2
     delaySpawnPrefab: 0.5
     delayForTheNextWaveData: 5
   - enemyPrefab: {fileID: 3837514653413292261, guid: eef44996e3aebbc47bd198f5aff10466, type: 3}

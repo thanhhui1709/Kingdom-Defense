@@ -65,7 +65,7 @@ public class CannonShot : ATowerSkill
         IProjectile projectile1 = projectile.GetComponent<IProjectile>();
         if (projectile1 != null && shooterStats!=null)
         {
-            projectile1.Launch(barrel,targets,shooterStats.AttackDamage);
+            projectile1.Launch(targets,shooterStats.AttackDamage);
         }
 
         

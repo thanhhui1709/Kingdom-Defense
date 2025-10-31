@@ -35,7 +35,7 @@ public class PoisonShot : ATowerSkill
             // Bây giờ:  
             // Truyền trực tiếp cả danh sách 'targets' vào hàm Launch.
             // Script của viên đạn (PoisonSlowProjectile) sẽ tự xử lý việc chọn mục tiêu đầu tiên từ danh sách này.
-            projectileLogic.Launch(shooter, targets, damage);
+            projectileLogic.Launch(targets, damage);
         }
         else
         {

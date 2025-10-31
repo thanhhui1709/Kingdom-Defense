@@ -13,6 +13,6 @@ public class OrientedShot : ATowerSkill
         GameObject go = ObjectPoolManager.SpawnObject(projectile, shooter.position+ offset, Quaternion.identity,ObjectPoolManager.PoolType.TowerProjectile);
         IProjectile projectile1 = go.GetComponent<IProjectile>();
         if (projectile1 == null) Debug.LogError("Projectile does not implement IProjectile interface.");
-        projectile1.Launch(shooter, target,damage);
+        projectile1.Launch(target,damage);
     }
 }

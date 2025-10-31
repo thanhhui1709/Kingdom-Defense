@@ -4,60 +4,42 @@ using System.Collections.Generic;
 public class LevelController : MonoBehaviour
 {
     [Header("Level Config")]
-    [Tooltip("Key định danh cho trụ này, ví dụ: Const.ARCHER_TOWER_NAME")]
-    [SerializeField] private string towerNameKey; // DÙNG CÁI NÀY, ĐỪNG DÙNG SUBSTRING
-
-    [Tooltip("Cấp 'tiến hóa' hiện tại, ví dụ: 1, 2, 3...")]
+    [SerializeField] private string towerNameKey;
     [SerializeField] private int evolutionLevel = 1;
-
-    [Tooltip("Danh sách các chỉ số cộng thêm cho mỗi 'cấp' (sub-level)")]
     [SerializeField] private List<LevelStats> statsList = new List<LevelStats>();
 
     private Stats stats;
-    private int subLevel = 0; // Cấp nội bộ (0, 1, 2...)
-    private bool isReadyToEvolve = false; // Đã max cấp, sẵn sàng tiến hóa
+    private int subLevel = 0;
+    private bool isReadyToEvolve = false;
 
-    void Awake() // Dùng Awake để đảm bảo Stats được lấy trước
+    void Awake()
     {
         stats = GetComponent<Stats>();
     }
 
     void Start()
     {
-        // Khởi tạo trạng thái
         UpdateLevelState();
     }
 
-    /// <summary>
-    /// Kiểm tra xem đã max cấp (sẵn sàng tiến hóa) chưa
-    /// </summary>
     public bool IsReadyToEvolve()
     {
         return isReadyToEvolve;
     }
 
-    /// <summary>
-    /// Kiểm tra xem đã max tiến hóa (không thể nâng cấp được nữa)
-    /// </summary>
     public bool IsAtMaxEvolution()
     {
-        // Hỏi LevelUpManager xem còn cấp tiếp theo không
         return LevelUpManager.Instance.GetNextLevelPrefab(LevelUpType.Tower, towerNameKey, evolutionLevel) == null;
     }
 
-    /// <summary>
-    /// Hàm chính, được gọi bởi Button
-    /// </summary>
     public void LevelUp()
     {
         if (isReadyToEvolve)
         {
-            // 1. Đã max sub-level -> Tiến hóa
             EvolveTower();
         }
         else if (subLevel < statsList.Count)
         {
-            // 2. Chưa max sub-level -> Lên cấp
             ApplySubLevelStats();
         }
         else
@@ -73,24 +55,35 @@ public class LevelController : MonoBehaviour
     {
         LevelStats levelStats = statsList[subLevel];
 
-        // (Kiểm tra tiền ở đây)
-        // if (GameManager.Instance.Money < levelStats.cost) return;
-        // GameManager.Instance.SpendMoney(levelStats.cost);
+        // --- KIỂM TRA TIỀN (SUB-LEVEL) ---
+        if (!Currency.Instance.CheckBalance(levelStats.cost))
+        {
+            Debug.Log("Không đủ tiền để nâng cấp (sub-level)!");
+            return; 
+        }
+
+        // Đủ tiền, trừ tiền
+        Currency.Instance.SubMoney(levelStats.cost);
+
+        // Cập nhật tổng tiền đầu tư
+        stats.TotalInvestedMoney += levelStats.cost;
+        // --- KẾT THÚC LOGIC TIỀN ---
 
         // Cộng chỉ số
         stats.Ammor += levelStats.ammor;
         stats.Heath += levelStats.heath;
         stats.AttackDamage += levelStats.attackDamage;
+        stats.Money += levelStats.cost; // Cộng chi phí xây dựng cơ bản
         stats.AttackSpeed += levelStats.attackSpeed;
         stats.MoveSpeed += levelStats.moveSpeed;
         stats.AttackRange += levelStats.attackRange;
         stats.TriggerRange += levelStats.triggerRange;
 
-        subLevel++; // Tăng cấp nội bộ
-        UpdateLevelState(); // Cập nhật lại trạng thái
-        
 
-        // Bắn sự kiện để UIManager cập nhật (vì prefab không đổi)
+        subLevel++;
+        UpdateLevelState();
+
+        // Bắn sự kiện để UI cập nhật (vì prefab không đổi)
         GameEvent.Instance.OnTriggerTowerLevelUp(gameObject);
     }
 
@@ -99,38 +92,48 @@ public class LevelController : MonoBehaviour
     /// </summary>
     private void EvolveTower()
     {
+        // Lấy chi phí tiến hóa TRƯỚC
+        int cost = LevelUpManager.Instance.GetLevelUpCost(towerNameKey, evolutionLevel);
+
+        // --- KIỂM TRA TIỀN (EVOLVE) ---
+        if (cost == 0) // Không tìm thấy cấp tiếp theo
+        {
+            Debug.Log("Đã max cấp, không thể tiến hóa.");
+            return;
+        }
+        if (!Currency.Instance.CheckBalance(cost))
+        {
+            Debug.Log("Không đủ tiền để tiến hóa (evolve)!");
+            return; // Dừng lại
+        }
+        // --- KẾT THÚC LOGIC TIỀN ---
+
         GameObject nextLevelPrefab = LevelUpManager.Instance.GetNextLevelPrefab(
-            LevelUpType.Tower,
-            towerNameKey,
-            evolutionLevel
+            LevelUpType.Tower, towerNameKey, evolutionLevel
         );
 
         if (nextLevelPrefab != null)
         {
-            // (Kiểm tra tiền ở đây, dùng LevelUpManager để lấy cost)
-            // int cost = LevelUpManager.Instance.GetLevelUpCost(towerNameKey, evolutionLevel);
-            // if (GameManager.Instance.Money < cost) return;
-            // GameManager.Instance.SpendMoney(cost);
+            // Đã kiểm tra, giờ trừ tiền
+            Currency.Instance.SubMoney(cost);
 
             // Spawn trụ mới
             GameObject newTower = ObjectPoolManager.SpawnObject(
-                nextLevelPrefab,
-                transform.position,
-                transform.rotation,
-                ObjectPoolManager.PoolType.Tower
+                nextLevelPrefab, transform.position, transform.rotation, ObjectPoolManager.PoolType.Tower
             );
+            newTower.tag = "Tower";
 
-            newTower.tag = "Tower"; 
+            // --- CHUYỂN TIỀN ĐẦU TƯ SANG TRỤ MỚI ---
+            Stats newTowerStats = newTower.GetComponent<Stats>();
+            if (newTowerStats != null)
+            {
+                // Tiền của trụ mới = tiền của trụ cũ + tiền vừa tiêu
+                newTowerStats.TotalInvestedMoney = stats.TotalInvestedMoney + cost;
+            }
+            // --- KẾT THÚC ---
 
-            // Bắn sự kiện (BuildManager và UIManager sẽ bắt sự kiện này)
             GameEvent.Instance.OnTriggerTowerLevelUp(newTower);
-
-            // Trả trụ cũ về pool
             ObjectPoolManager.ReturnObject(gameObject);
-        }
-        else
-        {
-            Debug.Log("Đã đạt cấp tiến hóa tối đa!");
         }
     }
 
@@ -141,20 +144,15 @@ public class LevelController : MonoBehaviour
     {
         if (isReadyToEvolve)
         {
-            // Lấy chi phí tiến hóa
             return LevelUpManager.Instance.GetLevelUpCost(towerNameKey, evolutionLevel);
         }
         else if (subLevel < statsList.Count)
         {
-            // Lấy chi phí lên cấp nội bộ
             return statsList[subLevel].cost;
         }
         return 0; // Max
     }
 
-    /// <summary>
-    /// Cập nhật lại trạng thái (gọi sau khi lên cấp)
-    /// </summary>
     private void UpdateLevelState()
     {
         isReadyToEvolve = (subLevel >= statsList.Count);

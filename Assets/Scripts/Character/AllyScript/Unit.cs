@@ -39,20 +39,20 @@ public class Unit : MonoBehaviour
         health = GetComponent<UnitHealth>();
         anim = GetComponent<AnimationController>();
 
-     
+
     }
 
-    void Start()
+    void OnEnable()
     {
-        UnitManager.Instance.RegisterUnit(this);
+        UnitController.Instance.RegisterUnit(this);
         currentState = UnitState.Idle;
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
-        if (UnitManager.Instance != null)
+        if (UnitController.Instance != null)
         {
-            UnitManager.Instance.UnregisterUnit(this);
+            UnitController.Instance.UnregisterUnit(this);
         }
     }
 
@@ -175,13 +175,13 @@ public class Unit : MonoBehaviour
 
     public void Select()
     {
-       
+
         health.ShowHealthBar();
     }
 
     public void Deselect()
     {
-     
+
         health.HideHealthBar();
     }
 
@@ -202,5 +202,10 @@ public class Unit : MonoBehaviour
     {
         currentState = UnitState.Attacking; // Chuyển sang tấn công
         currentTarget = target; // Gán mục tiêu thủ công
+    }
+    public void AttackEnemy(int animationIndex)
+    {
+        AttackBehavior attackBehavior = stats.GetAttack(animationIndex);
+        attackBehavior.Execute(this,stats, currentTarget);
     }
 }

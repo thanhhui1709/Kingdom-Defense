@@ -51,12 +51,12 @@ public class LevelUpManager : MonoBehaviour
             return null;
         }
 
-        // Tối ưu: Dùng Linq.Find cho nhanh
+   
         LevelUpData nextLevelData = list.Find(data => data.type == type && data.level == currentLevel + 1);
 
         if (nextLevelData == null)
         {
-            // Debug.Log("Không tìm thấy cấp tiếp theo.");
+            Debug.Log("Không tìm thấy cấp tiếp theo.");
             return null;
         }
 
@@ -77,7 +77,7 @@ public class LevelUpManager : MonoBehaviour
         List<LevelUpData> list = GetListFromName(name);
         if (list == null) return 0;
 
-        LevelUpData nextLevelData = list.Find(data => data.level == currentLevel + 1);
+        LevelUpData nextLevelData = list.Find(data => data.level == currentLevel + 1 &&data.isUnlocked == true);
 
         // Trả về cost nếu tìm thấy, ngược lại trả về 0
         return nextLevelData?.cost ?? 0;

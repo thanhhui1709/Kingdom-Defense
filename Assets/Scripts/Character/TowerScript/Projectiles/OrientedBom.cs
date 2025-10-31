@@ -79,10 +79,10 @@ public class OrientedBom : MonoBehaviour, IProjectile
     }
 
     
-    public void Launch(Transform launchPoint, List<GameObject> targets, float damage)
+    public void Launch( List<GameObject> targets, float damage)
     {
       
-        this.target = targets.OrderBy(x => Vector3.Distance(x.transform.position, launchPoint.position)).FirstOrDefault();
+        this.target = targets.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
 
         
         this.damage = damage;

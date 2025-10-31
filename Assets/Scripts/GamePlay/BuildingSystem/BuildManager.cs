@@ -113,10 +113,29 @@ public class BuildManager : MonoBehaviour
     {
         if (selectedBuildableTile == null) return;
 
-        // (Logic kiểm tra tiền)
-        // if (GameManager.Instance.Money < towerToBuild.buildCost) return;
+        // Lấy chi phí xây dựng từ prefab
+        int buildCost = towerToBuild.towerPrefab.GetComponent<Stats>().Money;
+
+        // --- KIỂM TRA TIỀN (XÂY MỚI) ---
+        if (!Currency.Instance.CheckBalance(buildCost))
+        {
+            Debug.Log("Không đủ tiền xây trụ!");
+            return; // Dừng
+        }
+
+        // Đủ tiền, trừ tiền
+        Currency.Instance.SubMoney(buildCost);
+        // --- KẾT THÚC LOGIC TIỀN ---
 
         GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity, ObjectPoolManager.PoolType.Tower);
+
+        // --- GÁN TIỀN ĐẦU TƯ BAN ĐẦU ---
+        Stats newTowerStats = newTower.GetComponent<Stats>();
+        if (newTowerStats != null)
+        {
+            newTowerStats.TotalInvestedMoney = buildCost;
+        }
+        // --- KẾT THÚC ---
 
         BuildableTile tileScript = selectedBuildableTile.GetComponent<BuildableTile>();
         tileScript.towerOnTile = newTower;
@@ -142,10 +161,19 @@ public class BuildManager : MonoBehaviour
         if (selectedTileForDemolish == null) return;
 
         GameObject towerToSell = selectedTileForDemolish.towerOnTile;
+        Stats towerStats = towerToSell.GetComponent<Stats>();
 
-        // (Logic hoàn tiền)
-        // Stats towerStats = towerToSell.GetComponent<Stats>();
-        // GameManager.Instance.AddMoney(towerStats.GetSellValue());
+        if (towerStats != null)
+        {
+            // --- LOGIC BÁN TRỤ (70%) ---
+            int sellAmount = (int)(towerStats.TotalInvestedMoney * 0.7f);
+            Currency.Instance.AddMoney(sellAmount);
+            // --- KẾT THÚC ---
+        }
+        else
+        {
+            Debug.LogError("Trụ bị bán không có Stats!");
+        }
 
         ObjectPoolManager.ReturnObject(towerToSell);
         selectedTileForDemolish.towerOnTile = null;
