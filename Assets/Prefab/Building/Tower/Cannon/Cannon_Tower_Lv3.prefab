@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
+  towerSkill: {fileID: 11400000, guid: 28ec91cf9b20de74abb84266761e29b3, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
   shooter: {fileID: 5059069850543602814}
@@ -198,7 +198,7 @@ MonoBehaviour:
   attackDamage: 100
   attackSpeed: 0.4
   moveSpeed: 0
-  attackRange: 20
+  attackRange: 30
   triggerRange: 20
   money: 300
 --- !u!114 &924023304922949653

@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
+  towerSkill: {fileID: 11400000, guid: 3375fad0a0ce28f47aba1d729bb33986, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
   shooter: {fileID: 5051225906193602881}
@@ -198,7 +198,7 @@ MonoBehaviour:
   attackDamage: 100
   attackSpeed: 0.4
   moveSpeed: 0
-  attackRange: 20
+  attackRange: 35
   triggerRange: 20
   money: 300
 --- !u!114 &3061264412336745440
@@ -254,8 +254,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
---- !u!1 &9112661172314855729 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -7212592657350682407, guid: fe21bcde790470d409bf014af0b0667c, type: 3}
-  m_PrefabInstance: {fileID: 7318653130459562472}
-  m_PrefabAsset: {fileID: 0}
