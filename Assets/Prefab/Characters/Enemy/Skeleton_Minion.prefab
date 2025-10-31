@@ -78,15 +78,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.81
+      value: -14.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.10110092
+      value: 0.10110474
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.1380334
+      value: -33.17857
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       propertyPath: m_LocalRotation.w
@@ -775,6 +775,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8281298809940148392}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5107788957448736759}
   m_SourcePrefab: {fileID: 100100000, guid: d7627be019c37a5488d541957bcd5c48, type: 3}
 --- !u!4 &4882465860427763544 stripped
 Transform:
@@ -922,7 +925,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heath: 500
+  sprite: {fileID: 0}
+  heath: 2000
   ammor: 10
   attackDamage: 10
   attackSpeed: 1
@@ -945,6 +949,20 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &5107788957448736759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6540222376654014055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a00b92d088fb548afdac5d68ef0af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 0
 --- !u!1001 &8325190703793189210
 PrefabInstance:
   m_ObjectHideFlags: 0

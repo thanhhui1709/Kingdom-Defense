@@ -89,6 +89,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7354001152335525957}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4288291800067366533}
     - targetCorrespondingSourceObject: {fileID: -6835891189525546521, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7177062657822014330}
@@ -110,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 3faf73b7c628a414896d8c602c5c0731, type: 3}
   heath: 100
   ammor: 10
   attackDamage: 100
@@ -146,7 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerLevel: 2
+  towerNameKey: Archer_Tower
+  evolutionLevel: 2
   statsList:
   - cost: 100
     heath: 100
@@ -172,6 +177,20 @@ MonoBehaviour:
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
+--- !u!114 &4288291800067366533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016874508122696362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25682741f63de914f8e829d5168e6c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
 --- !u!1 &3899554681217084956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6835891189525546521, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}

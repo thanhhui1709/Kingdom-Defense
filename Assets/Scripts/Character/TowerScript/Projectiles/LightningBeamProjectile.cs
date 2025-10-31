@@ -1,84 +1,108 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿// File: LightningBeam.cs
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
 public class LightningBeam : MonoBehaviour
 {
-    [SerializeField] int segments = 20;            // >= 2
-    [SerializeField] float amplitude = 0.5f;       // biên độ jitter
-    [SerializeField] float frequency = 1.5f;       // tần số noise theo không gian
-    [SerializeField] float speed = 3f;             // speed của noise theo thời gian
-    [SerializeField] Vector3 up = Vector3.up;      // dùng để tính perpendicular
-    [SerializeField] bool usePerpendicular = true; // nếu false thì jitter trong 3D
-    [SerializeField] bool useWorldSpace = true;
+    [Header("Visual Effects")]
+    [SerializeField] int segments = 20;            // Số đoạn của tia sét (>= 2)
+    [SerializeField] float amplitude = 0.5f;       // Biên độ cong của tia sét
+    [SerializeField] float frequency = 1.5f;       // Tần số nhiễu (noise)
+    [SerializeField] float speed = 3f;             // Tốc độ thay đổi của hiệu ứng theo thời gian
+    [SerializeField] Vector3 up = Vector3.up;      // Vector dùng để tính phương vuông góc
+    [SerializeField] bool usePerpendicular = true; // Nếu false, tia sét sẽ cong trong không gian 3D
+    [SerializeField] bool useWorldSpace = true;    // Nên để true để tia sét nối đúng giữa 2 vật thể
 
+    // Các biến trạng thái của tia sét
     private LineRenderer lr;
     private Transform shooter;
     private Transform target;
-    private float seed;
+    private EnemyHealth targetHealth; // Thay "EnemyHealth" bằng tên script máu của đối thủ
     private float damagePerSecond;
-    private EnemyHealth targetHealth;
+    private float seed; // Hạt giống ngẫu nhiên để mỗi tia sét có hình dạng khác nhau
 
     void Awake()
     {
+        // Lấy component LineRenderer khi đối tượng được tạo
         lr = GetComponent<LineRenderer>();
         lr.positionCount = Mathf.Max(2, segments);
         lr.useWorldSpace = useWorldSpace;
+
+        // Tạo một seed ngẫu nhiên để hiệu ứng Perlin Noise không bị trùng lặp giữa các tia sét
         seed = Random.Range(-1000f, 1000f);
     }
 
-    public void Launch(Transform launchPoint, List<GameObject> targets, float damage)
+    private void OnDisable()
     {
+        // Rất quan trọng cho Object Pooling:
+        // Reset lại trạng thái khi tia sét được trả về pool để sẵn sàng cho lần sử dụng sau.
+        shooter = null;
+        target = null;
+        targetHealth = null;
+    }
 
+    /// <summary>
+    /// Hàm khởi động, được gọi bởi ContinuousBeamManager.
+    /// </summary>
+    /// <param name="launchPoint">Vị trí bắn (thường là một đối tượng con của trụ).</param>
+    /// <param name="singleTarget">Mục tiêu duy nhất mà tia sét này sẽ tấn công.</param>
+    /// <param name="damageFromTower">Sát thương mỗi giây được truyền từ chỉ số của trụ.</param>
+    public void Launch(Transform launchPoint, GameObject singleTarget, float damageFromTower)
+    {
         this.shooter = launchPoint;
-        this.target = targets.FirstOrDefault().transform;
-        this.damagePerSecond = damage;
-        this.targetHealth = target.GetComponent<EnemyHealth>();
-
+        this.target = singleTarget.transform;
+        this.damagePerSecond = damageFromTower;
+        this.targetHealth = singleTarget.GetComponent<EnemyHealth>(); // Lấy component máu của mục tiêu
     }
 
     void Update()
     {
-        if (shooter == null || target == null) return;
-        if (!target.gameObject.activeInHierarchy)
+        // Nếu không có trụ hoặc mục tiêu, ngừng xử lý.
+        // ContinuousBeamManager sẽ chịu trách nhiệm dọn dẹp và trả tia sét này về pool.
+        if (shooter == null || target == null)
         {
-            ObjectPoolManager.ReturnObject(gameObject);
-
             return;
         }
 
+        // Cập nhật hiệu ứng hình ảnh và gây sát thương trong mỗi frame
+        UpdateVisuals();
+        DealContinuousDamage();
+    }
+
+    /// <summary>
+    /// Cập nhật vị trí các điểm của LineRenderer để tạo hiệu ứng sét giật.
+    /// </summary>
+    private void UpdateVisuals()
+    {
         Vector3 start = shooter.position;
         Vector3 end = target.position;
 
-        // đảm bảo line renderer có đủ điểm
+        // Đảm bảo LineRenderer có đủ số điểm
         int seg = Mathf.Max(2, segments);
         if (lr.positionCount != seg) lr.positionCount = seg;
 
-        // hướng chính và perpendicular
+        // Hướng chính và phương vuông góc
         Vector3 dir = (end - start);
-        float totalDist = dir.magnitude;
         Vector3 forward = dir.normalized;
-
         Vector3 perp = Vector3.Cross(forward, up).normalized;
-        if (perp.sqrMagnitude < 0.0001f) // nếu forward trùng với up -> dùng khác
-            perp = Vector3.Cross(forward, Vector3.forward).normalized;
+        if (perp.sqrMagnitude < 0.0001f) // Xử lý trường hợp hướng bắn song song với vector "up"
+            perp = Vector3.Cross(forward, Vector3.right).normalized;
 
-        // build positions vào mảng (hiệu năng tốt hơn gọi SetPosition nhiều lần)
+        // Tạo một mảng để chứa vị trí các điểm (hiệu năng tốt hơn gọi SetPosition nhiều lần)
         Vector3[] positions = new Vector3[seg];
 
         for (int i = 0; i < seg; i++)
         {
-            float t = (float)i / (seg - 1);                 // 0..1
-            Vector3 basePos = Vector3.Lerp(start, end, t); // điểm dọc theo đường
+            float t = (float)i / (seg - 1);                 // Tỷ lệ vị trí từ 0 đến 1
+            Vector3 basePos = Vector3.Lerp(start, end, t);  // Vị trí cơ bản trên đường thẳng
 
-            // noise: dùng perlin 2D (x = seed + i*frequency, y = Time*timeSpeed)
+            // Sử dụng Perlin Noise để tạo ra giá trị ngẫu nhiên mượt mà
             float nx = seed + i * frequency;
             float ny = Time.time * speed;
-            float p = Mathf.PerlinNoise(nx, ny);           // 0..1
-            float n = (p - 0.5f) * 2f;                     // -1..1
+            float p = Mathf.PerlinNoise(nx, ny);            // Giá trị từ 0..1
+            float n = (p - 0.5f) * 2f;                      // Chuyển về khoảng -1..1
 
-            // tính offset vuông góc (càng xa seed có thể khác)
+            // Tính toán độ lệch so với đường thẳng
             Vector3 offset = Vector3.zero;
             if (usePerpendicular)
             {
@@ -86,19 +110,31 @@ public class LightningBeam : MonoBehaviour
             }
             else
             {
-                // jitter 3D nhỏ
-                offset = Random.onUnitSphere * amplitude * 0.3f; // nếu muốn 3D, nhưng Random gây flicker -> tránh
+                // Jitter 3D (ít được dùng hơn vì có thể gây rung lắc khó kiểm soát)
+                offset = new Vector3(Mathf.PerlinNoise(nx, ny) - 0.5f, Mathf.PerlinNoise(ny, nx) - 0.5f, 0) * (2f * amplitude);
             }
 
-            // giảm jitter ở 2 đầu (start/end) để giữ chắc điểm nối
+            // Giảm độ lệch ở hai đầu để tia sét luôn nối chính xác vào trụ và mục tiêu
             float edgeFade = 1f;
-            float edgeDist = 0.15f; // phần tỷ lệ hai đầu giảm dần
-            if (t < edgeDist) edgeFade = Mathf.InverseLerp(0f, edgeDist, t);           // ~0->1
+            float edgeDist = 0.15f; // 15% ở mỗi đầu sẽ bị giảm hiệu ứng
+            if (t < edgeDist) edgeFade = Mathf.InverseLerp(0f, edgeDist, t);
             else if (t > 1f - edgeDist) edgeFade = Mathf.InverseLerp(1f, 1f - edgeDist, t);
 
             positions[i] = basePos + offset * edgeFade;
         }
 
         lr.SetPositions(positions);
+    }
+
+    /// <summary>
+    /// Gây sát thương liên tục cho mục tiêu.
+    /// </summary>
+    private void DealContinuousDamage()
+    {
+        if (targetHealth != null)
+        {
+            // Sát thương trong frame này = Sát thương mỗi giây * thời gian của frame
+            targetHealth.TakeDamage(damagePerSecond * Time.deltaTime);
+        }
     }
 }
