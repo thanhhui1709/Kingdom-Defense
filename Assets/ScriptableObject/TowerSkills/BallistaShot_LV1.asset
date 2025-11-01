@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: BallistaShot_LV1
   m_EditorClassIdentifier: 
   numberOfEnemy: 3
+  launchOffset: -1.5

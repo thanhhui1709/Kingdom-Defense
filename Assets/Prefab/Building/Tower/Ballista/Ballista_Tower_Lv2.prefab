@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6507453961551258975
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6367273701244389767}
-  m_Layer: 9
-  m_Name: ShootPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6367273701244389767
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6507453961551258975}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 0.41, z: -1.74}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7214680197297357654}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3326010522718474841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,10 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -3875367713577840369, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6367273701244389767}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
       insertIndex: -1
@@ -192,7 +158,7 @@ MonoBehaviour:
   towerSkill: {fileID: 11400000, guid: 47433f2ae74ebe64184a0e9a27d5bd4f, type: 2}
   projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
   maxTarget: 3
-  shooter: {fileID: 6507453961551258975}
+  shooter: {fileID: 8706098763060091883}
 --- !u!114 &-3966603804504739397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,8 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
---- !u!4 &7214680197297357654 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3875367713577840369, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
+--- !u!1 &8706098763060091883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2956021341180753486, guid: 16466f8914901604d942fe7ad0d5e5c2, type: 3}
   m_PrefabInstance: {fileID: 3326010522718474841}
   m_PrefabAsset: {fileID: 0}

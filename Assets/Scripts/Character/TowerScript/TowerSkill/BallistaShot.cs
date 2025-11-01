@@ -6,6 +6,7 @@ using UnityEngine;
 public class BallistaShot : ATowerSkill
 {
     [SerializeField] private int numberOfEnemy;
+    [SerializeField] private float launchOffset = 1.0f;
 
     public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets,float damage)
     {
@@ -17,9 +18,11 @@ public class BallistaShot : ATowerSkill
             .Take(numberOfEnemy)
             .ToList();
 
+        Vector3 spawnPosition = shooter.position + shooter.forward * launchOffset;
+
         foreach (var target in sortedTargets)
         {
-            GameObject go = Instantiate(projectile, shooter.position, Quaternion.identity);
+            GameObject go = Instantiate(projectile, spawnPosition, Quaternion.identity);
             IProjectile projectileComp = go.GetComponent<IProjectile>();
 
             if (projectileComp == null)

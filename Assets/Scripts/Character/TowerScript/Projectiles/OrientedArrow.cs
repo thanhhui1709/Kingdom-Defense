@@ -34,7 +34,6 @@ public class OrientedArrow : MonoBehaviour,IProjectile
             Destroy(gameObject);
             if(explosionEffect != null)
             {
-
                 ObjectPoolManager.SpawnObject(explosionEffect, transform.position, Quaternion.identity,ObjectPoolManager.PoolType.Particle);
             }
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
