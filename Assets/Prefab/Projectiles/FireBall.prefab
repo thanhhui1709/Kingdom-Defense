@@ -80,7 +80,7 @@ PrefabInstance:
       addedObject: {fileID: 1934478423466538322}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64e5c233f89a0454597e18514992bd96, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2879494815936820568}
+      addedObject: {fileID: 3066710731194026475}
   m_SourcePrefab: {fileID: 100100000, guid: 64e5c233f89a0454597e18514992bd96, type: 3}
 --- !u!1 &6070664012787949308 stripped
 GameObject:
@@ -133,9 +133,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.009939723
-  m_Center: {x: 0.000000055413693, y: -0.00000005029141, z: -0.000000027939672}
---- !u!114 &2879494815936820568
+  m_Radius: 0.9376187
+  m_Center: {x: 0.11, y: 0.78, z: 0}
+--- !u!114 &3066710731194026475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,8 +144,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6070664012787949308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f8a93ead4cba8469f2156b64db1d6a, type: 3}
+  m_Script: {fileID: 11500000, guid: 577766c4d52571144aff87c47474adcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  explosionEffect: {fileID: 0}
+  speed: 7
+  rotationSpeed: 360

@@ -10,6 +10,7 @@ public class OrientedArrow : MonoBehaviour,IProjectile
     private float damage;
     [SerializeField] private float speed = 10f;
     public GameObject explosionEffect;
+    public int ignoreArmor = 10;
     void Awake()
     {
         rb=GetComponent<Rigidbody>();
@@ -31,17 +32,26 @@ public class OrientedArrow : MonoBehaviour,IProjectile
     {
         if(other.gameObject == target)
         {
-            Destroy(gameObject);
-            if(explosionEffect != null)
+            if (explosionEffect != null)
             {
 
-                ObjectPoolManager.SpawnObject(explosionEffect, transform.position, Quaternion.identity,ObjectPoolManager.PoolType.Particle);
+                ObjectPoolManager.SpawnObject(explosionEffect, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Particle);
             }
-            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            if(enemyHealth != null)
+            IHealthSystem enemyHealth = other.GetComponent<IHealthSystem>();
+            if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage);
+               if(enemyHealth as EnemyHealth)
+                {
+                    EnemyHealth eh = enemyHealth as EnemyHealth;
+                    eh.TakeDamage(damage,10);
+                }
+                else
+                {
+                    enemyHealth.TakeDamage(damage);
+                }
             }
+            ObjectPoolManager.ReturnObject(gameObject);
+           
         }
     }
 

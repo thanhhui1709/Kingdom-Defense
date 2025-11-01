@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FireArrow
   m_EditorClassIdentifier: 
   numberOfShoot: 1
-  fireRate: 0
+  fireRate: 1
   projectile: {fileID: 1249633527955674889, guid: 6a9a4ffcdcecfcb4fbc78630cdb3d237, type: 3}
-  offsetPos: {x: 0, y: 0, z: 0}
-  offsetRotation: {x: 0, y: 0, z: 0, w: 0}
+  offsetPos: {x: 0.45, y: 1, z: 1.5}
+  offsetRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  damageMultiplier: 1

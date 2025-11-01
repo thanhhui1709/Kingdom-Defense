@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitHealth : MonoBehaviour, IHealthSystem
@@ -16,6 +17,8 @@ public class UnitHealth : MonoBehaviour, IHealthSystem
 
     private Canvas healthBarCanvas; 
     private bool hasDie;
+    private AnimationController anim;
+    private Rigidbody rb;
 
     // Awake được gọi trước OnEnable, lý tưởng để lấy component
     void Awake()
@@ -26,6 +29,8 @@ public class UnitHealth : MonoBehaviour, IHealthSystem
             // Lấy Canvas cha của thanh máu để xoay nó
             healthBarCanvas = healthBar.GetComponentInParent<Canvas>();
         }
+        anim = GetComponent<AnimationController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // OnEnable được gọi mỗi khi object được lấy ra từ Pool
@@ -33,8 +38,9 @@ public class UnitHealth : MonoBehaviour, IHealthSystem
     private void OnEnable()
     {
         hasDie = false;
+        rb.isKinematic = false; // Kích hoạt vật lý lại
+        anim.Play(AnimationType.Die, false);
 
-     
         maxHealth = stats.Heath;
         currentHealth = maxHealth;
 
@@ -75,11 +81,17 @@ public class UnitHealth : MonoBehaviour, IHealthSystem
     public void Die()
     {
         hasDie = true;
-
+        rb.isKinematic = true; // Vô hiệu hóa vật lý
         HideHealthBar(); // Ẩn khi chết
-        ObjectPoolManager.ReturnObject(gameObject);
+        anim.Play(AnimationType.Die, true);
+        StartCoroutine(DisableAfterTime(5f)); // Chờ 5 giây trước khi tắt   
 
-       
+
+    }
+    IEnumerator DisableAfterTime(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ObjectPoolManager.ReturnObject(gameObject);
     }
 
     public bool HasDie()

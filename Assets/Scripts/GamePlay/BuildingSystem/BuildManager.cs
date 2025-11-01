@@ -114,7 +114,7 @@ public class BuildManager : MonoBehaviour
         if (selectedBuildableTile == null) return;
 
         // Lấy chi phí xây dựng từ prefab
-        int buildCost = towerToBuild.towerPrefab.GetComponent<Stats>().Money;
+        int buildCost = towerToBuild.buildCost;
 
         // --- KIỂM TRA TIỀN (XÂY MỚI) ---
         if (!Currency.Instance.CheckBalance(buildCost))

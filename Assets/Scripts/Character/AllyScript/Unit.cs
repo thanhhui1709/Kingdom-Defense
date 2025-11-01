@@ -206,6 +206,7 @@ public class Unit : MonoBehaviour
     public void AttackEnemy(int animationIndex)
     {
         AttackBehavior attackBehavior = stats.GetAttack(animationIndex);
+        attackBehavior=Instantiate(attackBehavior);
         attackBehavior.Execute(this,stats, currentTarget);
     }
 }

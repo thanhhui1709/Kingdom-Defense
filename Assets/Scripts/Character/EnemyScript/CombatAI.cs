@@ -217,6 +217,7 @@ public class CombatAI : MonoBehaviour
     {
         if (currentTarget == null) return;
         AttackBehavior attackToUse = stats.GetAttack(id);
+        attackToUse=Instantiate(attackToUse); // Phải Instantiate để tránh xung đột khi nhiều kẻ tấn công cùng lúc
         if (attackToUse != null)
         {
             attackToUse.Execute(this, stats, currentTarget);

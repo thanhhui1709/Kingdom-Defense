@@ -52,6 +52,7 @@ public class InGameUIManager : MonoBehaviour
     // Biến lưu trụ đang được chọn để lắng nghe sự kiện
     private TowerHealth currentSelectedTowerHealth;
     private List<UnitButtonInfo> unitButtons = new List<UnitButtonInfo>();
+    private List<GameObject> buyTowerBtns= new List<GameObject>();
 
     void Start()
     {
@@ -133,6 +134,7 @@ public class InGameUIManager : MonoBehaviour
             {
                 builder.SelectAndPlaceTower(towerData);
             });
+            buyTowerBtns.Add(buttonGO);
         }
     }
 
@@ -319,7 +321,22 @@ public class InGameUIManager : MonoBehaviour
             }
         }
 
-        // 3. (Tương lai) Cập nhật các nút mua trụ
-        // foreach (UnitButtonInfo info in towerButtons) { ... }
+        foreach (var btn in buyTowerBtns)
+        {
+            if (btn != null)
+            {
+                // Nút chỉ có thể nhấn nếu tiền >= giá
+                // Giả sử bạn có cách lấy giá từ nút trụ
+                TMP_Text costText = btn.transform.Find("CostText").GetComponent<TMP_Text>();
+                Button button = btn.GetComponentInChildren<Button>();
+                if (int.TryParse(costText.text, out int towerCost))
+                {
+                    button.interactable = (currentMoney >= towerCost);
+                }
+            }
+
+            // 3. (Tương lai) Cập nhật các nút mua trụ
+            // foreach (UnitButtonInfo info in towerButtons) { ... }
+        }
     }
 }

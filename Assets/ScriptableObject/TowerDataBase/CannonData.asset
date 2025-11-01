@@ -15,5 +15,5 @@ MonoBehaviour:
   towerName: Cannon
   towerPrefab: {fileID: 2380547163063386895, guid: 23e09605a8d2c6241bbbc0ae8073edbe, type: 3}
   towerIcon: {fileID: 21300000, guid: 4e638a61966f3844e9e8093e44e27b37, type: 3}
-  buildCost: 0
+  buildCost: 100
   isUnlocked: 1

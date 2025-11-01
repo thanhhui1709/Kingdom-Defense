@@ -1123,7 +1123,7 @@ MonoBehaviour:
   moveSpeed: 3
   attackRange: 5
   triggerRange: 10
-  money: 0
+  money: 200
   attackList:
   - {fileID: 11400000, guid: f912d7cbf64f7a542bb0e58593de418e, type: 2}
   - {fileID: 11400000, guid: afd3e8b9d4386a140b1c0c01cdeebdb2, type: 2}

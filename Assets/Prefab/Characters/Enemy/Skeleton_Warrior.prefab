@@ -1395,7 +1395,7 @@ MonoBehaviour:
   moveSpeed: 3
   attackRange: 3
   triggerRange: 10
-  money: 0
+  money: 200
   attackList:
   - {fileID: 11400000, guid: bc83d1b2f9f0a904dad0eaf3b3622a7c, type: 2}
   - {fileID: 11400000, guid: 33dafb272267bab46ae6567810424bde, type: 2}
@@ -1475,7 +1475,6 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   showDuration: 3
-  anim: {fileID: 4006451594618840035}
 --- !u!4 &4470464273914421855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 730fb4efc0ab8f44ea4a6cbc6ce8418c, type: 3}

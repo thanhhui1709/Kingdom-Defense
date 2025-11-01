@@ -1305,9 +1305,11 @@ MonoBehaviour:
   attackDamage: 10
   attackSpeed: 1
   moveSpeed: 3
-  attackRange: 5
-  triggerRange: 7
+  attackRange: 10
+  triggerRange: 15
   money: 30
+  attackList:
+  - {fileID: 11400000, guid: 119ad643fedc45647a9b725c1128c2cd, type: 2}
   totalInvestedMoney: 0
 --- !u!114 &2715309516261149350
 MonoBehaviour:

@@ -1390,8 +1390,8 @@ MonoBehaviour:
   attackDamage: 10
   attackSpeed: 1
   moveSpeed: 3
-  attackRange: 2
-  triggerRange: 5
+  attackRange: 5
+  triggerRange: 12
   money: 30
   attackList:
   - {fileID: 11400000, guid: ceabc34a40225b34189e036782d6a634, type: 2}

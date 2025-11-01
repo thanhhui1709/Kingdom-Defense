@@ -15,5 +15,5 @@ MonoBehaviour:
   towerName: Ballista
   towerPrefab: {fileID: 7943674416711679487, guid: 22ee0491921c430438e386e49994402c, type: 3}
   towerIcon: {fileID: 21300000, guid: 55a5e95fa2922234aa85d8a73eac6237, type: 3}
-  buildCost: 0
+  buildCost: 80
   isUnlocked: 1

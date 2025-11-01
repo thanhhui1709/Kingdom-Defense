@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using static Unity.Collections.Unicode;
@@ -13,6 +13,8 @@ public class RangeAttack : AttackBehavior
     public Vector3 offsetPos;
     public Quaternion offsetRotation;
     public float damageMultiplier = 1f;
+
+    private int count = 0;
     public override void Execute(MonoBehaviour runner, Stats attackerStats, GameObject target)
     {
         if (projectile == null)
@@ -20,24 +22,46 @@ public class RangeAttack : AttackBehavior
             Debug.Log("No projectile assigned for RangeAttack.");
             return;
         }
-        runner.StartCoroutine(SpawnProjectile(runner, attackerStats, target));
 
+        runner.StartCoroutine(ShootRoutine(runner, attackerStats, target));
 
 
     }
-    IEnumerator SpawnProjectile(MonoBehaviour runner, Stats attackerStats, GameObject target)
+    private IEnumerator ShootRoutine(MonoBehaviour runner, Stats attackerStats, GameObject target)
     {
-        for (int i = 0; i < numberOfShoot; i++)
+        while ((target != null && target.activeInHierarchy) && count < numberOfShoot) // vẫn bắn khi mục tiêu còn sống
         {
+            SpawnProjectile(runner, attackerStats, target);
 
-            GameObject project = ObjectPoolManager.SpawnObject(projectile, runner.transform.position + offsetPos, Quaternion.identity * offsetRotation, ObjectPoolManager.PoolType.EnemyProjectile);
-
-            IProjectile prj = project.GetComponent<IProjectile>();
-            if (prj != null)
-            {
-                prj.Launch(new List<GameObject> { target }, attackerStats.AttackDamage*damageMultiplier);
-            }
+            yield return new WaitForSeconds(1f / fireRate);
         }
-        yield return new WaitForSeconds(1f / fireRate);
     }
+    private void SpawnProjectile(MonoBehaviour runner, Stats attackerStats, GameObject target)
+    {
+
+
+        Vector3 spawnPos = runner.transform.position + (runner.transform.rotation * offsetPos);
+
+        GameObject proj = ObjectPoolManager.SpawnObject(
+            projectile,
+            spawnPos,
+            Quaternion.identity,
+            ObjectPoolManager.PoolType.EnemyProjectile
+        );
+
+        Vector3 dir = (target.transform.position - proj.transform.position).normalized;
+        proj.transform.right = dir;
+
+        if (offsetRotation != Quaternion.identity)
+            proj.transform.rotation *= offsetRotation;
+
+        if (proj.TryGetComponent<IProjectile>(out var prj))
+        {
+            prj.Launch(new List<GameObject> { target }, attackerStats.AttackDamage * damageMultiplier);
+        }
+        count++;
+
+    }
+
+
 }
