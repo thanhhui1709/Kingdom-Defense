@@ -15,7 +15,7 @@ public class LightningBeam : MonoBehaviour
 
     // Các biến trạng thái của tia sét
     private LineRenderer lr;
-    private Transform shooter;
+    private Vector3 shooter;
     private Transform target;
     private EnemyHealth targetHealth; // Thay "EnemyHealth" bằng tên script máu của đối thủ
     private float damagePerSecond;
@@ -36,7 +36,7 @@ public class LightningBeam : MonoBehaviour
     {
         // Rất quan trọng cho Object Pooling:
         // Reset lại trạng thái khi tia sét được trả về pool để sẵn sàng cho lần sử dụng sau.
-        shooter = null;
+        shooter = Vector3.zero;
         target = null;
         targetHealth = null;
     }
@@ -47,7 +47,7 @@ public class LightningBeam : MonoBehaviour
     /// <param name="launchPoint">Vị trí bắn (thường là một đối tượng con của trụ).</param>
     /// <param name="singleTarget">Mục tiêu duy nhất mà tia sét này sẽ tấn công.</param>
     /// <param name="damageFromTower">Sát thương mỗi giây được truyền từ chỉ số của trụ.</param>
-    public void Launch(Transform launchPoint, GameObject singleTarget, float damageFromTower)
+    public void Launch(Vector3 launchPoint, GameObject singleTarget, float damageFromTower)
     {
         this.shooter = launchPoint;
         this.target = singleTarget.transform;
@@ -74,7 +74,7 @@ public class LightningBeam : MonoBehaviour
     /// </summary>
     private void UpdateVisuals()
     {
-        Vector3 start = shooter.position;
+        Vector3 start = shooter;
         Vector3 end = target.position;
 
         // Đảm bảo LineRenderer có đủ số điểm

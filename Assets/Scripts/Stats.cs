@@ -45,4 +45,14 @@ public class Stats : MonoBehaviour
     private int totalInvestedMoney;
     public int TotalInvestedMoney { get => totalInvestedMoney; set => totalInvestedMoney = value; }
     // --- KẾT THÚC THÊM MỚI ---
+
+    private void OnDrawGizmos()
+    {
+        Vector3 position = transform.position;
+        position = new Vector3(position.x, position.y + 0.1f, position.z);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(position, triggerRange);
+    }
 }

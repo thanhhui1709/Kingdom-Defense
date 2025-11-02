@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using System; // Cần cho "Action"
-
+using DG.Tweening;
+using System.Collections;
 [RequireComponent(typeof(Stats))]
 public class TowerHealth : MonoBehaviour, IHealthSystem
 {
+    private TowerController towerController;
     private Stats stats;
     private bool hasDie;
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
+    public GameObject hurtEffect;
 
+    [Header("Death Effect")]
+    [SerializeField] private float sinkAmount = 6f;
+    [SerializeField] private float sinkDuration = 1.5f;
     // 1. SỰ KIỆN: Bất cứ ai quan tâm đều có thể đăng ký
     // Gửi ra (currentHealth, maxHealth)
     public event Action<float, float> OnHealthChanged;
@@ -17,15 +23,11 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
 
-    // XÓA: Toàn bộ biến UI đã bị xóa
-    // public Slider healthBar;
-    // public Image healthFill;
-    // public Gradient gradient;
-
     void Awake()
     {
         stats = GetComponent<Stats>();
         maxHealth = stats.Heath; // Giả sử Stats có biến Heath
+        towerController = GetComponent<TowerController>();
     }
 
     private void OnEnable()
@@ -33,13 +35,34 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
         hasDie = false;
         currentHealth = maxHealth;
         // Phát sự kiện ngay khi bật để UI (nếu đang xem) cập nhật
+        towerController.enabled = true;
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        hurtEffect.SetActive(false);
+
+        InvokeRepeating(nameof(HurtEffect), 0f, 0.5f);  
     }
 
     public void Die()
     {
+        // 1. Guard: Đảm bảo chỉ chết 1 lần
+        if (hasDie) return;
         hasDie = true;
-        // TODO: Thêm logic khi trụ bị phá hủy
+
+        // 2. Dọn dẹp
+        CancelInvoke(nameof(HurtEffect)); // Dừng InvokeRepeating
+        towerController.enabled = false; // Vô hiệu hóa hành vi trụ
+        if (hurtEffect != null) hurtEffect.SetActive(false);
+     
+
+        // 3. Chạy hiệu ứng chìm (DOTween)
+        float targetY = transform.position.y - sinkAmount;
+
+        transform.DOMoveY(targetY, sinkDuration)
+            .SetEase(Ease.InCubic) // Bắt đầu chậm, kết thúc nhanh (cho cảm giác nặng)
+            .OnComplete(() => {
+               
+               StartCoroutine(ReturAfterDeath());
+            });
     }
 
     public bool HasDie()
@@ -72,13 +95,44 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
         }
     }
 
-    // XÓA: Hàm này không còn cần thiết
-    // private void UpdateHeathBar() { ... }
 
-    // (Bạn thiếu hàm SetHealth trong IHealthSystem, nhưng tôi sẽ bỏ qua)
     public void SetHealth(float health)
     {
         currentHealth = Mathf.Clamp(health, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
+    private void HurtEffect()
+    {
+        // Giả sử hurtEffect là một GameObject
+        if (hurtEffect == null) return;
+
+        float healthPercentage = currentHealth / maxHealth;
+
+        if (healthPercentage < 0.2f)
+        {
+            hurtEffect.SetActive(true);
+            hurtEffect.transform.localScale = new Vector3(3f, 3f, 3f);
+        }
+        else if (healthPercentage < 0.45f)
+        {
+            hurtEffect.SetActive(true);
+            hurtEffect.transform.localScale = new Vector3(2f, 2f, 2f);
+        }
+        else if (healthPercentage < 0.7f)
+        {
+            hurtEffect.SetActive(true);
+            hurtEffect.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
+        }
+        else
+        {
+            // Nếu máu trên 70%, hãy ẩn hiệu ứng đi
+
+            hurtEffect.SetActive(false);
+        }
+    }
+    IEnumerator ReturAfterDeath()
+    {
+        yield return new WaitForSeconds(sinkDuration + 10f);
+        ObjectPoolManager.ReturnObject(gameObject);
     }
 }

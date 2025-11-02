@@ -1,6 +1,7 @@
 ﻿// File: ContinuousBeamManager.cs (Phiên bản tối ưu)
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq; // Cần thiết cho .ToList()
 
 // Component này sẽ chủ động quản lý các tia sét mỗi frame
@@ -11,6 +12,8 @@ public class ContinuousBeamManager : MonoBehaviour
     private Stats stats;
     [SerializeField]
     private Transform shooterTransform; // Vị trí bắn, lấy từ TowerController
+    public ParticleSystem laserEffect;
+
 
     // --- CÁC BIẾN TRẠNG THÁI ---
     private Dictionary<GameObject, GameObject> activeBeams = new Dictionary<GameObject, GameObject>();
@@ -18,6 +21,7 @@ public class ContinuousBeamManager : MonoBehaviour
     // --- CÁC BIẾN CÀI ĐẶT ---
     [Tooltip("Prefab của tia sét")]
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Vector3 offsetPos=new Vector3(0,2,0);
 
     void Awake()
     {
@@ -33,11 +37,10 @@ public class ContinuousBeamManager : MonoBehaviour
             return;
         }
 
-        // Lấy vị trí bắn từ TowerController (bạn cần đảm bảo biến 'shooter' trong TowerController không phải private)
-        // Nếu nó là private, bạn cần tạo một getter cho nó giống như GetCurrentTargets()
-        // Hoặc bạn có thể gán trực tiếp vào đây qua Inspector
-        // Giả sử bạn có một getter tên là GetShooterTransform() trong TowerController
-        // shooterTransform = towerController.GetShooterTransform();
+    }
+    private void OnEnable()
+    {
+        InvokeRepeating(nameof(CheckEnemyExist), 0f, 0.25f);
     }
 
     // Update chạy mỗi frame, không còn phụ thuộc vào DoAttack
@@ -47,17 +50,13 @@ public class ContinuousBeamManager : MonoBehaviour
         // Chuyển từ HashSet sang List để dễ làm việc
         List<GameObject> currentTargets = towerController.GetCurrentTargets().ToList();
 
-        // --- 1. DỌN DẸP TIA SÉT KHÔNG HỢP LỆ ---
-        // Sử dụng một List riêng để tránh lỗi khi sửa Dictionary trong lúc duyệt
+    
         List<GameObject> targetsToRemove = new List<GameObject>();
         foreach (var pair in activeBeams)
         {
             GameObject target = pair.Key;
 
-            // Một tia sét bị coi là không hợp lệ nếu:
-            // - Mục tiêu đã bị hủy (null)
-            // - Mục tiêu không còn active
-            // - Mục tiêu không còn nằm trong danh sách mục tiêu chính thức của TowerController
+          
             if (target == null || !target.activeInHierarchy || !currentTargets.Contains(target))
             {
                 targetsToRemove.Add(target);
@@ -71,10 +70,6 @@ public class ContinuousBeamManager : MonoBehaviour
             activeBeams.Remove(target);
         }
 
-        // --- 2. TẠO TIA SÉT MỚI CHO CÁC MỤC TIÊU HỢP LỆ ---
-        // Lấy vị trí bắn từ shooter của TowerController
-       
-
         foreach (GameObject target in currentTargets)
         {
             // Nếu mục tiêu này hợp lệ và CHƯA có tia sét nào bắn vào nó
@@ -87,7 +82,7 @@ public class ContinuousBeamManager : MonoBehaviour
                 if (beamScript != null)
                 {
                     // Ra lệnh cho tia sét tấn công
-                    beamScript.Launch(shooterTransform, target, stats.AttackDamage);
+                    beamScript.Launch(shooterTransform.position+offsetPos, target, stats.AttackDamage);
                     // Lưu lại để quản lý
                     activeBeams.Add(target, beamGO);
                 }
@@ -111,5 +106,20 @@ public class ContinuousBeamManager : MonoBehaviour
             }
         }
         activeBeams.Clear();
+    }
+    private void CheckEnemyExist()
+    {
+     
+        if(towerController.GetCurrentTargets().Count == 0)
+        {
+            laserEffect.Stop();
+        }
+        else
+        {
+            if (!laserEffect.isPlaying)
+            {
+                laserEffect.Play();
+            }
+        }
     }
 }

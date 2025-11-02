@@ -15,6 +15,7 @@ TagManager:
   - Tower
   - Unit
   - Obstacle
+  - Castle
   layers:
   - Default
   - TransparentFX

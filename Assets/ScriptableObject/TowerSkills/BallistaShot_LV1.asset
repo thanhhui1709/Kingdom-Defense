@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2e1949b56325b49b84a59f6f77f825, type: 3}
   m_Name: BallistaShot_LV1
   m_EditorClassIdentifier: 
-  numberOfEnemy: 3
-  launchOffset: -1.5
+  numberOfEnemy: 2
+  spawnOffset: {x: 0, y: 2, z: -2}
+  aimHeightOffset: 1
+  rotationFix: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
