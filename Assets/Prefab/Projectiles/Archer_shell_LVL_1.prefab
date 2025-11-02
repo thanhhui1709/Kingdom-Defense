@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4861e5050026e7e41b29ab99b8ef6d9e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -132,4 +132,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  explosionEffect: {fileID: 0}
+  ignoreArmor: 10
+  rotationFix: {x: 90, y: 0, z: 0}

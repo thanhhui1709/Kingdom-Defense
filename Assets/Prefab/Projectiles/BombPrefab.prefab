@@ -5101,3 +5101,4 @@ MonoBehaviour:
   explosionRadius: 3
   explosionForce: 500
   explosionEffect: {fileID: 1237870669895136310, guid: 960d5c25a2b942f4a9e1c14877178d06, type: 3}
+  ignoreArmor: 10

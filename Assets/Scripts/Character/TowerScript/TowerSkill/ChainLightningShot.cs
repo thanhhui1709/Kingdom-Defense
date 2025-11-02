@@ -9,7 +9,7 @@ public class ContinuousLightningBeam : ATowerSkill
     HashSet<GameObject> hitTargets = new();
     // Giả sử hàm DoAttack gốc của bạn là đây
 
-    public override void DoAttack(Transform shooter, GameObject projectilePrefab, List<GameObject> targetsInRange, float damage)
+    public override void DoAttack(MonoBehaviour runner, Transform shooter, GameObject projectilePrefab, List<GameObject> targetsInRange, float damage)
     {
        
     }

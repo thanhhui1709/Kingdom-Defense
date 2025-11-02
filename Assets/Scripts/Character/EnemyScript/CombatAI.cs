@@ -104,7 +104,7 @@ public class CombatAI : MonoBehaviour
         // Dùng sqrMagnitude (nhanh)
         float currentFlatSqrDist = (myFlatPos - currentTargetFlatPos).sqrMagnitude;
 
-        if (currentFlatSqrDist <= attackRangeSqr)
+        if (currentFlatSqrDist <= attackRangeSqr||(transform.gameObject.name.Equals("Golem(Clone)") && currentFlatSqrDist<= (stats.AttackRange*1.5f*1.5f*stats.AttackRange)))
         {
             currentState = AIState.Attacking;
         }

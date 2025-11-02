@@ -99,7 +99,7 @@ public class TowerController : MonoBehaviour
         currentTarget.RemoveWhere(target =>
             target == null ||
             !target.activeInHierarchy ||
-            Vector3.Distance(transform.position, target.transform.position) > attackRangeSqr ||
+            Vector3.Distance(transform.position, target.transform.position) > stats.AttackRange ||
             target.GetComponent<IHealthSystem>()?.HasDie() == true // <--- SỬA LỖI Ở ĐÂY
         );
     }
@@ -156,7 +156,7 @@ public class TowerController : MonoBehaviour
     private void Attack()
     {
         // Chuyển HashSet thành List cho hàm DoAttack
-        towerSkill.DoAttack(shooter.transform, projectilePrefab, currentTarget.ToList(), stats.AttackDamage);
+        towerSkill.DoAttack(this,shooter.transform, projectilePrefab, currentTarget.ToList(), stats.AttackDamage);
     }
 
     /// <summary>

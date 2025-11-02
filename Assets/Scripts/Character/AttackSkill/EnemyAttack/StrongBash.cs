@@ -13,7 +13,7 @@ public class StrongBash : AttackBehavior
         Collider[] hitColliders = Physics.OverlapSphere(target.transform.position, radius,layer);
         foreach (var hitCollider in hitColliders)
         {
-            IHealthSystem health = hitCollider.GetComponent<IHealthSystem>();
+            IHealthSystem health = hitCollider.GetComponentInParent<IHealthSystem>();
             if (health != null)
             {
                 float damage = attackerStats.AttackDamage;

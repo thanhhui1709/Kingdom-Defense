@@ -3,6 +3,7 @@
 public class SyncAttackSpeed : StateMachineBehaviour
 {
     Stats stats; // Cache component Stats
+    [SerializeField] private float originalSpeed = 1.0f;
 
     // OnStateEnter được gọi MỘT LẦN khi animation TẤN CÔNG BẮT ĐẦU
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

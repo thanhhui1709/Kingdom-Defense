@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
-  projectilePrefab: {fileID: 7812923760696459432, guid: b3724de6281e4cb46be69b786d75ce31, type: 3}
+  projectilePrefab: {fileID: 5796448561545124938, guid: b5e89bc4a38834a45af3264a9c8164fd, type: 3}
   maxTarget: 1
   shooter: {fileID: 5215862777329353441}
   enemyLayer:

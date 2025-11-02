@@ -13,7 +13,7 @@ public class PoisonShot : ATowerSkill
 
 
     // Chữ ký hàm này đã đúng, nó nhận vào một List<GameObject>
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets, float damage)
+    public override void DoAttack(MonoBehaviour runner, Transform shooter, GameObject projectile, List<GameObject> targets, float damage)
     {
         // Kiểm tra điều kiện cơ bản
         if (poisonProjectilePrefab == null || targets == null || targets.Count == 0)

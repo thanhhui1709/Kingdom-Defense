@@ -7,7 +7,7 @@ public class BallistaShot : ATowerSkill
 {
     [SerializeField] private int numberOfEnemy;
 
-    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets,float damage)
+    public override void DoAttack(MonoBehaviour runner, Transform shooter, GameObject projectile, List<GameObject> targets,float damage)
     {
         if (targets == null || targets.Count == 0) return;
 

@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.681889
+      value: 7.924521
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000019073486
+      value: 0.049999237
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.52117
+      value: 4.207834
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerSkill: {fileID: 11400000, guid: 28ec91cf9b20de74abb84266761e29b3, type: 2}
+  towerSkill: {fileID: 11400000, guid: d0e4862ef68f7a646a04b76d3ed5fb06, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
   shooter: {fileID: 5059069850543602814}

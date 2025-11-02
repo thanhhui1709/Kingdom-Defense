@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c437e00405e61654ab5d4456554536b0, type: 3}
   m_Name: CanonShot
   m_EditorClassIdentifier: 
-  shootForce: 500
-  fireRate: 2
-  range: 10
-  muzzleOffsetDistance: 1.5
+  projectileSpeed: 20
+  aimHeightOffset: 0.5
+  spawnOffset: {x: 0, y: 1.8, z: 3}
+  projectileLifeTime: 6
+  burstCount: 1
+  timeBetweenShots: 0.2

@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Rock : MonoBehaviour, IProjectile
 {
+    [Header("AOE Settings")]
+    public float explosionRadius = 2f;   // Bán kính vùng nổ
+    public float explosionForce = 5f;    // Lực đẩy lan
     [SerializeField]
     private float speed = 5f;
-    [SerializeField]
-    private float pushForce;
     public LayerMask layer;
     public AudioClip hitSound;
     private GameObject target;
@@ -66,26 +68,46 @@ public class Rock : MonoBehaviour, IProjectile
     {
         rb = GetComponent<Rigidbody>();
     }
+    private void FixedUpdate()
+    {
+        if (target == null) return;
+        Util.MoveToward(rb, target.transform, speed);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == layer)
-        {
-            IHealthSystem health = other.GetComponent<IHealthSystem>();
-            if (health != null)
-            {
-                health.TakeDamage(damage);
+        // Chỉ nổ khi chạm đúng layer chỉ định
+        if ((layer.value & (1 << other.gameObject.layer)) == 0)
+            return;
 
-            }
-            Rigidbody otherRb = other.GetComponent<Rigidbody>();
-            if (otherRb != null)
+        // --- TẠO VÙNG HIỆU LỰC ---
+        Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius, layer);
+
+        foreach (Collider hit in hits)
+        {
+            IHealthSystem healthCheck = hit.GetComponentInParent<IHealthSystem>();
+            // Gây damage
+            if (healthCheck!=null)
             {
-                Vector3 forceDirection = (other.transform.position - transform.position).normalized;
-                otherRb.AddForce(forceDirection * pushForce, ForceMode.Impulse);
+                healthCheck.TakeDamage(damage);
             }
-            ObjectPoolManager.ReturnObject(gameObject);
+
+            Rigidbody hitRb=hit.GetComponentInParent<Rigidbody>();
+            // Đẩy lùi
+            if (hitRb!=null)
+            {
+                Vector3 dir = (hit.transform.position - transform.position).normalized;
+               hitRb.AddForce(dir * explosionForce, ForceMode.Impulse);
+            }
         }
+
+        // ✨ Option: hiệu ứng vụ nổ (nếu có poolFX thì dùng, không thì bỏ)
+        // ObjectPoolManager.SpawnObject(explosionEffectPrefab, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Particle);
+
+        // Trả đá về pool
+        ObjectPoolManager.ReturnObject(gameObject);
     }
+
     private void CheckTargetAlive()
     {
         IHealthSystem health = target.GetComponent<IHealthSystem>();
@@ -94,5 +116,25 @@ public class Rock : MonoBehaviour, IProjectile
             ObjectPoolManager.ReturnObject(gameObject);
         }
 
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+    public void ApplyKnockback(Vector3 direction, float force, float duration)
+    {
+        StartCoroutine(KnockbackCoroutine(direction, force, duration));
+    }
+
+    private IEnumerator KnockbackCoroutine(Vector3 direction, float force, float duration)
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            rb.MovePosition(rb.position + force * Time.deltaTime * direction);
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
 }

@@ -1,63 +1,128 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
 
-public class OrientedArrow : MonoBehaviour,IProjectile
+[RequireComponent(typeof(Rigidbody))]
+public class OrientedArrow : MonoBehaviour, IProjectile
 {
     private GameObject target;
     private Rigidbody rb;
     private float damage;
     [SerializeField] private float speed = 10f;
-    public GameObject explosionEffect;
-    public int ignoreArmor = 10;
+    [SerializeField] private int ignoreArmor = 10;
+
+    // --- SỬA LẠI BIẾN XOAY ---
+    [Tooltip("Độ xoay bù trừ cho model (ví dụ: (90, 0, 0))")]
+    [SerializeField] private Vector3 rotationFix = new Vector3(90, 0, 0);
+    private Quaternion fixQuaternion;
+    // --- KẾT THÚC SỬA ---
+
+    private bool isLaunched = false;
+
     void Awake()
     {
-        rb=GetComponent<Rigidbody>();
-        if(rb==null) Debug.LogError("Rigidbody component is missing from the projectile.");
+        rb = GetComponent<Rigidbody>();
+        if (rb == null) Debug.LogError("Rigidbody component is missing from the projectile.");
 
+        // Tính toán Quaternion 1 lần
+        fixQuaternion = Quaternion.Euler(rotationFix);
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        isLaunched = false;
+        target = null;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
     void FixedUpdate()
     {
-        if (target == null) return;
+        // Chỉ bay khi đã được Launch và có mục tiêu
+        if (!isLaunched || target == null || !target.activeInHierarchy)
+        {
+            // Nếu mất mục tiêu, bay thẳng
+            rb.linearVelocity = transform.forward * speed;
+            return;
+        }
 
-       Vector3 dir= Util.MoveToward(rb, target.transform, speed);
-       Quaternion targetRotation= Quaternion.LookRotation(dir*180, transform.up)*Quaternion.Euler(90,0,0);
-       rb.MoveRotation(targetRotation);
+        // --- LOGIC BAY VÀ XOAY ĐÃ SỬA ---
+
+        // 1. Tính hướng bay
+        Vector3 dir = (target.transform.position - rb.position).normalized;
+
+        // 2. Gán vận tốc
+        rb.linearVelocity = dir * speed;
+
+        // 3. Tính hướng xoay (nhìn theo hướng bay)
+        Quaternion targetRotation = Quaternion.LookRotation(dir);
+
+        // 4. Áp dụng bù trừ và xoay
+        rb.MoveRotation(targetRotation * fixQuaternion);
+        // --- KẾT THÚC SỬA ---
     }
-  
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == target)
-        {
-            if (explosionEffect != null)
-            {
+        // Chỉ kích hoạt 1 lần
+        if (!isLaunched || !other.gameObject) return;
 
-                ObjectPoolManager.SpawnObject(explosionEffect, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Particle);
-            }
-            IHealthSystem enemyHealth = other.GetComponent<IHealthSystem>();
-            if (enemyHealth != null)
+        if (other.gameObject == target)
+        {
+            IHealthSystem enemyHealth = other.GetComponentInParent<IHealthSystem>();
+            if (enemyHealth != null && !enemyHealth.HasDie())
             {
-               if(enemyHealth as EnemyHealth)
+                // Tối ưu: Dùng 'is' (C# 7.0+)
+                if (enemyHealth is EnemyHealth eh)
                 {
-                    EnemyHealth eh = enemyHealth as EnemyHealth;
-                    eh.TakeDamage(damage,10);
+                    eh.TakeDamage(damage, ignoreArmor);
                 }
                 else
                 {
                     enemyHealth.TakeDamage(damage);
                 }
             }
+
+            isLaunched = false; // Ngừng xử lý
             ObjectPoolManager.ReturnObject(gameObject);
-           
         }
     }
 
-    public void Launch(List<GameObject> target, float damage)
+    public void Launch(List<GameObject> targets, float damage)
     {
-        this.target = target.OrderBy(x=> Vector3.Distance(x.transform.position,transform.position)).FirstOrDefault();
+        // --- TỐI ƯU HÓA: TÌM MỤC TIÊU (O(n)) ---
+        GameObject closestTarget = null;
+        float minSqrDistance = float.MaxValue;
+        Vector3 currentPos = transform.position;
+
+        foreach (GameObject t in targets)
+        {
+            if (t == null || !t.activeInHierarchy) continue;
+            float sqrDist = (t.transform.position - currentPos).sqrMagnitude;
+            if (sqrDist < minSqrDistance)
+            {
+                minSqrDistance = sqrDist;
+                closestTarget = t;
+            }
+        }
+
+        this.target = closestTarget;
+        // --- KẾT THÚC TỐI ƯU ---
+
         this.damage = damage;
+        isLaunched = true;
+
+        if (this.target == null)
+        {
+            // Nếu không có mục tiêu, tự hủy sau 5s
+            StartCoroutine(ReturnAfterDelay(5f));
+        }
+    }
+
+    private IEnumerator ReturnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ObjectPoolManager.ReturnObject(gameObject);
     }
 }
