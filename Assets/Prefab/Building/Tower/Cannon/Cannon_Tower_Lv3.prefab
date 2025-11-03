@@ -384,13 +384,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4e638a61966f3844e9e8093e44e27b37, type: 3}
-  heath: 500
-  ammor: 100
-  attackDamage: 100
-  attackSpeed: 0.4
+  heath: 1100
+  ammor: 150
+  attackDamage: 250
+  attackSpeed: 0.5
   moveSpeed: 0
-  attackRange: 30
-  triggerRange: 20
+  attackRange: 22
+  triggerRange: 22
   money: 300
   attackList: []
   totalInvestedMoney: 0

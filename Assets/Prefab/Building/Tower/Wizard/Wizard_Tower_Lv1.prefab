@@ -382,10 +382,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: fd2c82a3c61e65142925ff285b5c3aca, type: 3}
-  heath: 800
+  heath: 80
   ammor: 75
-  attackDamage: 50
-  attackSpeed: 2
+  attackDamage: 80
+  attackSpeed: 1
   moveSpeed: 0
   attackRange: 15
   triggerRange: 15
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerSkill: {fileID: 11400000, guid: 5ebde201de94ce24a9d07c39946cc2de, type: 2}
   projectilePrefab: {fileID: 5551972361978619668, guid: 401a92fc7bafa0c44b1cd694c8814dad, type: 3}
-  maxTarget: 2
+  maxTarget: 1
   shooter: {fileID: 6955444184985343119}
   enemyLayer:
     serializedVersion: 2

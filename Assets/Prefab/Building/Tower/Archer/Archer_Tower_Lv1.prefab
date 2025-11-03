@@ -168,7 +168,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 378973ca0a92f1f4eb22d5f2cf1b1b96, type: 3}
   heath: 100
   ammor: 10
-  attackDamage: 100
+  attackDamage: 70
   attackSpeed: 1
   moveSpeed: 0
   attackRange: 10

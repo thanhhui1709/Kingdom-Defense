@@ -426,8 +426,8 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 55a5e95fa2922234aa85d8a73eac6237, type: 3}
   heath: 90
   ammor: 15
-  attackDamage: 120
-  attackSpeed: 1
+  attackDamage: 50
+  attackSpeed: 0.9
   moveSpeed: 0
   attackRange: 15
   triggerRange: 15
