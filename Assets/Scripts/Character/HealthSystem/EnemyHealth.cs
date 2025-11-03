@@ -5,6 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Stats), typeof(Collider))] // Cần Collider để hover
 public class EnemyHealth : MonoBehaviour, IHealthSystem
 {
+    public AudioClip deathSound;
     private Stats stats;
     private bool isDead = false;
 
@@ -189,6 +190,7 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
     {
         if (isDead) return; // Đảm bảo Die() chỉ chạy 1 lần
 
+        ObjectPoolManager.PlayAudio(deathSound, transform.position,1f);
         isDead = true;
 
         // Tắt UI trước khi tắt object

@@ -318,7 +318,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 6023431738587750871}
   sinkAmount: 6
   sinkDuration: 1.5
-  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
+  destroySound: {fileID: 8300000, guid: 4a463809d705f944ab86978ac24e949d, type: 3}
 --- !u!1 &3899554681217084956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6835891189525546521, guid: 15adcc40f4c3ad246b76081fdd0f5c69, type: 3}

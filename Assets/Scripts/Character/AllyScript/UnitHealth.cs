@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class UnitHealth : MonoBehaviour, IHealthSystem
 {
+    public AudioClip deathSound;
     private Stats stats;
     [SerializeField]
     private float currentHealth;
@@ -82,6 +83,7 @@ public class UnitHealth : MonoBehaviour, IHealthSystem
     {
         hasDie = true;
         rb.isKinematic = true; // Vô hiệu hóa vật lý
+        ObjectPoolManager.PlayAudio(deathSound, transform.position,1f);
         HideHealthBar(); // Ẩn khi chết
         anim.Play(AnimationType.Die, true);
         StartCoroutine(DisableAfterTime(5f)); // Chờ 5 giây trước khi tắt   

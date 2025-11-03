@@ -1350,6 +1350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a00b92d088fb548afdac5d68ef0af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSound: {fileID: 8300000, guid: 8542e4cbbf4448f49b37df27865eef77, type: 3}
   currentHealth: 0
   maxHealth: 0
   healthBarCanvas: {fileID: 7877525864651528039}

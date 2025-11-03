@@ -393,6 +393,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -881,6 +889,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1169,6 +1185,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1319,6 +1343,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 205376564983924861, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1574,6 +1606,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842879143148321030, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1611,16 +1651,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a91569cc541c314396e741607192777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildSound: {fileID: 0}
+  sellSound: {fileID: 0}
   availableTowers:
   - {fileID: 11400000, guid: c5351e9356f65cd489cb79d3353d40d3, type: 2}
   - {fileID: 11400000, guid: 0a63e17524e986b439f2818f3125af80, type: 2}
   - {fileID: 11400000, guid: ed5baccea72c3ec4495b83d45620fbb0, type: 2}
   - {fileID: 11400000, guid: df7fa68959feeb04abc9cd2f45ef67c9, type: 2}
   - {fileID: 11400000, guid: ab16508399cc9194abcff3294d474084, type: 2}
-  towerSelectionPanel: {fileID: 1860179246}
-  towerButtonPrefab: {fileID: 6356934351893748550, guid: eaaf1dd6e27d4424aabb4ae564caca4d, type: 3}
-  demolishPanel: {fileID: 1401764464}
-  sellButton: {fileID: 1525616946}
+  uiManager: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &1234180545
 Transform:
   m_ObjectHideFlags: 0

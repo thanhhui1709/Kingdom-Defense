@@ -57,59 +57,54 @@ public class CombatAI : MonoBehaviour
     }
     private void UpdateStateAndTarget()
     {
-        // Lấy vị trí phẳng của AI (chỉ tính 1 lần)
+       
+        GameObject idealTarget = FindBestTarget();
+        currentTarget = idealTarget; // Ghi đè mục tiêu cũ (nếu có)
+
+        // --- 2. NẾU KHÔNG CÓ MỤC TIÊU -> ĐI ĐƯỜNG ---
+        if (currentTarget == null)
+        {
+            // Nếu vừa mất mục tiêu, quay về path
+            if (currentState != AIState.MovingOnPath)
+            {
+                mover.UpdatePathToClosestNode();
+                currentState = AIState.MovingOnPath;
+            }
+            return; // Không có mục tiêu, không làm gì nữa
+        }
+
+        // --- 3. NẾU CÓ MỤC TIÊU -> QUYẾT ĐỊNH TRẠNG THÁI ---
+
+        // Lấy vị trí phẳng của AI
         Vector3 myFlatPos = transform.position;
         myFlatPos.y = 0;
 
-        // --- 1. Xác thực mục tiêu hiện tại ---
-        if (currentTarget != null)
-        {
-            var health = currentTarget.GetComponentInParent<IHealthSystem>();
-
-            // Lấy vị trí phẳng của mục tiêu
-            Vector3 targetFlatPos = currentTarget.transform.position;
-            targetFlatPos.y = 0;
-
-            // Dùng (A-B).sqrMagnitude (nhanh) cho cả check tầm Trigger
-            float flatSqrDist = (myFlatPos - targetFlatPos).sqrMagnitude;
-
-            if (!currentTarget.activeInHierarchy || (health != null && health.HasDie()) || flatSqrDist > triggerRangeSqr)
-            {
-                currentTarget = null;
-            }
-        }
-
-        // --- 2. Tìm mục tiêu mới (nếu không có) ---
-        if (currentTarget == null)
-        {
-            currentTarget = FindBestTarget();
-
-            // Nếu tìm xong mà vẫn null -> quay về đi đường
-            if (currentTarget == null)
-            {
-                if (currentState != AIState.MovingOnPath)
-                {
-                    mover.UpdatePathToClosestNode();
-                    currentState = AIState.MovingOnPath;
-                }
-                return; // Không có mục tiêu, không làm gì nữa
-            }
-        }
-
-        // --- 3. Quyết định trạng thái (LOGIC SỬA LỖI Y-AXIS) ---
-        // (currentTarget chắc chắn không null ở đây)
+        // Lấy vị trí phẳng của mục tiêu
         Vector3 currentTargetFlatPos = currentTarget.transform.position;
         currentTargetFlatPos.y = 0;
 
-        // Dùng sqrMagnitude (nhanh)
+        // Tính khoảng cách bình phương
         float currentFlatSqrDist = (myFlatPos - currentTargetFlatPos).sqrMagnitude;
 
-        if (currentFlatSqrDist <= attackRangeSqr||(transform.gameObject.name.Equals("Golem(Clone)") && currentFlatSqrDist<= (stats.AttackRange*1.5f*1.5f*stats.AttackRange)))
+        // --- Logic Golem đã được làm rõ ---
+        float effectiveAttackRangeSqr = attackRangeSqr; // Mặc định là tầm đánh thường
+
+        if (transform.gameObject.name.Equals("Golem(Clone)"))
+        {
+            // Golem có tầm đánh = tầm thường * 1.5
+            float golemRange = stats.AttackRange * 1.5f;
+            effectiveAttackRangeSqr = golemRange * golemRange; // (tương đương attackRangeSqr * 2.25)
+        }
+        // --- Kết thúc logic Golem ---
+
+        // So sánh với tầm đánh hiệu dụng
+        if (currentFlatSqrDist <= effectiveAttackRangeSqr)
         {
             currentState = AIState.Attacking;
         }
         else
         {
+            // Mục tiêu vẫn còn, nhưng ngoài tầm đánh -> Đuổi theo
             currentState = AIState.ChasingTarget;
         }
     }
