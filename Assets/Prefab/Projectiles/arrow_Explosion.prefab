@@ -149,5 +149,6 @@ MonoBehaviour:
   explosionRadius: 4
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   rotationFix: {x: 90, y: 0, z: 180}
+  explosionSound: {fileID: 8300000, guid: edaef6848f4ce2d43a5c63fb26afe51e, type: 3}

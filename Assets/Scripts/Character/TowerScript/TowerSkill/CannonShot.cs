@@ -17,6 +17,7 @@ public class CannonShot : ATowerSkill
     [SerializeField] private int burstCount = 1;
     [Tooltip("Thời gian chờ giữa các viên đạn (nếu burstCount > 1)")]
     [SerializeField] private float timeBetweenShots = 0.2f;
+    public AudioClip shootSound;
 
     /// <summary>
     /// Hàm DoAttack chính, chỉ chịu trách nhiệm khởi động Coroutine
@@ -94,6 +95,7 @@ public class CannonShot : ATowerSkill
                     projectile.Launch(new List<GameObject> { currentTarget }, shooterStats.AttackDamage);
                 }
             }
+            ObjectPoolManager.PlayAudio(shootSound, shooter.position, 1.0f);
 
             // 7. Gán vận tốc (cho đạn "ngu")
             Rigidbody rb = projGO.GetComponent<Rigidbody>();

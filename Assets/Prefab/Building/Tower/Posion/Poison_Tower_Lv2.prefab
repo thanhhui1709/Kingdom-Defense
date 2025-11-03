@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce1a3b9f5344d794281275c94838fd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerSkill: {fileID: 11400000, guid: 86514b8c27d1e4d4db4d52d80077cbf5, type: 2}
+  towerSkill: {fileID: 11400000, guid: 7bb1c60377a790045978fed4d94257b8, type: 2}
   projectilePrefab: {fileID: 6745793394025541538, guid: d5aab9a57c500b5478e827a1535647b3, type: 3}
   maxTarget: 1
   shooter: {fileID: 3751130836491113770}
@@ -244,6 +244,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 674424107443616301}
   sinkAmount: 6
   sinkDuration: 1.5
+  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
 --- !u!1 &3751130836491113770 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6760584356554072413, guid: 2f94aa76261b96f4baec3af9c6ddd30e, type: 3}

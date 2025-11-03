@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcaecc49619e124e8e7a5d9b41e8378, type: 3}
   m_Name: NormalSlice 1
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: d240d887ee30d654daa47c3c8c975cde, type: 3}
   criticalChance: 0.5
+  damageMultiplier: 1

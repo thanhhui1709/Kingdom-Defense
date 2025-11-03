@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StrongBash", menuName = "AttackBehavior/StrongBash")]
 public class StrongBash : AttackBehavior
 {
+    public AudioClip attackSound;
     [Range(0,1)]
     public float criticalChance = 0.8f;
     public float radius = 2f;
@@ -10,6 +11,7 @@ public class StrongBash : AttackBehavior
     public float damageMultiplier = 1f;
     public override void Execute(MonoBehaviour runner, Stats attackerStats, GameObject target)
     {
+        ObjectPoolManager.PlayAudio(attackSound, runner.transform.position, 1f);
         Collider[] hitColliders = Physics.OverlapSphere(target.transform.position, radius,layer);
         foreach (var hitCollider in hitColliders)
         {

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9d284de24e8ae4d827f0387a2b92b0, type: 3}
   m_Name: FireArrow
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: 3af17bf831bc62b45a9400212e30cb2a, type: 3}
   numberOfShoot: 1
   fireRate: 1
   projectile: {fileID: 1249633527955674889, guid: 6a9a4ffcdcecfcb4fbc78630cdb3d237, type: 3}

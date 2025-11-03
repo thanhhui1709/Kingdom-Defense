@@ -16,7 +16,7 @@ public class OrientedBom : MonoBehaviour, IProjectile
     [SerializeField] private float explosionForce = 500f;
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private int ignoreArmor = 10;
-
+    public AudioClip boomExplosion;
     // --- THÊM MỚI: Biến guard để chống nổ 2 lần ---
     private bool hasExploded = false;
     private Collider myCollider;
@@ -81,6 +81,7 @@ public class OrientedBom : MonoBehaviour, IProjectile
 
     private void Explode()
     {
+        ObjectPoolManager.PlayAudio(boomExplosion, transform.position, 1.0f);   
         // --- SỬA LỖI ĐA CHẠM ---
         if (hasExploded) return;
         hasExploded = true;
@@ -122,7 +123,7 @@ public class OrientedBom : MonoBehaviour, IProjectile
         }
 
         // Bắt đầu coroutine để trả về pool
-        StartCoroutine(WaitToReturnToPool(1f)); // Chờ 1s cho hiệu ứng nổ
+        StartCoroutine(WaitToReturnToPool(0.3f)); // Chờ 1s cho hiệu ứng nổ
     }
 
     IEnumerator WaitToReturnToPool(float delay)

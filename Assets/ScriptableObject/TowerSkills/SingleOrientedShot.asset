@@ -15,3 +15,4 @@ MonoBehaviour:
   numberOfShoot: 1
   offset: {x: 0, y: 3, z: 1}
   timeBetweenShots: 0.1
+  shootSound: {fileID: 8300000, guid: 44359c3b8dcab714b920d055dae7a7b5, type: 3}

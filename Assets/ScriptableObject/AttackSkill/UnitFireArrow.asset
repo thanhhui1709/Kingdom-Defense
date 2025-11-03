@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9d284de24e8ae4d827f0387a2b92b0, type: 3}
   m_Name: UnitFireArrow
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: 3af17bf831bc62b45a9400212e30cb2a, type: 3}
   numberOfShoot: 1
   fireRate: 1
   projectile: {fileID: 5709846014651571912, guid: d823ee6cc3bae0e46a46a6d96558cd75, type: 3}

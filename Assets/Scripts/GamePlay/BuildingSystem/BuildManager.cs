@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 
 public class BuildManager : MonoBehaviour
 {
+    [Header("Sound Effect")]
+    public AudioClip buildSound;
+  
+    public AudioClip sellSound;
     [Header("Tower Data")]
     public List<TowerData> availableTowers = new List<TowerData>();
 
@@ -128,6 +132,7 @@ public class BuildManager : MonoBehaviour
         // --- KẾT THÚC LOGIC TIỀN ---
 
         GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity, ObjectPoolManager.PoolType.Tower);
+        ObjectPoolManager.PlayAudio(buildSound, selectedBuildableTile.position, 1.0f);
 
         // --- GÁN TIỀN ĐẦU TƯ BAN ĐẦU ---
         Stats newTowerStats = newTower.GetComponent<Stats>();
@@ -176,6 +181,7 @@ public class BuildManager : MonoBehaviour
         }
 
         ObjectPoolManager.ReturnObject(towerToSell);
+        ObjectPoolManager.PlayAudio(sellSound, selectedTileForDemolish.transform.position, 1.0f);
         selectedTileForDemolish.towerOnTile = null;
 
         DeselectAll();

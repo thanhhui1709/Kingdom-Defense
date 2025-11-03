@@ -117,15 +117,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 05716db7bf547b44db0c4f1897ba6c11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.564523
+      value: 7.894601
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05716db7bf547b44db0c4f1897ba6c11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.10109711
+      value: 0.049999237
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05716db7bf547b44db0c4f1897ba6c11, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.85423845
+      value: 3.838782
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05716db7bf547b44db0c4f1897ba6c11, type: 3}
       propertyPath: m_LocalRotation.w
@@ -364,6 +364,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 1686084487330338696}
   sinkAmount: 6
   sinkDuration: 1.5
+  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
 --- !u!95 &6157539020425283531
 Animator:
   serializedVersion: 7

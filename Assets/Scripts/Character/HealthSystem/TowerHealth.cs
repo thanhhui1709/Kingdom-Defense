@@ -18,7 +18,7 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
     // 1. SỰ KIỆN: Bất cứ ai quan tâm đều có thể đăng ký
     // Gửi ra (currentHealth, maxHealth)
     public event Action<float, float> OnHealthChanged;
-
+    public AudioClip destroySound;
     // 2. Thêm "getters" để script bên ngoài có thể đọc giá trị
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
@@ -32,6 +32,7 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
 
     private void OnEnable()
     {
+       
         hasDie = false;
         currentHealth = maxHealth;
         // Phát sự kiện ngay khi bật để UI (nếu đang xem) cập nhật
@@ -44,12 +45,12 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
 
     public void Die()
     {
+        ObjectPoolManager.PlayAudio(destroySound, transform.position, 1.0f);
         // 1. Guard: Đảm bảo chỉ chết 1 lần
         if (hasDie) return;
         hasDie = true;
 
-        // 2. Dọn dẹp
-        CancelInvoke(nameof(HurtEffect)); // Dừng InvokeRepeating
+      
         towerController.enabled = false; // Vô hiệu hóa hành vi trụ
         if (hurtEffect != null) hurtEffect.SetActive(false);
      

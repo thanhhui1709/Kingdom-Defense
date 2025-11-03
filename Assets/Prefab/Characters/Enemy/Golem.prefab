@@ -1126,7 +1126,7 @@ MonoBehaviour:
   money: 200
   attackList:
   - {fileID: 11400000, guid: f912d7cbf64f7a542bb0e58593de418e, type: 2}
-  - {fileID: 11400000, guid: afd3e8b9d4386a140b1c0c01cdeebdb2, type: 2}
+  - {fileID: 11400000, guid: c33811c696ef6d748a39b39a783689b2, type: 2}
   - {fileID: 11400000, guid: 33dafb272267bab46ae6567810424bde, type: 2}
   totalInvestedMoney: 0
 --- !u!114 &3639055658336584526

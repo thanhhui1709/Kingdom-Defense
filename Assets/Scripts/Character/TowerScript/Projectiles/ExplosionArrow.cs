@@ -20,6 +20,7 @@ public class ExplosionArrow : MonoBehaviour, IProjectile
     [Header("Rotation")]
     [Tooltip("Độ xoay bù trừ cho model (ví dụ: (90, 0, 0))")]
     [SerializeField] private Vector3 rotationFix = new Vector3(0, 0, 0);
+    public AudioClip explosionSound;
     private Quaternion fixQuaternion;
 
     private bool hasExploded = false;
@@ -81,6 +82,7 @@ public class ExplosionArrow : MonoBehaviour, IProjectile
     {
         if (hasExploded) return;
         hasExploded = true;
+        ObjectPoolManager.PlayAudio(explosionSound, transform.position, 1.0f);
 
         // Tắt mũi tên
         myCollider.enabled = false;

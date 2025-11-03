@@ -151,3 +151,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   poisonSplash: {fileID: 2271619723447961029, guid: 9dd4a9984e081b842a45f03e76cb3f0d, type: 3}
+  poisonSound: {fileID: 8300000, guid: 903f59dbf749b244b882c06a15b3780c, type: 3}

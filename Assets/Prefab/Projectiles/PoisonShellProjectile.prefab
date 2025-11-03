@@ -104,10 +104,10 @@ MonoBehaviour:
   speed: 10
   effectDuration: 3
   slowFactor: 0.3
-  damagePerTick: 2
   damageTickRate: 0.5
   maxStacks: 3
   debuffColor: {r: 0, g: 1, b: 0, a: 1}
+  burnSound: {fileID: 8300000, guid: ec38c4a470f687340a6288a66eb194cc, type: 3}
 --- !u!54 &5215053237631948562
 Rigidbody:
   m_ObjectHideFlags: 0

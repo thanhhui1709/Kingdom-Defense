@@ -116,7 +116,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 576
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 827e09a7b6b78c14196c549e27d34486, type: 3}
 --- !u!65 &6738997918069155508
 BoxCollider:
   m_ObjectHideFlags: 0

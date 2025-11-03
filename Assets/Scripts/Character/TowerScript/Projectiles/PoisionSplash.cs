@@ -3,6 +3,7 @@ using DG.Tweening;
 
 public class PoisionSplash : MonoBehaviour
 {
+    public Transform parent;
     [Header("Thông số Đạn")]
     public float existTime = 5f;
     public float effectDuration = 3f;
@@ -24,7 +25,8 @@ public class PoisionSplash : MonoBehaviour
     public float damageTickRate = 0.5f;
     public int maxStacks = 4;
     public Color debuffColor = Color.green;
-
+    public AudioClip poisonSound;
+    public AudioClip burnSound;
     private float remainingExistTime;
 
   
@@ -47,6 +49,7 @@ public class PoisionSplash : MonoBehaviour
         {
             ObjectPoolManager.SpawnObject(splashEffect, transform.position+new Vector3(0,2,0), Quaternion.identity, ObjectPoolManager.PoolType.Particle);
         }
+         InvokeRepeating("PlayAxitSound", 0f, 2.5f);
 
     }
 
@@ -60,7 +63,8 @@ public class PoisionSplash : MonoBehaviour
 
             // Dừng DOTween để tránh lỗi khi trả về Pool
             transform.DOKill();
-            ObjectPoolManager.ReturnObject(transform.parent.gameObject);
+            ObjectPoolManager.ReturnObject(parent.gameObject);
+            CancelInvoke("PlayAxitSound");
         }
     }
 
@@ -79,13 +83,14 @@ public class PoisionSplash : MonoBehaviour
             {
                 // Thêm component lần đầu
                 effect = collision.gameObject.AddComponent<PoisonDamageEffect>();
-
+                effect.burnSound = this.burnSound;
                 effect.damageTickRate = this.damageTickRate;
                 effect.maxStacks = this.maxStacks;
                 effect.poisonColor = this.debuffColor;
 
                 // Áp dụng Stack đầu tiên
                 effect.ApplyStack(this.effectDuration, this.slowFactor, this.damagePerTick);
+            
             }
             else
             {
@@ -95,5 +100,9 @@ public class PoisionSplash : MonoBehaviour
 
         
         }
+    }
+    private void PlayAxitSound()
+    {
+        ObjectPoolManager.PlayAudio(poisonSound, transform.position, 1.0f);
     }
 }

@@ -18,7 +18,7 @@ public class BallistaShot : ATowerSkill
     // Tối ưu: Tạo list tạm 1 lần để tránh rác (garbage)
     private List<(GameObject target, float sqrDist)> tempTargetList = new List<(GameObject, float)>();
     private Animator animator;
-
+    public AudioClip shootSound;
     /// <summary>
     /// Hàm DoAttack chính (đã được dọn dẹp)
     /// </summary>
@@ -124,6 +124,7 @@ public class BallistaShot : ATowerSkill
 
             // Giao mục tiêu cho đạn
             projectileComp.Launch(new List<GameObject> { target }, damage);
+            ObjectPoolManager.PlayAudio(shootSound, spawnPos, 1.0f);
         }
     }
 }

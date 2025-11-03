@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9d284de24e8ae4d827f0387a2b92b0, type: 3}
   m_Name: ThrowRock
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: fd03f0575efc6ee45a7b145e6964df97, type: 3}
   numberOfShoot: 1
   fireRate: 0
   projectile: {fileID: 9077797773556550367, guid: 55dbce9c5944d5343bd03c03296420d6, type: 3}

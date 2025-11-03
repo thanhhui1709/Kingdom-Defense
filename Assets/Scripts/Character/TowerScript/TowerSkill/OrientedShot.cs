@@ -9,6 +9,7 @@ public class OrientedShot : ATowerSkill
     [SerializeField] private int numberOfShoot = 1;
     [SerializeField] private Vector3 offset;
     [SerializeField] private float timeBetweenShots = 0.1f;
+    public AudioClip shootSound;
 
     // XÓA BỎ BIẾN XOAY 180 ĐỘ (rotationFix)
 
@@ -38,6 +39,7 @@ public class OrientedShot : ATowerSkill
                 spawnRot, // Dùng hướng xoay GỐC (mũi tên sẽ tự sửa)
                 ObjectPoolManager.PoolType.TowerProjectile
             );
+            ObjectPoolManager.PlayAudio(shootSound, shooter.position, 1.0f);
 
             // Launch
             IProjectile projectile1 = go.GetComponent<IProjectile>();

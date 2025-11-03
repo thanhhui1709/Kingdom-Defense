@@ -13,11 +13,13 @@ public class ContinuousBeamManager : MonoBehaviour
     [SerializeField]
     private Transform shooterTransform; // Vị trí bắn, lấy từ TowerController
     public ParticleSystem laserEffect;
+    public AudioClip laserAudio;
+    public AudioSource laserAudioSource;
 
 
     // --- CÁC BIẾN TRẠNG THÁI ---
     private Dictionary<GameObject, GameObject> activeBeams = new Dictionary<GameObject, GameObject>();
-
+   
     // --- CÁC BIẾN CÀI ĐẶT ---
     [Tooltip("Prefab của tia sét")]
     [SerializeField] private GameObject projectilePrefab;
@@ -25,6 +27,7 @@ public class ContinuousBeamManager : MonoBehaviour
 
     void Awake()
     {
+
         // Lấy các component cần thiết trên cùng một trụ
         towerController = GetComponent<TowerController>();
         stats = GetComponent<Stats>();
@@ -36,6 +39,8 @@ public class ContinuousBeamManager : MonoBehaviour
             this.enabled = false; // Vô hiệu hóa script nếu không có TowerController
             return;
         }
+        laserAudioSource.clip = laserAudio;
+
 
     }
     private void OnEnable()
@@ -112,13 +117,20 @@ public class ContinuousBeamManager : MonoBehaviour
      
         if(towerController.GetCurrentTargets().Count == 0)
         {
+            laserAudioSource.Pause();
             laserEffect.Stop();
         }
         else
         {
             if (!laserEffect.isPlaying)
             {
+
+               
                 laserEffect.Play();
+            }
+            if (!laserAudioSource.isPlaying)
+            {
+                laserAudioSource.Play();
             }
         }
     }

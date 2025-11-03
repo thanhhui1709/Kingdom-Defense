@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1748e6bb08138043a5278fe8dcc02ab, type: 3}
   m_Name: StrongBash
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: d07f2d2b34932f347a8bc96e81315448, type: 3}
   criticalChance: 0.8
   radius: 2
   layer:

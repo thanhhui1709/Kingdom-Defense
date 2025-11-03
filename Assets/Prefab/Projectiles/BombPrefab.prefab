@@ -5102,3 +5102,4 @@ MonoBehaviour:
   explosionForce: 500
   explosionEffect: {fileID: 1237870669895136310, guid: 960d5c25a2b942f4a9e1c14877178d06, type: 3}
   ignoreArmor: 10
+  boomExplosion: {fileID: 8300000, guid: 84051a5dc7ffce147bf2d5fbf280a58d, type: 3}

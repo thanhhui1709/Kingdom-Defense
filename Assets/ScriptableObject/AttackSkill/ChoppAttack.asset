@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcaecc49619e124e8e7a5d9b41e8378, type: 3}
   m_Name: ChoppAttack
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: 49c584a8c7707e04382652d45e1c596c, type: 3}
   criticalChance: 0.2
   damageMultiplier: 1

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4692a46c0869abd4db33a711aa966f35, type: 3}
   m_Name: MeleeSpinAttack
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: e1da04e23fc9c2e4189e42e38aacaa83, type: 3}
   radius: 5
   criticalChance: 0.208
   layer:

@@ -27,6 +27,7 @@ public class PoisonDamageProjectile : MonoBehaviour, IProjectile
     public int maxStacks = 3; // Giới hạn cộng dồn
 
     public Color debuffColor = Color.green;
+    public AudioClip burnSound;
 
     public void Launch(List<GameObject> targets,float damage)
     {
@@ -69,6 +70,7 @@ public class PoisonDamageProjectile : MonoBehaviour, IProjectile
             {
                 // ... (Phần thêm component như cũ, gán tất cả các thông số tĩnh)
                 effect = other.gameObject.AddComponent<PoisonDamageEffect>();
+                effect.burnSound = this.burnSound;
                 effect.damageTickRate = this.damageTickRate;
                 effect.maxStacks = this.maxStacks;
                 effect.poisonColor = this.debuffColor;

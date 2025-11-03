@@ -15,7 +15,7 @@ public class PoisonDamageEffect : MonoBehaviour
     [HideInInspector] public Color poisonColor= new Color(0.5f, 1f, 0.5f,0.5f);
     [HideInInspector] public float duration=0.5f;
 
- 
+    public AudioClip burnSound; 
     private Stats stats;
     private EnemyHealth enemyHealth;
     private Renderer[] objectRenderer;
@@ -63,7 +63,7 @@ public class PoisonDamageEffect : MonoBehaviour
         {
             // Sát thương nhân với số Stack và Sát thương Cao nhất đã nhận
             enemyHealth.TakeAbsoluteDamage(currentMaxDamagePerTick * currentStacks);
-
+            ObjectPoolManager.PlayAudio(burnSound,transform.position,0.7f);
             damageTimer = damageTickRate;
         }
     }

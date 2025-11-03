@@ -11,7 +11,7 @@ public class PremiumPoisonShell : MonoBehaviour, IProjectile
 
     [SerializeField]
     private GameObject poisonSplash;
-
+    public AudioClip poisonSound;
     private float damage;
     private Rigidbody rb;
     public void Launch(List<GameObject> target, float damage)
@@ -45,6 +45,7 @@ public class PremiumPoisonShell : MonoBehaviour, IProjectile
             if (poisonSplash != null)
             {
                 GameObject splash = ObjectPoolManager.SpawnObject(poisonSplash, transform.position+new Vector3(0,-0.5f,0), Quaternion.identity, ObjectPoolManager.PoolType.TowerProjectile);
+                ObjectPoolManager.PlayAudio(poisonSound, transform.position, 2f);
                 PoisionSplash poisionSplash = poisonSplash.GetComponentInChildren<PoisionSplash>();
                 if (poisonSplash != null)
                 {

@@ -121,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.217298
+      value: 7.8526907
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_LocalPosition.y
@@ -129,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.6785064
+      value: 5.1070604
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 454316d7f45ed2047b0ba2e61d176f00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -264,7 +264,7 @@ MonoBehaviour:
   attackDamage: 100
   attackSpeed: 2
   moveSpeed: 0
-  attackRange: 10
+  attackRange: 13
   triggerRange: 10
   money: 0
   attackList: []
@@ -344,6 +344,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 3311912308468275614}
   sinkAmount: 6
   sinkDuration: 1.5
+  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
 --- !u!1001 &8821049472463195576
 PrefabInstance:
   m_ObjectHideFlags: 0

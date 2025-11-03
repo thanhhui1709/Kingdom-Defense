@@ -7,6 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 [CreateAssetMenu(fileName = "RangeAttack", menuName = "AttackBehavior/RangeAttack")]
 public class RangeAttack : AttackBehavior
 {
+    public AudioClip attackSound;
     public int numberOfShoot;
     public float fireRate;
     public GameObject projectile;
@@ -59,6 +60,7 @@ public class RangeAttack : AttackBehavior
         {
             prj.Launch(new List<GameObject> { target }, attackerStats.AttackDamage * damageMultiplier);
         }
+        ObjectPoolManager.PlayAudio(attackSound, runner.transform.position, 1.0f);
         count++;
 
     }

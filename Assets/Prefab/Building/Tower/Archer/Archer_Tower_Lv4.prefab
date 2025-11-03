@@ -117,15 +117,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.905795
+      value: -10.708438
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.10109711
+      value: 0.049999237
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.0338042
+      value: 4.6803694
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29e722287b3f28342b659e09548628ed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -234,7 +234,7 @@ MonoBehaviour:
   attackDamage: 100
   attackSpeed: 2
   moveSpeed: 0
-  attackRange: 10
+  attackRange: 13
   triggerRange: 10
   money: 0
   attackList: []
@@ -314,6 +314,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 937982097975396883}
   sinkAmount: 6
   sinkDuration: 1.5
+  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
 --- !u!1 &6123571586118172547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6942421975285683649, guid: 29e722287b3f28342b659e09548628ed, type: 3}

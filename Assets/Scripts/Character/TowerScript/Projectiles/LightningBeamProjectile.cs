@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class LightningBeam : MonoBehaviour
 {
+   
     [Header("Visual Effects")]
     [SerializeField] int segments = 20;            // Số đoạn của tia sét (>= 2)
     [SerializeField] float amplitude = 0.5f;       // Biên độ cong của tia sét
@@ -12,7 +13,7 @@ public class LightningBeam : MonoBehaviour
     [SerializeField] Vector3 up = Vector3.up;      // Vector dùng để tính phương vuông góc
     [SerializeField] bool usePerpendicular = true; // Nếu false, tia sét sẽ cong trong không gian 3D
     [SerializeField] bool useWorldSpace = true;    // Nên để true để tia sét nối đúng giữa 2 vật thể
-
+    
     // Các biến trạng thái của tia sét
     private LineRenderer lr;
     private Vector3 shooter;
@@ -53,6 +54,8 @@ public class LightningBeam : MonoBehaviour
         this.target = singleTarget.transform;
         this.damagePerSecond = damageFromTower;
         this.targetHealth = singleTarget.GetComponent<EnemyHealth>(); // Lấy component máu của mục tiêu
+
+       
     }
 
     void Update()
