@@ -257,8 +257,19 @@ public class WaitSceneUIManager : MonoBehaviour
         nextBtn.interactable = currentStageIndex < stages.Count - 1;
         playBtn.onClick.RemoveAllListeners();
         playBtn.onClick.AddListener(OnPlayStage);
+        IsAbleToPlayStage();
     }
-
+    private void IsAbleToPlayStage()
+    {
+        if (GameManager.Instance.CheckValidScene(stages[currentStageIndex].sceneName))
+        {
+            playBtn.interactable = true;
+        }
+        else
+        {
+            playBtn.interactable = false;
+        }
+    }
     public void OnPlayStage()
     {
         ObjectPoolManager.PlayAudio2D(clickSound, 1f);
