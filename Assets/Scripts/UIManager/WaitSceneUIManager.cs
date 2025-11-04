@@ -39,6 +39,7 @@ public class WaitSceneUIManager : MonoBehaviour
     public Transform stageContainer;
     public Button nextBtn;
     public Button prevBtn;
+    public Button playBtn;
 
     private List<List<LevelUpData>> datas;
     private int currentStageIndex = 0;
@@ -233,6 +234,7 @@ public class WaitSceneUIManager : MonoBehaviour
             currentStageIndex++;
             LoadStage(currentStageIndex);
             ObjectPoolManager.PlayAudio2D(clickSound, 1f);
+          
             UpdateSlideButtons();
         }
     }
@@ -244,6 +246,7 @@ public class WaitSceneUIManager : MonoBehaviour
             currentStageIndex--;
             LoadStage(currentStageIndex);
             ObjectPoolManager.PlayAudio2D(clickSound, 1f);
+       
             UpdateSlideButtons();
         }
     }
@@ -252,6 +255,8 @@ public class WaitSceneUIManager : MonoBehaviour
     {
         prevBtn.interactable = currentStageIndex > 0;
         nextBtn.interactable = currentStageIndex < stages.Count - 1;
+        playBtn.onClick.RemoveAllListeners();
+        playBtn.onClick.AddListener(OnPlayStage);
     }
 
     public void OnPlayStage()

@@ -9108,6 +9108,7 @@ MonoBehaviour:
   stageContainer: {fileID: 290366017}
   nextBtn: {fileID: 1533164146}
   prevBtn: {fileID: 1550974933}
+  playBtn: {fileID: 568045541}
 --- !u!1001 &1951291920
 PrefabInstance:
   m_ObjectHideFlags: 0
