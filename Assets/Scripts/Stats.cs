@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Stats: MonoBehaviour
 {
-    public Sprite sprite;
     [SerializeField] private float heath;
     [SerializeField] private float ammor;
     [SerializeField] private float attackDamage;

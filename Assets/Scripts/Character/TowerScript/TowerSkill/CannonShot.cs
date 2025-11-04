@@ -5,76 +5,63 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Cannon Shot", menuName = "Tower Skill/CannonShot")]
 public class CannonShot : ATowerSkill
 {
-    [SerializeField] private float projectileSpeed = 20f;
-    [SerializeField] private float aimHeightOffset = 0.5f;
-    [SerializeField] private float minRange = 4f;
-    [SerializeField] private float muzzleOffset = 4f;
-    [SerializeField] private float projectileLifeTime = 6f;
+    public float shootForce = 500f;
+    public float fireRate = 1f;
+    public float range = 10f;
 
-    public override void DoAttack(Transform shooter, GameObject projectilePrefab, List<GameObject> targets, float damage)
+    // Giữ nguyên biến offset, bạn có thể phải dùng giá trị lớn hơn 20f
+    public float muzzleOffsetDistance = 1.5f;
+
+    public override void DoAttack(Transform shooter, GameObject projectile, List<GameObject> targets, float damage)
     {
-        if (targets == null || targets.Count == 0 || projectilePrefab == null)
-            return;
+        if (targets == null || targets.Count == 0 || projectile == null) return;
 
-        GameObject target = targets.FirstOrDefault();
+        GameObject target = targets[0];
         if (target == null) return;
 
-        // --- Quay tháp về phía mục tiêu ---
-        Vector3 flatDir = target.transform.position - shooter.position;
-        flatDir.y = 0f;
-
-        if (flatDir.sqrMagnitude > 0.001f)
-            shooter.rotation = Quaternion.LookRotation(flatDir.normalized, Vector3.up);
-
-        // --- Kiểm tra tầm bắn ---
-        float distance = Vector3.Distance(shooter.position, target.transform.position);
-        if (distance < minRange)
+        // --- Tìm Cannon_1 (Đối tượng được quay) ---
+        Transform cannon1 = shooter.GetComponentsInChildren<Transform>(true)
+                                       .FirstOrDefault(t => t.name == "Cannon_1");
+        if (cannon1 == null)
+        {
+            Debug.LogError("Không tìm thấy Cannon_1!");
             return;
-
-        // --- Xác định vị trí sinh viên đạn ---
-        Transform barrel = shooter.Find("Cannon_2");
-        Vector3 spawnPos;
-        Quaternion spawnRot;
-
-        if (barrel != null)
-        {
-           
-            spawnPos = barrel.position + barrel.up * muzzleOffset;
-            spawnRot = barrel.rotation;
-        }
-        else
-        {
-            spawnPos = shooter.position + shooter.up * muzzleOffset;
-            spawnRot = shooter.rotation;
         }
 
-        
-        Debug.DrawLine(barrel != null ? barrel.position : shooter.position, spawnPos, Color.red, 2f);
+        // --- Tìm Cannon_2 (Đối tượng mà bạn muốn lấy vị trí, dù nó ở tâm) ---
+        Transform cannon2 = shooter.GetComponentsInChildren<Transform>(true)
+                                       .FirstOrDefault(t => t.name == "Cannon_2");
+        if (cannon2 == null)
+        {
+            Debug.LogError("Không tìm thấy Cannon_2!");
+            return;
+        }
+
+      
+        Vector3 directionToTarget = (target.transform.position - cannon1.position).normalized;
+        if (directionToTarget != Vector3.zero)
+        {
+            cannon1.rotation = Quaternion.LookRotation(directionToTarget);
+        }
+
+      
+        Vector3 fireDirection = cannon1.forward;
+
+        Vector3 basePos = cannon2.position;
+
+        Vector3 spawnPos = basePos + fireDirection * muzzleOffsetDistance;
+
+      
+        Quaternion spawnRot = cannon1.rotation;
 
        
-        GameObject projectile = ObjectPoolManager.SpawnObject(projectilePrefab, spawnPos, spawnRot,ObjectPoolManager.PoolType.TowerProjectile);
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        GameObject bullet = GameObject.Instantiate(projectile, spawnPos, spawnRot);
 
-        if (rb == null)
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            Debug.LogError("CannonShot: projectilePrefab cần có Rigidbody!");
-            Object.Destroy(projectile);
-            return;
+           
+            rb.AddForce(fireDirection * shootForce);
         }
-        Stats shooterStats=shooter.GetComponentInParent<Stats>();
-        IProjectile projectile1 = projectile.GetComponent<IProjectile>();
-        if (projectile1 != null && shooterStats!=null)
-        {
-            projectile1.Launch(barrel,targets,shooterStats.AttackDamage);
-        }
-
-        
-        Vector3 aimTarget = target.transform.position + Vector3.up * aimHeightOffset;
-        Vector3 shootDir = (aimTarget - spawnPos).normalized;
-
-        rb.linearVelocity = shootDir * projectileSpeed;
-        projectile.transform.forward = shootDir;
-
-        Object.Destroy(projectile, projectileLifeTime);
     }
 }
