@@ -13,17 +13,25 @@ MonoBehaviour:
   m_Name: EnemyWave
   m_EditorClassIdentifier: 
   waveData:
-  - enemyPrefab: {fileID: 0}
-    numberPerWave: 0
-    delaySpawnPrefab: 0
-    delayForTheNextWaveData: 0
-  - enemyPrefab: {fileID: 0}
-    numberPerWave: 0
-    delaySpawnPrefab: 0
-    delayForTheNextWaveData: 0
-  - enemyPrefab: {fileID: 0}
-    numberPerWave: 0
-    delaySpawnPrefab: 0
-    delayForTheNextWaveData: 0
-  delayForTheNextWave: 0
-  isDoneSpawned: 0
+  - enemyPrefab: {fileID: 6540222376654014055, guid: f44b20cb845287e4d9a5c39bbb984bc6, type: 3}
+    numberPerWave: 10
+    delaySpawnPrefab: 1.5
+    delayForTheNextWaveData: 15
+  - enemyPrefab: {fileID: 507631359435553744, guid: aa641f3119939f247b04969eeb378558, type: 3}
+    numberPerWave: 9
+    delaySpawnPrefab: 1.5
+    delayForTheNextWaveData: 15
+  - enemyPrefab: {fileID: 6540222376654014055, guid: f44b20cb845287e4d9a5c39bbb984bc6, type: 3}
+    numberPerWave: 12
+    delaySpawnPrefab: 1.5
+    delayForTheNextWaveData: 15
+  - enemyPrefab: {fileID: 1551875180090516271, guid: 6c0e4f97bae303a4aa933065590be798, type: 3}
+    numberPerWave: 10
+    delaySpawnPrefab: 1.5
+    delayForTheNextWaveData: 15
+  - enemyPrefab: {fileID: 3410437373876898271, guid: 6441525018c9f1c42ad6b079c52cac5d, type: 3}
+    numberPerWave: 10
+    delaySpawnPrefab: 1.5
+    delayForTheNextWaveData: 15
+  delayForTheNextWave: 30
+  isDoneSpawned: 1
