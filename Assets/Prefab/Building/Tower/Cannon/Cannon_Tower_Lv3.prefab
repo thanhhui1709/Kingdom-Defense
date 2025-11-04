@@ -48,6 +48,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 640491404812320857, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.014328035
+      objectReference: {fileID: 0}
+    - target: {fileID: 640491404812320857, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0143279955
+      objectReference: {fileID: 0}
+    - target: {fileID: 640491404812320857, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7069617
+      objectReference: {fileID: 0}
+    - target: {fileID: 640491404812320857, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7069616
+      objectReference: {fileID: 0}
+    - target: {fileID: 640491404812320857, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 640491404812320857, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -182.322
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       propertyPath: m_Name
       value: Cannon_Tower_Lv3
@@ -97,15 +121,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 924023304922949653}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8395907886627272065}
     - targetCorrespondingSourceObject: {fileID: 7046889192226579917, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5934000955613497309}
   m_SourcePrefab: {fileID: 100100000, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
---- !u!1 &87327825284222134 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6860302996382567554, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
-  m_PrefabInstance: {fileID: 6774241821414162484}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4596316400276530681 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7046889192226579917, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
@@ -132,6 +154,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.272502, y: 14.931561, z: 4.6680202}
   m_Center: {x: 0.076873794, y: 7.364697, z: 0.32077587}
+--- !u!1 &5059069850543602814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1745035119669197898, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
+  m_PrefabInstance: {fileID: 6774241821414162484}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5963778395517074789 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90b99a3fb5a0a704b9432fe48f8ba1a0, type: 3}
@@ -152,7 +179,7 @@ MonoBehaviour:
   towerSkill: {fileID: 11400000, guid: c1b9c4d9db7046c49bbbb1cd9ea2a767, type: 2}
   projectilePrefab: {fileID: 5266378106977556716, guid: 7bc7878c49be95d438acc3a15e505a99, type: 3}
   maxTarget: 1
-  shooter: {fileID: 87327825284222134}
+  shooter: {fileID: 5059069850543602814}
 --- !u!114 &-662157244601223794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 4e638a61966f3844e9e8093e44e27b37, type: 3}
   heath: 500
   ammor: 100
   attackDamage: 100
@@ -185,7 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742f95fa3caacbd4096f1c1170cca1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerLevel: 3
+  towerNameKey: 
+  evolutionLevel: 1
   statsList:
   - cost: 100
     heath: 100
@@ -211,3 +240,17 @@ MonoBehaviour:
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
+--- !u!114 &8395907886627272065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5963778395517074789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25682741f63de914f8e829d5168e6c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0
