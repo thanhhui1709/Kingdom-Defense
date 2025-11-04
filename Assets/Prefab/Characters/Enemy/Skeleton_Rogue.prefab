@@ -1393,10 +1393,10 @@ MonoBehaviour:
   sprite: {fileID: 0}
   heath: 400
   ammor: 5
-  attackDamage: 50
-  attackSpeed: 13
+  attackDamage: 25
+  attackSpeed: 0.5
   moveSpeed: 3
-  attackRange: 25
+  attackRange: 13
   triggerRange: 17
   money: 25
   attackList:

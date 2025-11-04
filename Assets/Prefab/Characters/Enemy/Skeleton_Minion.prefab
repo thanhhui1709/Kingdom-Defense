@@ -1314,7 +1314,7 @@ MonoBehaviour:
   heath: 120
   ammor: 0
   attackDamage: 10
-  attackSpeed: 1
+  attackSpeed: 0.5
   moveSpeed: 3.5
   attackRange: 3
   triggerRange: 10
