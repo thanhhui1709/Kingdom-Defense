@@ -208,7 +208,7 @@ public class InGameUIManager : MonoBehaviour
         upgradeTowerUI.sellCostText.text = sellCost.ToString();
 
         // --- 2. KIỂM TRA TRẠNG THÁI NÂNG CẤP (ĐÃ CẬP NHẬT) ---
-        int playerMoney = Currency.Instance.GetBalance();
+        int playerMoney = InGameMoney.Instance.GetBalance();
         int nextLevelCost = levelController.GetNextLevelCost();
 
         if (levelController.IsReadyToEvolve() && levelController.IsAtMaxEvolution())
@@ -309,7 +309,7 @@ public class InGameUIManager : MonoBehaviour
     private void UpdateAllButtonStates()
     {
         // 1. Lấy số tiền hiện tại
-        int currentMoney = Currency.Instance.GetBalance();
+        int currentMoney = InGameMoney.Instance.GetBalance();
 
         // 2. Cập nhật các nút mua lính
         foreach (UnitButtonInfo info in unitButtons)

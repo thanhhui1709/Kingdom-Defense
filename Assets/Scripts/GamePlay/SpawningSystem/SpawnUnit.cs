@@ -16,7 +16,7 @@ public class SpawnUnit : MonoBehaviour
     public void AttemptToSpawnUnit(UnitData unit)
     {
         // 1. Kiểm tra tiền
-        if (Currency.Instance.SubMoney(unit.cost)) // SubMoney đã bao gồm cả kiểm tra
+        if (InGameMoney.Instance.SubMoney(unit.cost)) // SubMoney đã bao gồm cả kiểm tra
         {
             // 2. Đủ tiền -> Spawn
             Debug.Log("Đã mua lính: " + unit.unitName);
