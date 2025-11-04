@@ -405,7 +405,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 4327172624233377218}
   sinkAmount: 6
   sinkDuration: 1.5
-  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
+  destroySound: {fileID: 8300000, guid: 4a463809d705f944ab86978ac24e949d, type: 3}
 --- !u!114 &3497755909421113615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +437,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 513d122a7940c8c40987d90738ec941e, type: 3}
   m_Resource: {fileID: 8300000, guid: 513d122a7940c8c40987d90738ec941e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.564
+  m_Volume: 0.831
   m_Pitch: 1
   Loop: 1
   Mute: 0

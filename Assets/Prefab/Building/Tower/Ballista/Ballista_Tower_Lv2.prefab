@@ -291,7 +291,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 8068948320357154629}
   sinkAmount: 6
   sinkDuration: 1.5
-  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
+  destroySound: {fileID: 8300000, guid: 4a463809d705f944ab86978ac24e949d, type: 3}
 --- !u!95 &8840505328036447509
 Animator:
   serializedVersion: 7

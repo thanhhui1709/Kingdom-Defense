@@ -344,7 +344,7 @@ MonoBehaviour:
   hurtEffect: {fileID: 3311912308468275614}
   sinkAmount: 6
   sinkDuration: 1.5
-  destroySound: {fileID: 8300000, guid: 3a2d9642b39b71c44b3627c40a374eaa, type: 3}
+  destroySound: {fileID: 8300000, guid: 4a463809d705f944ab86978ac24e949d, type: 3}
 --- !u!1001 &8821049472463195576
 PrefabInstance:
   m_ObjectHideFlags: 0

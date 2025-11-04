@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: fourshot
   m_EditorClassIdentifier: 
   numberOfShoot: 4
+  offset: {x: 0, y: 0, z: 0}
+  timeBetweenShots: 0.1
+  shootSound: {fileID: 8300000, guid: 6b2eaec7072355c48a413c25dcd819bb, type: 3}
