@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8105f4ecb473f4392a8244d29bedc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 7217451481894519502}
   existTime: 5
   effectDuration: 3
   splashEffect: {fileID: 4234218909329562068, guid: 09580d549614c3b4d9a947170ce1a29f, type: 3}
@@ -142,6 +143,8 @@ MonoBehaviour:
   damageTickRate: 0.5
   maxStacks: 4
   debuffColor: {r: 0, g: 1, b: 0, a: 1}
+  poisonSound: {fileID: 8300000, guid: fd03a31c6862140429e64d8da52fc096, type: 3}
+  burnSound: {fileID: 8300000, guid: ec38c4a470f687340a6288a66eb194cc, type: 3}
 --- !u!65 &4836973192252869080
 BoxCollider:
   m_ObjectHideFlags: 0

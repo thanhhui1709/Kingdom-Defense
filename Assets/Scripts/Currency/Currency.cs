@@ -4,27 +4,21 @@ using DG.Tweening; // Import thư viện DOTween
 
 public class Currency : MonoBehaviour
 {
-    // CƠ CHẾ SINGLETON ĐÃ SỬA CHỮA:
     public static Currency Instance;
-
     public TextMeshProUGUI coinText;
 
     [Header("Cài đặt Animation")]
-    [Tooltip("Thời gian hiệu ứng đếm số tiền.")]
     public float countDuration = 0.5f;
-    [Tooltip("Độ phóng to khi tiền thay đổi.")]
     public float punchScale = 1.2f;
 
-    private int balance = 100; // Khởi tạo số dư ban đầu cho dễ test
-    private int displayedBalance; // Số dư đang hiển thị trên UI
+    private int balance = 100; // Khởi tạo số dư ban đầu
+    private int displayedBalance;
 
     private void Awake()
     {
-        // Logic Singleton (đảm bảo chỉ có một instance)
         if (Instance == null)
         {
             Instance = this;
-            // Khởi tạo số dư hiển thị bằng số dư thực tế
             displayedBalance = balance;
         }
         else if (Instance != this)
@@ -36,35 +30,44 @@ public class Currency : MonoBehaviour
 
     private void Start()
     {
-        // Đảm bảo UI hiển thị đúng ngay khi bắt đầu
-        UpdateUI(0);
-
-        // Đăng ký sự kiện (Giữ nguyên)
+        UpdateUI(0); // Hiển thị số tiền ban đầu
         if (GameEvent.Instance != null)
         {
             GameEvent.Instance.SubscribeEnemyDie(AddMoney);
         }
     }
+
+    // (Hàm Update test của bạn được giữ nguyên)
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SubMoney(10);
-        }  
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            AddMoney(100);
-        }
+        if (Input.GetKeyDown(KeyCode.Space)) { SubMoney(10); }
+        if (Input.GetKeyDown(KeyCode.Escape)) { AddMoney(100); }
     }
 
+    // --- CÁC HÀM MỚI ---
+    /// <summary>
+    /// Lấy số dư hiện tại.
+    /// </summary>
+    public int GetBalance()
+    {
+        return balance;
+    }
 
+    /// <summary>
+    /// Kiểm tra xem có đủ tiền hay không.
+    /// </summary>
+    public bool CheckBalance(int amount)
+    {
+        return balance >= amount;
+    }
+    // --- KẾT THÚC HÀM MỚI ---
 
     public void AddMoney(int amount)
     {
         if (amount > 0)
         {
             balance += amount;
-            UpdateUI(amount); 
+            UpdateUI(amount);
         }
     }
 
@@ -73,38 +76,22 @@ public class Currency : MonoBehaviour
         if (amount > 0 && balance >= amount)
         {
             balance -= amount;
-            Debug.Log("Sub" + amount + "Balance" + balance);
-            UpdateUI(amount); 
+            UpdateUI(amount); // (Bạn đã có sẵn UpdateUI, rất tốt)
             return true;
         }
         return false;
     }
 
-   
-
-    // --- HÀM MỚI: CẬP NHẬT UI CÓ ANIMATION ---
-    /// <summary>
-    /// Cập nhật UI với hiệu ứng đếm số (Counting) và hiệu ứng phóng to.
-    /// </summary>
-    /// <param name="changeAmount">Số tiền thay đổi (cho mục đích debug/effect).</param>
-    /// <param name="animate">Có chạy animation phóng to UI không.</param>
     private void UpdateUI(int changeAmount)
     {
-        // 1. Dừng mọi DOTween đang chạy trên text để tránh lỗi chồng chéo
         coinText.DOKill();
-
-
-        // Tween số tiền đang hiển thị từ displayedBalance lên balance thực tế
-        DOTween.To(() => displayedBalance, // Giá trị bắt đầu
+        DOTween.To(() => displayedBalance,
                    x =>
                    {
-                       displayedBalance = x; // Cập nhật displayedBalance
-                       coinText.text = displayedBalance.ToString(); // Cập nhật Text
+                       displayedBalance = x;
+                       coinText.text = displayedBalance.ToString();
                    },
-                   balance,              // Giá trị kết thúc (số dư thực tế)
-                   countDuration);         // Thời gian chạy
-
-    
-      
+                   balance,
+                   countDuration);
     }
 }

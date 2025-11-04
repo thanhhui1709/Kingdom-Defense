@@ -1,80 +1,164 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
-using System;
-using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
+    [Header("Level Config")]
+    [SerializeField] private string towerNameKey;
+    [SerializeField] private int evolutionLevel = 1;
+    [SerializeField] private List<LevelStats> statsList = new List<LevelStats>();
+
     private Stats stats;
+    private int subLevel = 0;
+    private bool isReadyToEvolve = false;
 
-    [SerializeField]
-    [Tooltip("Cấp độ hiện tại của tháp phòng thủ.Nếu lên cấp thì sẽ tăng chỉ số,nếu max cấp sẽ tiến hóa")]
-    private int towerLevel = 1;
-
-    [SerializeField]
-    private List<LevelStats> statsList = new List<LevelStats>();
-    private int currentLevel = 0;
-
-
-    void Start()
+    void Awake()
     {
         stats = GetComponent<Stats>();
     }
 
+    void Start()
+    {
+        UpdateLevelState();
+    }
+
+    public bool IsReadyToEvolve()
+    {
+        return isReadyToEvolve;
+    }
+
+    public bool IsAtMaxEvolution()
+    {
+        return LevelUpManager.Instance.GetNextLevelPrefab(LevelUpType.Tower, towerNameKey, evolutionLevel) == null;
+    }
 
     public void LevelUp()
     {
-        
-        if (currentLevel == statsList.Count)
+        if (isReadyToEvolve)
         {
-            Upgrade();
-           
-            return;
+            EvolveTower();
         }
-        LevelStats levelStats = statsList[currentLevel];
+        else if (subLevel < statsList.Count)
+        {
+            ApplySubLevelStats();
+        }
+        else
+        {
+            Debug.Log("Đã đạt cấp tối đa cho phiên bản này.");
+        }
+    }
+
+    /// <summary>
+    /// Cộng chỉ số (lên cấp nội bộ)
+    /// </summary>
+    private void ApplySubLevelStats()
+    {
+        LevelStats levelStats = statsList[subLevel];
+
+        // --- KIỂM TRA TIỀN (SUB-LEVEL) ---
+        if (!Currency.Instance.CheckBalance(levelStats.cost))
+        {
+            Debug.Log("Không đủ tiền để nâng cấp (sub-level)!");
+            return; 
+        }
+
+        // Đủ tiền, trừ tiền
+        Currency.Instance.SubMoney(levelStats.cost);
+
+        // Cập nhật tổng tiền đầu tư
+        stats.TotalInvestedMoney += levelStats.cost;
+        // --- KẾT THÚC LOGIC TIỀN ---
+
+        // Cộng chỉ số
         stats.Ammor += levelStats.ammor;
         stats.Heath += levelStats.heath;
         stats.AttackDamage += levelStats.attackDamage;
+        stats.Money += levelStats.cost; // Cộng chi phí xây dựng cơ bản
         stats.AttackSpeed += levelStats.attackSpeed;
         stats.MoveSpeed += levelStats.moveSpeed;
         stats.AttackRange += levelStats.attackRange;
         stats.TriggerRange += levelStats.triggerRange;
-        currentLevel++;
 
 
+        subLevel++;
+        UpdateLevelState();
+
+        // Bắn sự kiện để UI cập nhật (vì prefab không đổi)
+        GameEvent.Instance.OnTriggerTowerLevelUp(gameObject);
     }
 
-    private void Upgrade()
+    /// <summary>
+    /// Tiến hóa (thay prefab)
+    /// </summary>
+    private void EvolveTower()
     {
-        GameObject nextLevelObject = LevelUpManager.Instance.GetLevelUpGameObject(LevelUpManager.LevelUpType.Tower, GetTowerName(gameObject.name.Substring(0, gameObject.name.Length - 11)), towerLevel);
+        // Lấy chi phí tiến hóa TRƯỚC
+        int cost = LevelUpManager.Instance.GetLevelUpCost(towerNameKey, evolutionLevel);
 
-        if (nextLevelObject != null)
+        // --- KIỂM TRA TIỀN (EVOLVE) ---
+        if (cost == 0) // Không tìm thấy cấp tiếp theo
         {
-            GameObject newTower = ObjectPoolManager.SpawnObject(nextLevelObject, transform.position, transform.rotation, ObjectPoolManager.PoolType.Tower);
+            Debug.Log("Đã max cấp, không thể tiến hóa.");
+            return;
+        }
+        if (!Currency.Instance.CheckBalance(cost))
+        {
+            Debug.Log("Không đủ tiền để tiến hóa (evolve)!");
+            return; // Dừng lại
+        }
+        // --- KẾT THÚC LOGIC TIỀN ---
+
+        GameObject nextLevelPrefab = LevelUpManager.Instance.GetNextLevelPrefab(
+            LevelUpType.Tower, towerNameKey, evolutionLevel
+        );
+
+        if (nextLevelPrefab != null)
+        {
+            // Đã kiểm tra, giờ trừ tiền
+            Currency.Instance.SubMoney(cost);
+
+            // Spawn trụ mới
+            GameObject newTower = ObjectPoolManager.SpawnObject(
+                nextLevelPrefab, transform.position, transform.rotation, ObjectPoolManager.PoolType.Tower
+            );
+            newTower.tag = "Tower";
+
+            // --- CHUYỂN TIỀN ĐẦU TƯ SANG TRỤ MỚI ---
+            Stats newTowerStats = newTower.GetComponent<Stats>();
+            if (newTowerStats != null)
+            {
+                // Tiền của trụ mới = tiền của trụ cũ + tiền vừa tiêu
+                newTowerStats.TotalInvestedMoney = stats.TotalInvestedMoney + cost;
+            }
+            // --- KẾT THÚC ---
+
             GameEvent.Instance.OnTriggerTowerLevelUp(newTower);
             ObjectPoolManager.ReturnObject(gameObject);
         }
     }
-    private string GetTowerName(string name)
+
+    /// <summary>
+    /// Lấy chi phí nâng cấp cho lần tiếp theo
+    /// </summary>
+    public int GetNextLevelCost()
     {
-        switch (name)
+        if (isReadyToEvolve)
         {
-            case "Archer_Tower":
-                return Const.ARCHER_TOWER_NAME;
-            case "Ballista_Tower":
-                return Const.BALLISTA_TOWER_NAME;
-            case "Cannon_Tower":
-                return Const.CANNON_TOWER_NAME;
-            case "Poison_Tower":
-                return Const.POISON_TOWER_NAME;
-            case "Wizard_Tower":
-                return Const.WIZARD_TOWER_NAME;
-            default:
-                return "";
+            return LevelUpManager.Instance.GetLevelUpCost(towerNameKey, evolutionLevel);
         }
+        else if (subLevel < statsList.Count)
+        {
+            return statsList[subLevel].cost;
+        }
+        return 0; // Max
+    }
+
+    private void UpdateLevelState()
+    {
+        isReadyToEvolve = (subLevel >= statsList.Count);
     }
 }
+
 [System.Serializable]
 public class LevelStats
 {
@@ -86,5 +170,4 @@ public class LevelStats
     public float moveSpeed;
     public float attackRange;
     public float triggerRange;
-
 }

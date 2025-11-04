@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -32,7 +32,7 @@ public class ObjectPoolManager : MonoBehaviour
     private void Awake()
     {
         SetUpEmpty();
-        //CreateDefaultAudioObject();
+        CreateDefaultAudioObject();
     }
 
     private void SetUpEmpty()
@@ -63,30 +63,35 @@ public class ObjectPoolManager : MonoBehaviour
         audioPool = new GameObject("AudioPool");
         audioPool.transform.SetParent(_objectPoolEmptyHolder.transform);
     }
-    //private GameObject CreateDefaultAudioObject()
-    //{
-    //    GameObject audioClipGO = new GameObject("AudioClip");
-    //    audioClipGO.AddComponent<PoolAudioPlayer>();
-    //    audioClipGO.transform.SetParent(audioPool.transform);
-    //    objectPools.Add(new PoolObjectInfo { poolName = audioClipGO.name, poolObjects = new List<GameObject>() { audioClipGO } });
-    //    return audioClipGO;
-    //}
-    //private static GameObject CreateAudioObjectStatic()
-    //{
-    //    GameObject audioClipGO = new GameObject("AudioClip");
-    //    audioClipGO.AddComponent<PoolAudioPlayer>();
-    //    audioClipGO.transform.SetParent(audioPool.transform);
-    //    objectPools.Add(new PoolObjectInfo { poolName = audioClipGO.name, poolObjects = new List<GameObject>() { audioClipGO } });
-    //    return audioClipGO;
-    //}
-    //private static GameObject CreateAudioObjectStatic(GameObject parent)
-    //{
-    //    GameObject audioClipGO = new GameObject("AudioClip");
-    //    audioClipGO.AddComponent<PoolAudioPlayer>();
-    //    audioClipGO.transform.SetParent(parent.transform);
-    //    objectPools.Add(new PoolObjectInfo { poolName = audioClipGO.name, poolObjects = new List<GameObject>() { audioClipGO } });
-    //    return audioClipGO;
-    //}
+    private void CreateDefaultAudioObject()
+    {
+
+        PoolObjectInfo pool = objectPools.Find(x => x.poolName == "AudioClip");
+        if (pool == null)
+        {
+            pool = new PoolObjectInfo { poolName = "AudioClip" };
+            objectPools.Add(pool);
+        }
+
+        // Tạo 1 object mới
+        GameObject audioClipGO = new GameObject("AudioClip");
+        audioClipGO.AddComponent<PoolAudio>();
+        audioClipGO.transform.SetParent(audioPool.transform);
+
+        // Tắt nó đi và thêm vào pool
+        audioClipGO.SetActive(false);
+        pool.poolObjects.Add(audioClipGO);
+    }
+
+    // (Hàm này được gọi khi pool hết object)
+    private static GameObject CreateAudioObjectStatic()
+    {
+        GameObject audioClipGO = new GameObject("AudioClip");
+        audioClipGO.AddComponent<PoolAudio>();
+        audioClipGO.transform.SetParent(audioPool.transform);
+  
+        return audioClipGO;
+    }
 
     public static GameObject SpawnObject(GameObject gameObject, Vector3 spawnPos, Quaternion rotation, PoolType poolType = PoolType.None)
     {
@@ -144,66 +149,91 @@ public class ObjectPoolManager : MonoBehaviour
         }
         return obj;
     }
-    //public static GameObject PlayAudio(AudioClip audioClip, float volume, GameObject parent = null)
-    //{
-    //    PoolObjectInfo pool = objectPools.Find(x => x.poolName.Equals("AudioClip"));
-    //    if (pool == null)
-    //    {
-    //        pool = new PoolObjectInfo();
-    //        pool.poolName = "AudioClip";
-    //        objectPools.Add(pool);
+    private static PoolAudio GetAudioPlayerFromPool()
+    {
+        PoolObjectInfo pool = objectPools.Find(x => x.poolName.Equals("AudioClip"));
+        if (pool == null)
+        {
+          
+            pool = new PoolObjectInfo { poolName = "AudioClip" };
+            objectPools.Add(pool);
+        }
 
-    //    }
-    //    GameObject obj = pool.poolObjects.FirstOrDefault();
-    //    if (obj == null)
-    //    {
-    //        if (parent != null)
-    //        {
-    //            obj = CreateAudioObjectStatic(parent);
-    //        }
-    //        else
-    //        {
+        GameObject obj = pool.poolObjects.FirstOrDefault();
+        if (obj != null) 
+        {
+            pool.poolObjects.Remove(obj);
+            obj.SetActive(true);
+        }
+        else 
+        {
+            obj = CreateAudioObjectStatic();
+          
+        }
+        return obj.GetComponent<PoolAudio>();
+    }
+    public static void PlayAudio(AudioClip audioClip, Vector3 position, float volume, float minDistance, float maxDistance)
+    {
+        PoolAudio player = GetAudioPlayerFromPool();
+        player.Play(audioClip, position, volume, minDistance, maxDistance);
+    }
 
-    //            obj = CreateAudioObjectStatic();
-    //        }
+    /// <summary>
+    /// Chơi âm thanh 3D tại 1 vị trí (dùng min/max mặc định)
+    /// </summary>
+    public static void PlayAudio(AudioClip audioClip, Vector3 position, float volume)
+    {
+        PoolAudio player = GetAudioPlayerFromPool();
+        // Gọi hàm Play của PoolAudio với min/max mặc định
+        player.Play(audioClip, position, volume);
+    }
 
-
-    //    }
-    //    else
-    //    {
-
-    //        obj.SetActive(true);
-
-
-
-    //    }
-    //    PoolAudioPlayer player = obj.GetComponent<PoolAudioPlayer>();
-    //    player.PlayAudioClip(audioClip, volume);
-    //    pool.poolObjects.Remove(obj);
-    //    return obj;
-    //}
+    /// <summary>
+    /// Chơi âm thanh 2D (cho UI, nhạc...)
+    /// </summary>
+    public static void PlayAudio2D(AudioClip audioClip, float volume)
+    {
+        PoolAudio player = GetAudioPlayerFromPool();
+        player.Play2D(audioClip, volume);
+    }
     public static void ReturnObject(GameObject gameObject)
     {
-        string name = gameObject.name.Substring(0, gameObject.name.Length - 7); // Remove "(Clone)" from the name
-        PoolObjectInfo pool = objectPools.Find(x => x.poolName.Equals(name) || x.poolName.Equals(gameObject.name));
+        string poolName;
+
+
+        if (gameObject.name == "AudioClip")
+        {
+            poolName = "AudioClip";
+        }
+        else if (gameObject.name.EndsWith("(Clone)"))
+        {
+      
+            poolName = gameObject.name.Substring(0, gameObject.name.Length - 7);
+        }
+        else
+        {
+     
+            poolName = gameObject.name;
+        }
+
+        PoolObjectInfo pool = objectPools.Find(x => x.poolName.Equals(poolName));
+
         if (pool != null)
         {
-            if (gameObject.name.Equals("AudioClip"))
+            // Reset lại Audio Object
+            if (poolName == "AudioClip")
             {
-                if (gameObject.transform.parent != null)
-                {
-                    gameObject.transform.parent = null;
-                    gameObject.transform.SetParent(SetParentGameObject(PoolType.Audio).transform);
-                    gameObject.transform.position = audioPool.transform.position;
-
-                }
+                gameObject.transform.SetParent(audioPool.transform);
+                gameObject.transform.position = audioPool.transform.position;
             }
+
             gameObject.SetActive(false);
             pool.poolObjects.Add(gameObject);
         }
         else
         {
-            Debug.LogWarning("Pool not found for " + gameObject.name);
+            Debug.LogWarning("Pool not found for " + gameObject.name + " (Pool name was '" + poolName + "')");
+            Destroy(gameObject);
         }
     }
     public static GameObject SetParentGameObject(PoolType type)

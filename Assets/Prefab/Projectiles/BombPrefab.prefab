@@ -4957,7 +4957,6 @@ GameObject:
   - component: {fileID: 371892749830857907}
   - component: {fileID: 4613742884318795356}
   - component: {fileID: 2628127338261008483}
-  - component: {fileID: 4540433821511749899}
   - component: {fileID: -6768391420619597162}
   m_Layer: 0
   m_Name: BombPrefab
@@ -5065,7 +5064,7 @@ Rigidbody:
   m_GameObject: {fileID: 5266378106977556716}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -5083,23 +5082,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4540433821511749899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5266378106977556716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 401684e00e4ed98418629aa47ec37f05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SparksVfx: {fileID: 9054779525929060691}
-  detonationCord: {fileID: 8968268478674411238}
-  Xplosion: {fileID: 1237870669895136310, guid: 960d5c25a2b942f4a9e1c14877178d06, type: 3}
-  timer: 3
-  PlayOnStart: 1
 --- !u!114 &-6768391420619597162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5112,7 +5094,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee5c4e8f23ae38240aa686eb0d56341a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  layer:
+    serializedVersion: 2
+    m_Bits: 128
+  speed: 10
   explosionRadius: 3
   explosionForce: 500
-  explosionEffect: {fileID: 0}
+  explosionEffect: {fileID: 1237870669895136310, guid: 960d5c25a2b942f4a9e1c14877178d06, type: 3}
+  ignoreArmor: 10
+  boomExplosion: {fileID: 8300000, guid: 84051a5dc7ffce147bf2d5fbf280a58d, type: 3}

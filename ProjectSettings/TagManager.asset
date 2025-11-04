@@ -13,6 +13,9 @@ TagManager:
   - Xplosion
   - Tree_small
   - Tower
+  - Unit
+  - Obstacle
+  - Castle
   layers:
   - Default
   - TransparentFX

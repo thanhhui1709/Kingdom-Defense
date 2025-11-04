@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1237870669895136308}
   - component: {fileID: 1237870669895136309}
   - component: {fileID: 2071831432539810681}
+  - component: {fileID: 4165950219775009905}
   m_Layer: 8
   m_Name: Xplosion
   m_TagString: Xplosion
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1237870669954486144}
@@ -45,7 +46,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4923,6 +4924,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.8
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4165950219775009905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237870669895136310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21267add30a56045837cb6713264ef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1237870669954486145
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerName: Archer
   towerPrefab: {fileID: 295986473561444131, guid: 526b535722eb5334ebbfb512689d5315, type: 3}
-  towerIcon: {fileID: 257537482, guid: be7d141bd8b3cff48bee871661ab6d0c, type: 3}
-  buildCost: 0
+  towerIcon: {fileID: 21300000, guid: 378973ca0a92f1f4eb22d5f2cf1b1b96, type: 3}
+  buildCost: 50
+  isUnlocked: 1
