@@ -7,7 +7,7 @@ public class UpdateButton
 {
     public Sprite lvImage;
     public Sprite buttonImage;
-    public 
+   
 }
 public class WaitSceneUIManager : MonoBehaviour
 {

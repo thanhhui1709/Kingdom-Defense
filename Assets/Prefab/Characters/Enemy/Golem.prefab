@@ -1116,7 +1116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 500
+  heath: 1000
   ammor: 10
   attackDamage: 10
   attackSpeed: 1
