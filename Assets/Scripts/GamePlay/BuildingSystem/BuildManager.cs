@@ -121,14 +121,14 @@ public class BuildManager : MonoBehaviour
         int buildCost = towerToBuild.buildCost;
 
         // --- KIỂM TRA TIỀN (XÂY MỚI) ---
-        if (!Currency.Instance.CheckBalance(buildCost))
+        if (!InGameMoney.Instance.CheckBalance(buildCost))
         {
             Debug.Log("Không đủ tiền xây trụ!");
             return; // Dừng
         }
 
         // Đủ tiền, trừ tiền
-        Currency.Instance.SubMoney(buildCost);
+        InGameMoney.Instance.SubMoney(buildCost);
         // --- KẾT THÚC LOGIC TIỀN ---
 
         GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity, ObjectPoolManager.PoolType.Tower);
@@ -172,7 +172,7 @@ public class BuildManager : MonoBehaviour
         {
             // --- LOGIC BÁN TRỤ (70%) ---
             int sellAmount = (int)(towerStats.TotalInvestedMoney * 0.7f);
-            Currency.Instance.AddMoney(sellAmount);
+            InGameMoney.Instance.AddMoney(sellAmount);
             // --- KẾT THÚC ---
         }
         else

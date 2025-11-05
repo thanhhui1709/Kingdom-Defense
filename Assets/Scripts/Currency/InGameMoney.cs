@@ -2,9 +2,9 @@
 using UnityEngine;
 using DG.Tweening; // Import thư viện DOTween
 
-public class Currency : MonoBehaviour
+public class InGameMoney : MonoBehaviour
 {
-    public static Currency Instance;
+    public static InGameMoney Instance;
     public TextMeshProUGUI coinText;
 
     [Header("Cài đặt Animation")]

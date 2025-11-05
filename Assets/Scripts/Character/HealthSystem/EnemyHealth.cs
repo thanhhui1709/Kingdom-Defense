@@ -22,7 +22,7 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
     [Header("UI Visibility")]
     [Tooltip("Số giây thanh máu hiển thị sau khi bị đánh")]
     [SerializeField] private float showDuration = 3f;
-
+    [SerializeField] private GameObject floatingMoneyPrefab;
     private AnimationController anim;
     private float showTimer; // Bộ đếm lùi
     private bool isHovering = false; // Chuột có đang hover không
@@ -188,18 +188,45 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
 
     public void Die()
     {
-        if (isDead) return; // Đảm bảo Die() chỉ chạy 1 lần
+        if (isDead) return;
 
-        ObjectPoolManager.PlayAudio(deathSound, transform.position,1f);
+        ObjectPoolManager.PlayAudio(deathSound, transform.position, 1f);
         isDead = true;
 
-        // Tắt UI trước khi tắt object
         if (healthBarCanvas != null)
             healthBarCanvas.SetActive(false);
 
         anim.Play(AnimationType.Die, true);
+
+    
+      
+
+        // 2. Spawn hiệu ứng text bay
+        if (floatingMoneyPrefab != null)
+        {
+            // Spawn tại vị trí của địch
+            GameObject textGO = ObjectPoolManager.SpawnObject(
+                floatingMoneyPrefab,
+                transform.position, 
+                Quaternion.identity   
+                ,ObjectPoolManager.PoolType.Particle
+            );
+
+
+            // Lấy script và Launch
+            FloatCoin textScript = textGO.GetComponent<FloatCoin>();
+            if (textScript != null)
+            {
+                textScript.Launch("+$" + stats.Money.ToString());
+            }
+        }
+
+
         GameEvent.Instance.OnTriggerEnemyDie(stats.Money);
-        StartCoroutine(DisableAfterTime(5f)); // Chờ 2 giây trước khi tắt
+
+
+
+        StartCoroutine(DisableAfterTime(5f));
     }
     IEnumerator DisableAfterTime(float delay)
     {
