@@ -76,4 +76,14 @@ public class GameEvent : MonoBehaviour
     {
         onEnemyDie -= callback;
     }
+
+    internal void UnsubscribeWinStage(Action onGameWin)
+    {
+         onWinStage-=onGameWin;
+    }
+
+    internal void UnsubscribeGameOver(Action onGameOver)
+    {
+         onGameOver -=onGameOver;
+    }
 }

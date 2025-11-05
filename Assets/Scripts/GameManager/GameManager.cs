@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private CutsceneManager _cutsceneManager;
     private ThemeAudio _themeAudio;
 
+  
+
     public GameEvent GameEvent
     {
         get
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-        
+
             return _cutsceneManager;
         }
         set => _cutsceneManager = value;
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; 
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -69,8 +71,13 @@ public class GameManager : MonoBehaviour
     // 🔥 Khi scene mới được load
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Time.timeScale = 1.0f;
         CheckInGameUIActive(scene.name);
-   
+        if (InGameUIManager != null)
+        {
+            InGameUIManager.InitData();
+        }
+
 
     }
 

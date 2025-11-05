@@ -38,10 +38,9 @@ public class SpawnEnemyWave : MonoBehaviour
     /// </summary>
     private IEnumerator SpawnAllWaves()
     {
-        // 1. Chờ thời gian active ban đầu
         yield return new WaitForSeconds(activeTime);
 
-        // 2. Lặp qua từng EnemyWave (ví dụ: "Wave 1", "Wave 2")
+     
         for (currentWaveIndex = 0; currentWaveIndex < enemyWaves.Count; currentWaveIndex++)
         {
             EnemyWave currentWave = enemyWaves[currentWaveIndex];
@@ -74,7 +73,7 @@ public class SpawnEnemyWave : MonoBehaviour
         {
             // Bắt đầu spawn wave con (vd: 10 lính A)
             // Chúng ta không 'yield' ở đây nếu không muốn chờ
-            StartCoroutine(SpawnSingleWaveData(waveData));
+           yield return StartCoroutine(SpawnSingleWaveData(waveData));
 
             // Chờ (delay) trước khi bắt đầu wave con tiếp theo
             yield return new WaitForSeconds(waveData.delayForTheNextWaveData);

@@ -27,6 +27,7 @@ public class UpgradeTowerUI
 public class InGameUIManager : MonoBehaviour
 {
     // Lớp nội bộ để lưu trữ nút và giá tiền của nó
+    private static InGameUIManager Instance;
     private class UnitButtonInfo
     {
         public Button button;
@@ -65,7 +66,15 @@ public class InGameUIManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         GameManager.Instance.InGameUIManager = this;
     }
     void Start()
@@ -78,6 +87,16 @@ public class InGameUIManager : MonoBehaviour
         GameEvent.Instance.SubscribeWinStage(OnGameVictory);
 
         // Lưu ý: BuildManager sẽ tự gán nó khi gọi PopulateBuyTowerMenu
+    }
+    private void OnDestroy()
+    {
+        GameEvent.Instance.UnsubscribeGameOver(OnGameOver);
+        GameEvent.Instance.UnsubscribeWinStage(OnGameVictory);
+    }
+    public void InitData()
+    {
+        UnitController.Instance.selectionBoxImage=this.transform.Find("SelectImage").GetComponent<Image>();    
+        spawnUnit = FindObjectOfType<SpawnUnit>();
     }
 
     private void OnGameVictory()

@@ -56,4 +56,5 @@ public class LoadingScene : MonoBehaviour
 
         asyncOp.allowSceneActivation = true;
     }
+
 }
