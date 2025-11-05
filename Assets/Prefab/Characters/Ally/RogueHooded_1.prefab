@@ -867,7 +867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1c418fbc60da17f48b36863e5e5013a8, type: 3}
       propertyPath: m_Name
-      value: RogueHooded
+      value: RogueHooded_1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1c418fbc60da17f48b36863e5e5013a8, type: 3}
       propertyPath: m_Layer
@@ -1302,12 +1302,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 100
-  ammor: 10
-  attackDamage: 10
-  attackSpeed: 1
+  heath: 300
+  ammor: 5
+  attackDamage: 25
+  attackSpeed: 1.2
   moveSpeed: 3
-  attackRange: 10
+  attackRange: 8
   triggerRange: 15
   money: 30
   attackList:
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 128
 --- !u!114 &8906954759781725338
 MonoBehaviour:
   m_ObjectHideFlags: 0

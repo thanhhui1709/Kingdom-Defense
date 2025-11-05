@@ -883,7 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9e9a423f98a589946b845ec195950d2d, type: 3}
       propertyPath: m_Name
-      value: Knight
+      value: Knight_2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9e9a423f98a589946b845ec195950d2d, type: 3}
       propertyPath: m_Layer
@@ -1322,12 +1322,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 100
-  ammor: 10
-  attackDamage: 10
-  attackSpeed: 1
-  moveSpeed: 3
-  attackRange: 6
+  heath: 950
+  ammor: 50
+  attackDamage: 32
+  attackSpeed: 0.8
+  moveSpeed: 2
+  attackRange: 3
   triggerRange: 12
   money: 30
   attackList:

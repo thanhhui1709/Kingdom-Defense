@@ -923,7 +923,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8f22f94162e3fa643be1580a3f66cc1a, type: 3}
       propertyPath: m_Name
-      value: Barbarian
+      value: Barbarian_1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8f22f94162e3fa643be1580a3f66cc1a, type: 3}
       propertyPath: m_Layer
@@ -1385,12 +1385,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 100
-  ammor: 10
-  attackDamage: 10
+  heath: 450
+  ammor: 5
+  attackDamage: 50
   attackSpeed: 1
   moveSpeed: 3
-  attackRange: 5
+  attackRange: 3
   triggerRange: 12
   money: 30
   attackList:

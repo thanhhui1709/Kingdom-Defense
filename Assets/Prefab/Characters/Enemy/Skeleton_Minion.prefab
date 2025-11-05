@@ -1311,14 +1311,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 300
-  ammor: 10
-  attackDamage: 10
-  attackSpeed: 1
-  moveSpeed: 3
+  heath: 120
+  ammor: 0
+  attackDamage: 12
+  attackSpeed: 0.5
+  moveSpeed: 3.5
   attackRange: 3
   triggerRange: 10
-  money: 200
+  money: 12
   attackList:
   - {fileID: 11400000, guid: e5d6aa2f8a230e44680662f17a0cdbdd, type: 2}
   - {fileID: 11400000, guid: ceabc34a40225b34189e036782d6a634, type: 2}

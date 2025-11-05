@@ -10,16 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ad6b492215e94447b653db772ea44a6, type: 3}
-  m_Name: W1
+  m_Name: Wave 12 C
   m_EditorClassIdentifier: 
   waveData:
   - enemyPrefab: {fileID: 6540222376654014055, guid: f44b20cb845287e4d9a5c39bbb984bc6, type: 3}
-    numberPerWave: 2
-    delaySpawnPrefab: 0.5
+    numberPerWave: 25
+    delaySpawnPrefab: 0.7
     delayForTheNextWaveData: 4
-  - enemyPrefab: {fileID: 919132149155446097, guid: 453fd16c27bad8f41b7b253446027b91, type: 3}
-    numberPerWave: 2
-    delaySpawnPrefab: 0.5
-    delayForTheNextWaveData: 0
-  delayForTheNextWave: 0
-  isDoneSpawned: 1
+  delayForTheNextWave: 25
+  isDoneSpawned: 0
