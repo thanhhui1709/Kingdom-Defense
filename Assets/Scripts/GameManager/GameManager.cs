@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
         if (numberOfWinStage == index)
         {
             numberOfWinStage++;
-            StartMoney.Instance.AddMoney(10);
+            StartMoney.Instance.AddMoney(13);
         }
     }
 
