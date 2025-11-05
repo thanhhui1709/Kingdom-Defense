@@ -27,7 +27,7 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
     private float showTimer; // Bộ đếm lùi
     private bool isHovering = false; // Chuột có đang hover không
     private Camera mainCamera;
-
+    private Rigidbody rb;
     private void Awake()
     {
         stats = GetComponent<Stats>();
@@ -35,9 +35,9 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
         mainCamera = Camera.main; // Lấy camera chính
         maxHealth = stats.Heath;
         currentHealth = maxHealth;
+        rb = GetComponent<Rigidbody>();
     }
- 
-
+  
     private void OnEnable()
     {
        
@@ -52,6 +52,8 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
             healthBarCanvas.SetActive(false);
         UpdateHealthBar();
         anim.Play(AnimationType.Die, false);
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
     }
 
     private void Update()
@@ -193,27 +195,26 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
         ObjectPoolManager.PlayAudio(deathSound, transform.position, 1f);
         isDead = true;
 
+      
+        rb.detectCollisions = false;
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector3.zero; 
+
         if (healthBarCanvas != null)
             healthBarCanvas.SetActive(false);
 
         anim.Play(AnimationType.Die, true);
 
-    
-      
-
-        // 2. Spawn hiệu ứng text bay
+       
         if (floatingMoneyPrefab != null)
         {
-            // Spawn tại vị trí của địch
             GameObject textGO = ObjectPoolManager.SpawnObject(
                 floatingMoneyPrefab,
-                transform.position, 
-                Quaternion.identity   
-                ,ObjectPoolManager.PoolType.Particle
+                transform.position,
+                Quaternion.identity,
+                ObjectPoolManager.PoolType.Particle
             );
 
-
-            // Lấy script và Launch
             FloatCoin textScript = textGO.GetComponent<FloatCoin>();
             if (textScript != null)
             {
@@ -221,13 +222,11 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
             }
         }
 
-
         GameEvent.Instance.OnTriggerEnemyDie(stats.Money);
-
-
 
         StartCoroutine(DisableAfterTime(5f));
     }
+
     IEnumerator DisableAfterTime(float delay)
     {
         yield return new WaitForSeconds(delay);

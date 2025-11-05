@@ -50,6 +50,7 @@ public class ThemeAudio : MonoBehaviour
 
     private void Start()
     {
+        hasMuted = false;
         if (themePlaylist.Length > 0)
         {
             if (shuffle) ShufflePlaylist();
@@ -194,5 +195,15 @@ public class ThemeAudio : MonoBehaviour
         themeSource.Stop();
         specialSource.Stop();
     }
- 
+    private void OnDestroy()
+    {
+        // Rất quan trọng: Hủy đăng ký các sự kiện khi script này bị hủy
+        if (GameEvent.Instance != null)
+        {
+            // Bạn sẽ cần thêm các hàm Unsubscribe vào GameEvent
+            GameEvent.Instance.UnsubscribeWinStage(OnGameWin);
+            GameEvent.Instance.UnsubscribeGameOver(OnGameOver);
+        }
+    }
+
 }

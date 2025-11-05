@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private CutsceneManager _cutsceneManager;
     private ThemeAudio _themeAudio;
 
+  
+
     public GameEvent GameEvent
     {
         get
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-        
+
             return _cutsceneManager;
         }
         set => _cutsceneManager = value;
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; 
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -69,25 +71,18 @@ public class GameManager : MonoBehaviour
     // 🔥 Khi scene mới được load
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        CheckInGameUIActive(scene.name);
-   
+        Time.timeScale = 1.0f;
+    
+        if (InGameUIManager != null)
+        {
+            InGameUIManager.InitData();
+        }
+
 
     }
 
     // 🧩 Hàm kiểm tra scene hiện tại có phải stage hợp lệ không
-    private void CheckInGameUIActive(string sceneName)
-    {
-        bool isStageScene = stageNames.Contains(sceneName);
 
-        if (_inGameUIManager != null)
-        {
-            _inGameUIManager.gameObject.SetActive(isStageScene);
-        }
-        else
-        {
-            Debug.LogWarning("InGameUIManager reference is missing in GameManager!");
-        }
-    }
 
     public void WinGame()
     {

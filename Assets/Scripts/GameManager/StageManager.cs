@@ -48,6 +48,7 @@ public class StageManager : MonoBehaviour
 
         // 3. Cập nhật UI lần đầu
         UpdateProgressBar();
+        InvokeRepeating(nameof(CheckWinConditions), 5, 5f);
     }
 
     // Hủy đăng ký khi tắt
