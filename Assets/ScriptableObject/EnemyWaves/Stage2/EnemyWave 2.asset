@@ -32,7 +32,7 @@ MonoBehaviour:
   - enemyPrefab: {fileID: 0}
     numberPerWave: 0
     delaySpawnPrefab: 0
-    delayForTheNextWaveData: 30
+    delayForTheNextWaveData: 20
   - enemyPrefab: {fileID: 507631359435553744, guid: aa641f3119939f247b04969eeb378558, type: 3}
     numberPerWave: 15
     delaySpawnPrefab: 1.5

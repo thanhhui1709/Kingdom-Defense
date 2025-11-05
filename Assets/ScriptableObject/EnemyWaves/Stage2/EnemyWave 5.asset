@@ -21,9 +21,9 @@ MonoBehaviour:
     numberPerWave: 15
     delaySpawnPrefab: 1.5
     delayForTheNextWaveData: 15
-  - enemyPrefab: {fileID: 205376564983567453, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
-    numberPerWave: 5
-    delaySpawnPrefab: 5
+  - enemyPrefab: {fileID: 0}
+    numberPerWave: 0
+    delaySpawnPrefab: 0
     delayForTheNextWaveData: 15
   - enemyPrefab: {fileID: 3837514653413292261, guid: eef44996e3aebbc47bd198f5aff10466, type: 3}
     numberPerWave: 10
@@ -49,9 +49,9 @@ MonoBehaviour:
     numberPerWave: 15
     delaySpawnPrefab: 1.5
     delayForTheNextWaveData: 15
-  - enemyPrefab: {fileID: 205376564983567453, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
-    numberPerWave: 5
-    delaySpawnPrefab: 5
+  - enemyPrefab: {fileID: 507631359435553744, guid: aa641f3119939f247b04969eeb378558, type: 3}
+    numberPerWave: 15
+    delaySpawnPrefab: 10
     delayForTheNextWaveData: 15
   delayForTheNextWave: 0
   isDoneSpawned: 0
