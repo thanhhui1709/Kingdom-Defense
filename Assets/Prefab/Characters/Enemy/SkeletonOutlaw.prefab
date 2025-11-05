@@ -1727,7 +1727,7 @@ MonoBehaviour:
   attackDamage: 14
   attackSpeed: 0.5
   moveSpeed: 5
-  attackRange: 5
+  attackRange: 3
   triggerRange: 10
   money: 20
   attackList:
