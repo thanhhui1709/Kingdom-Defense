@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6326555607839987126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7087530815126467074}
+  - component: {fileID: 3369021872541657216}
+  m_Layer: 0
+  m_Name: Spawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7087530815126467074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6326555607839987126}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 0, z: -66.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3369021872541657216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6326555607839987126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac07d05d02e429f45928831595d42b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 10
+  enemyWaves:
+  - {fileID: 11400000, guid: 1e295733ecdb18c499cf742e67a660d1, type: 2}
+  - {fileID: 11400000, guid: 02aa9b1894debc547a11a3fc7d5ef582, type: 2}
+  - {fileID: 11400000, guid: 1377968051335844f96c5704a04fb036, type: 2}
+  - {fileID: 11400000, guid: d9cf39c00606e3440bec719954d13816, type: 2}
+  - {fileID: 11400000, guid: f159142a9929c134e848cb1a1bc8a7a3, type: 2}
+  - {fileID: 11400000, guid: 77715afa6461b4f4784e79796ea78393, type: 2}
+  - {fileID: 11400000, guid: 6dd585a52f0853e4e8aec77678c23561, type: 2}
+  - {fileID: 11400000, guid: 1a2ad56e80fe0c14eae0852ee0ac3640, type: 2}
+  - {fileID: 11400000, guid: 16afcef8ba4a5284e9f066d028f24ae1, type: 2}
+  - {fileID: 11400000, guid: bb2c85ad1541590489b5e5aca531012f, type: 2}
+  pathNodes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
