@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveData:
   - enemyPrefab: {fileID: 3837514653413292261, guid: eef44996e3aebbc47bd198f5aff10466, type: 3}
-    numberPerWave: 30
-    delaySpawnPrefab: 2
-    delayForTheNextWaveData: 0
-  - enemyPrefab: {fileID: 3410437373876898271, guid: 6441525018c9f1c42ad6b079c52cac5d, type: 3}
-    numberPerWave: 30
+    numberPerWave: 10
     delaySpawnPrefab: 3
-    delayForTheNextWaveData: 0
-  - enemyPrefab: {fileID: 205376564983567453, guid: a755cb483a12c7a4285de4c8d1c137be, type: 3}
+    delayForTheNextWaveData: 0.5
+  - enemyPrefab: {fileID: 6540222376654014055, guid: f44b20cb845287e4d9a5c39bbb984bc6, type: 3}
+    numberPerWave: 30
+    delaySpawnPrefab: 3.5
+    delayForTheNextWaveData: 1
+  - enemyPrefab: {fileID: 1551875180090516271, guid: 6c0e4f97bae303a4aa933065590be798, type: 3}
     numberPerWave: 15
-    delaySpawnPrefab: 6
+    delaySpawnPrefab: 4
     delayForTheNextWaveData: 0
   delayForTheNextWave: 0
   isDoneSpawned: 0
