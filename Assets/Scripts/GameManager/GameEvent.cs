@@ -17,7 +17,9 @@ public class GameEvent : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        GameManager.Instance.GameEvent = this;
     }
+
 
     private Action onWinStage;
     private Action onWinGame;
@@ -69,5 +71,9 @@ public class GameEvent : MonoBehaviour
     public void OnTriggerEnemyDie(int cost)
     {
         onEnemyDie?.Invoke(cost);
+    }
+    public void UnSubscribeEnemyDie(Action<int> callback )
+    {
+        onEnemyDie -= callback;
     }
 }

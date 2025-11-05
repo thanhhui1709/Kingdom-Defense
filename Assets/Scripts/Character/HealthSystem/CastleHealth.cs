@@ -22,7 +22,6 @@ public class CastleHealth : MonoBehaviour, IHealthSystem
         hasDie = false;
         currentHealth = maxHealth;
         UpdateHealthBar();
-        GameEvent.Instance?.SubscribeGameOver(Die);
     }
 
     // Update is called once per frame
