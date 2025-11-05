@@ -17,7 +17,7 @@ public class LoadingScene : MonoBehaviour
     public static void LoadScene(string sceneName)
     {
         nextSceneToLoad = sceneName;
-        SceneManager.LoadScene("LoadScene");
+        SceneManager.LoadSceneAsync("LoadScene");
     }
 
     private void Start()
@@ -56,4 +56,5 @@ public class LoadingScene : MonoBehaviour
 
         asyncOp.allowSceneActivation = true;
     }
+
 }

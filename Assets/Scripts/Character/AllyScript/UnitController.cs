@@ -15,7 +15,7 @@ public class UnitController : MonoBehaviour
     [SerializeField] private LayerMask unitLayer;
 
     [Header("Selection Box")]
-    [SerializeField] private Image selectionBoxImage; // UI Image cho hộp chọn
+    public Image selectionBoxImage; // UI Image cho hộp chọn
     [SerializeField] private GameObject clickIndicator;
     private Vector2 startDragPosition;
 
@@ -25,7 +25,7 @@ public class UnitController : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
-
+    
         mainCamera = Camera.main;
         selectionBoxImage.gameObject.SetActive(false);
     }

@@ -2,7 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq; // Cần cho .ToList()
+using System.Linq;
+using System;
+using UnityEngine.PlayerLoop; // Cần cho .ToList()
 
 // 1. Định nghĩa class UI Nâng cấp
 [System.Serializable]
@@ -25,11 +27,17 @@ public class UpgradeTowerUI
 public class InGameUIManager : MonoBehaviour
 {
     // Lớp nội bộ để lưu trữ nút và giá tiền của nó
+    private static InGameUIManager Instance;
     private class UnitButtonInfo
     {
         public Button button;
         public int cost;
     }
+    [Header("UI References")]
+    public GameObject PauseMenu;
+    public GameObject GameOverPanel;
+    public GameObject VictoryPanel;
+
     [Header("Buy Unit Settings")]
     [Tooltip("Tham chiếu đến script SpawnUnit trong Scene")]
     [SerializeField] private SpawnUnit spawnUnit;
@@ -53,15 +61,60 @@ public class InGameUIManager : MonoBehaviour
     private TowerHealth currentSelectedTowerHealth;
     private List<UnitButtonInfo> unitButtons = new List<UnitButtonInfo>();
     private List<GameObject> buyTowerBtns= new List<GameObject>();
+    private List<List<LevelUpData>> unitData=new();
 
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        GameManager.Instance.InGameUIManager = this;
+    }
     void Start()
     {
         // Ẩn tất cả các panel khi bắt đầu
-        ToggleBuyTowerPanel(false);
-        ToggleUpgradeTowerPanel(false);
+        unitData = LevelUpManager.Instance.GetLevelUpDatas().Where(list=>list.Any(data=>data.type==LevelUpType.Unit)).ToList();
+       
         PopulateUnitSpawnMenu();
+        GameEvent.Instance.SubscribeGameOver(OnGameOver);
+        GameEvent.Instance.SubscribeWinStage(OnGameVictory);
 
         // Lưu ý: BuildManager sẽ tự gán nó khi gọi PopulateBuyTowerMenu
+    }
+    private void OnDestroy()
+    {
+        GameEvent.Instance.UnsubscribeGameOver(OnGameOver);
+        GameEvent.Instance.UnsubscribeWinStage(OnGameVictory);
+    }
+    public void InitData()
+    {
+        UnitController.Instance.selectionBoxImage=this.transform.Find("SelectImage").GetComponent<Image>();    
+        spawnUnit = FindObjectOfType<SpawnUnit>();
+    }
+
+    private void OnGameVictory()
+    {
+        VictoryPanel.SetActive(true);
+    }
+
+    private void OnGameOver()
+    {
+        GameOverPanel.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            TogglePause(PauseMenu);
+        }
     }
 
     /// <summary>
@@ -208,7 +261,7 @@ public class InGameUIManager : MonoBehaviour
         upgradeTowerUI.sellCostText.text = sellCost.ToString();
 
         // --- 2. KIỂM TRA TRẠNG THÁI NÂNG CẤP (ĐÃ CẬP NHẬT) ---
-        int playerMoney = Currency.Instance.GetBalance();
+        int playerMoney = InGameMoney.Instance.GetBalance();
         int nextLevelCost = levelController.GetNextLevelCost();
 
         if (levelController.IsReadyToEvolve() && levelController.IsAtMaxEvolution())
@@ -247,8 +300,12 @@ public class InGameUIManager : MonoBehaviour
             return;
         }
 
-        // 1. Lấy dữ liệu từ "Database"
-        List<UnitData> units = UnitManager.Instance.GetAvailableUnits();
+         List<LevelUpData> list = new List<LevelUpData>();
+         foreach(var obj in unitData)
+        {
+            LevelUpData highestUnlocked = obj.Count > 0 ? obj.Where(data => data.type == LevelUpType.Unit && data.isUnlocked).OrderByDescending(data => data.level).FirstOrDefault() : null;
+            list.Add(highestUnlocked);
+        }
 
         // 2. Xóa các nút cũ
         foreach (Transform child in buyUnitButtonContainer)
@@ -257,14 +314,14 @@ public class InGameUIManager : MonoBehaviour
         }
 
         // 3. Tạo các nút mới
-        foreach (UnitData unit in units)
+        foreach (var unit in list)
         {
             // Chỉ tạo nút cho lính đã được mở khóa
             if (!unit.isUnlocked)
             {
                 continue;
             }
-
+            Stats stats=unit.prefab.gameObject.GetComponent<Stats>();
             GameObject buttonGO = Instantiate(unitButtonPrefab, buyUnitButtonContainer);
             Button newButton = buttonGO.GetComponentInChildren<Button>();
 
@@ -276,14 +333,14 @@ public class InGameUIManager : MonoBehaviour
             Image iconImg = buttonGO.transform.Find("KnightBtn/Icon").GetComponentInChildren<Image>();
             TMP_Text costText = buttonGO.transform.Find("Price/CostText").GetComponentInChildren<TMP_Text>();
 
-            iconImg.sprite = unit.icon;
-            costText.text = unit.cost.ToString();
+            iconImg.sprite = unit.avartar;
+            costText.text = stats.Money.ToString();
 
             // tao unit button infor
             UnitButtonInfo unitButtonInfo = new()
             {
                 button = newButton,
-                cost =unit.cost
+                cost =stats.Money
 
 
             };
@@ -294,7 +351,7 @@ public class InGameUIManager : MonoBehaviour
             newButton.onClick.AddListener(() =>
             {
                 // Khi nhấn nút, gọi hàm logic trong SpawnUnit
-                spawnUnit.AttemptToSpawnUnit(unit);
+                spawnUnit.AttemptToSpawnUnit(unit.prefab);
             });
             // --- THÊM MỚI ---
             // Chạy kiểm tra 1 lần ngay lập tức
@@ -309,7 +366,7 @@ public class InGameUIManager : MonoBehaviour
     private void UpdateAllButtonStates()
     {
         // 1. Lấy số tiền hiện tại
-        int currentMoney = Currency.Instance.GetBalance();
+        int currentMoney = InGameMoney.Instance.GetBalance();
 
         // 2. Cập nhật các nút mua lính
         foreach (UnitButtonInfo info in unitButtons)
@@ -339,4 +396,62 @@ public class InGameUIManager : MonoBehaviour
             // foreach (UnitButtonInfo info in towerButtons) { ... }
         }
     }
+    public void TogglePause(GameObject panel)
+    {
+        bool isActive = panel.activeSelf;
+        if(isActive)
+        {
+            Time.timeScale = 1f;
+            panel.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            panel.SetActive(true);
+        }
+    }
+    public void HandleRestartButton()
+    {
+        // GameManager sẽ tự động reset Time.timeScale
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ReloadScene();
+            DisablePanel();
+        }
+    }
+
+    /// <summary>
+    /// Hàm này được gọi bởi nút "Về Menu" (Back to Menu)
+    /// </summary>
+    public void HandleMenuButton()
+    {
+        if (GameManager.Instance != null)
+        {
+            // (Bạn có thể đổi "MainMenu" thành tên scene menu của bạn)
+            GameManager.Instance.LoadScene("WaitScene");
+            DisablePanel();
+        }
+    }
+
+    /// <summary>
+    /// Hàm này được gọi bởi nút "Màn kế" (Next Level)
+    /// </summary>
+    public void HandleNextLevelButton()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GoToNextScene();
+            DisablePanel();
+        }
+    }
+    public void DisablePanel()
+    {
+        ToggleBuyTowerPanel(false);
+        ToggleUpgradeTowerPanel(false);
+        VictoryPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
+        PauseMenu.SetActive(false);
+
+    }
+
 }

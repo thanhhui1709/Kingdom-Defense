@@ -296,7 +296,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1116,14 +1116,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 500
-  ammor: 10
-  attackDamage: 10
-  attackSpeed: 1
-  moveSpeed: 3
+  heath: 8000
+  ammor: 80
+  attackDamage: 150
+  attackSpeed: 0.5
+  moveSpeed: 1.5
   attackRange: 5
   triggerRange: 10
-  money: 200
+  money: 1236
   attackList:
   - {fileID: 11400000, guid: f912d7cbf64f7a542bb0e58593de418e, type: 2}
   - {fileID: 11400000, guid: c33811c696ef6d748a39b39a783689b2, type: 2}
@@ -1205,6 +1205,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   showDuration: 3
+  floatingMoneyPrefab: {fileID: 1096232864388555252, guid: 717c279d404c8fa4ba99fd99f4d3cffe, type: 3}
 --- !u!4 &205376564983924861 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 8b2d11d64877f0b4cad5d45ec7d53473, type: 3}

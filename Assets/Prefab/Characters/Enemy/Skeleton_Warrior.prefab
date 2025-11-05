@@ -1388,14 +1388,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 500
-  ammor: 10
-  attackDamage: 10
-  attackSpeed: 1
-  moveSpeed: 3
+  heath: 600
+  ammor: 25
+  attackDamage: 16
+  attackSpeed: 0.3
+  moveSpeed: 2.5
   attackRange: 3
   triggerRange: 10
-  money: 200
+  money: 36
   attackList:
   - {fileID: 11400000, guid: bc83d1b2f9f0a904dad0eaf3b3622a7c, type: 2}
   - {fileID: 11400000, guid: 33dafb272267bab46ae6567810424bde, type: 2}
@@ -1476,6 +1476,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   showDuration: 3
+  floatingMoneyPrefab: {fileID: 1096232864388555252, guid: 717c279d404c8fa4ba99fd99f4d3cffe, type: 3}
 --- !u!4 &4470464273914421855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 730fb4efc0ab8f44ea4a6cbc6ce8418c, type: 3}

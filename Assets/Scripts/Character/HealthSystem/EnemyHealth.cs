@@ -22,12 +22,12 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
     [Header("UI Visibility")]
     [Tooltip("Số giây thanh máu hiển thị sau khi bị đánh")]
     [SerializeField] private float showDuration = 3f;
-
+    [SerializeField] private GameObject floatingMoneyPrefab;
     private AnimationController anim;
     private float showTimer; // Bộ đếm lùi
     private bool isHovering = false; // Chuột có đang hover không
     private Camera mainCamera;
-
+    private Rigidbody rb;
     private void Awake()
     {
         stats = GetComponent<Stats>();
@@ -35,9 +35,9 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
         mainCamera = Camera.main; // Lấy camera chính
         maxHealth = stats.Heath;
         currentHealth = maxHealth;
+        rb = GetComponent<Rigidbody>();
     }
- 
-
+  
     private void OnEnable()
     {
        
@@ -52,6 +52,8 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
             healthBarCanvas.SetActive(false);
         UpdateHealthBar();
         anim.Play(AnimationType.Die, false);
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
     }
 
     private void Update()
@@ -188,19 +190,43 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
 
     public void Die()
     {
-        if (isDead) return; // Đảm bảo Die() chỉ chạy 1 lần
+        if (isDead) return;
 
-        ObjectPoolManager.PlayAudio(deathSound, transform.position,1f);
+        ObjectPoolManager.PlayAudio(deathSound, transform.position, 1f);
         isDead = true;
 
-        // Tắt UI trước khi tắt object
+      
+        rb.detectCollisions = false;
+        rb.isKinematic = true;
+        rb.linearVelocity = Vector3.zero; 
+
         if (healthBarCanvas != null)
             healthBarCanvas.SetActive(false);
 
         anim.Play(AnimationType.Die, true);
+
+       
+        if (floatingMoneyPrefab != null)
+        {
+            GameObject textGO = ObjectPoolManager.SpawnObject(
+                floatingMoneyPrefab,
+                transform.position,
+                Quaternion.identity,
+                ObjectPoolManager.PoolType.Particle
+            );
+
+            FloatCoin textScript = textGO.GetComponent<FloatCoin>();
+            if (textScript != null)
+            {
+                textScript.Launch("+$" + stats.Money.ToString());
+            }
+        }
+
         GameEvent.Instance.OnTriggerEnemyDie(stats.Money);
-        StartCoroutine(DisableAfterTime(5f)); // Chờ 2 giây trước khi tắt
+
+        StartCoroutine(DisableAfterTime(5f));
     }
+
     IEnumerator DisableAfterTime(float delay)
     {
         yield return new WaitForSeconds(delay);

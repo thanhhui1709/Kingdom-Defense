@@ -1,82 +1,71 @@
 ﻿using UnityEngine;
-using System.Collections; // Cần cho Coroutine
+using System.Collections;
 
 public class ThemeAudio : MonoBehaviour
 {
     [Header("Theme Music Playlist")]
-    [Tooltip("Kéo các bản nhạc nền (theme) vào đây")]
     [SerializeField] private AudioClip[] themePlaylist;
-
-    [Tooltip("Âm lượng cho nhạc nền")]
-    [Range(0f, 1f)]
-    [SerializeField] private float themeVolume = 0.7f;
-
-    [Tooltip("Nếu bật, danh sách nhạc sẽ phát ngẫu nhiên. Nếu không, sẽ phát theo thứ tự.")]
+    [Range(0f, 1f)][SerializeField] private float themeVolume = 0.7f;
     [SerializeField] private bool shuffle = false;
 
     [Header("Special Music Settings")]
-    [Tooltip("Âm lượng cho nhạc đặc biệt (như nhạc Boss)")]
-    [Range(0f, 1f)]
-    [SerializeField] private float specialVolume = 1.0f;
+    [SerializeField] private AudioClip winMusic;
+    [SerializeField] private AudioClip loseMusic;
+    [Range(0f, 1f)][SerializeField] private float specialVolume = 1.0f;
 
     [Header("Fading")]
-    [Tooltip("Thời gian (giây) để chuyển bài (crossfade)")]
     [SerializeField] private float crossfadeDuration = 1.5f;
 
-    // ----- Internal -----
-    private AudioSource themeSource;    // Nguồn phát nhạc nền
-    private AudioSource specialSource;  // Nguồn phát nhạc đặc biệt
+    private AudioSource themeSource;
+    private AudioSource specialSource;
 
     private int currentTrackIndex = -1;
     private bool isPlayingSpecial = false;
-    private Coroutine fadeCoroutine; // Coroutine đang chạy (nếu có)
-
-    // Tạo Singleton để dễ dàng gọi từ script khác
-    public static ThemeAudio Instance { get; private set; }
+    private Coroutine fadeCoroutine;
+    private bool hasMuted = false;
 
     private void Awake()
     {
-        // --- Cài đặt Singleton ---
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // Chỉ cho phép 1 MusicManager tồn tại
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // Giữ MusicManager khi chuyển scene
+      
+        GameManager.Instance.ThemeAudio = this;
 
-        // --- Tự động tạo 2 AudioSource ---
         themeSource = gameObject.AddComponent<AudioSource>();
         specialSource = gameObject.AddComponent<AudioSource>();
 
-        // Cấu hình 2 nguồn
         ConfigureSource(themeSource, themeVolume);
-        ConfigureSource(specialSource, 0f); // Bắt đầu với âm lượng 0
+        ConfigureSource(specialSource, 0f);
+
+        // 🧩 Gắn event cho win/lose
+        GameEvent.Instance.SubscribeWinStage(OnGameWin);
+        GameEvent.Instance.SubscribeGameOver(OnGameOver);
     }
 
     private void ConfigureSource(AudioSource source, float initialVolume)
     {
-        source.playOnAwake = false; // Tắt tự động phát
-        source.loop = false;        // Script sẽ tự xử lý loop
-        source.spatialBlend = 0.0f; // Đảm bảo là nhạc 2D
+        source.playOnAwake = false;
+        source.loop = false;
+        source.spatialBlend = 0f;
         source.volume = initialVolume;
     }
 
     private void Start()
     {
+        hasMuted = false;
         if (themePlaylist.Length > 0)
         {
-            if (shuffle)
-                ShufflePlaylist();
-
+            if (shuffle) ShufflePlaylist();
             PlayNextThemeTrack();
         }
+    }
+    private void OnEnable()
+    {
+        hasMuted = false;
+        isPlayingSpecial = false;
     }
 
     private void Update()
     {
-        // Nếu không đang chơi nhạc đặc biệt, và nhạc nền đã dừng (hết bài)
-        if (!isPlayingSpecial && !themeSource.isPlaying && themePlaylist.Length > 0)
+        if (!hasMuted&&!isPlayingSpecial && !themeSource.isPlaying && themePlaylist.Length > 0)
         {
             PlayNextThemeTrack();
         }
@@ -85,90 +74,111 @@ public class ThemeAudio : MonoBehaviour
     private void PlayNextThemeTrack()
     {
         if (shuffle)
-        {
             currentTrackIndex = Random.Range(0, themePlaylist.Length);
-        }
         else
-        {
             currentTrackIndex = (currentTrackIndex + 1) % themePlaylist.Length;
-        }
 
         themeSource.clip = themePlaylist[currentTrackIndex];
+        themeSource.volume = themeVolume;
         themeSource.Play();
     }
 
-    /// <summary>
-    /// Hàm này được gọi từ script Boss hoặc một sự kiện.
-    /// </summary>
-    public void PlaySpecialMusic(AudioClip clip)
+    // 🏆 Khi thắng game
+    private void OnGameWin()
     {
-        if (clip == null) return;
-
-        isPlayingSpecial = true;
-
-        // Dừng Coroutine (nếu đang chạy)
-        if (fadeCoroutine != null)
-            StopCoroutine(fadeCoroutine);
-
-        // Bắt đầu phát nhạc Boss (với âm lượng 0)
-        specialSource.clip = clip;
-        specialSource.loop = true; // Nhạc Boss thường lặp lại
-        specialSource.volume = 0f;
-        specialSource.Play();
-
-        // Bắt đầu Coroutine để mờ dần
-        fadeCoroutine = StartCoroutine(Crossfade(themeSource, specialSource, specialVolume));
+        StopAllCoroutines();
+        hasMuted = true;
+        if (winMusic != null)
+        {
+            StartCoroutine(FadeOutAndPlaySpecial(winMusic));
+        }
+        else
+        {
+            StartCoroutine(FadeOutThemeOnly());
+        }
     }
 
-    /// <summary>
-    /// Gọi hàm này khi Boss chết để quay lại nhạc nền.
-    /// </summary>
-    public void StopSpecialMusic()
+    // 💀 Khi thua game
+    private void OnGameOver()
     {
-        if (!isPlayingSpecial) return;
-        isPlayingSpecial = false;
-
-        // Dừng Coroutine (nếu đang chạy)
-        if (fadeCoroutine != null)
-            StopCoroutine(fadeCoroutine);
-
-        // Bắt đầu Coroutine để mờ dần (theo hướng ngược lại)
-        fadeCoroutine = StartCoroutine(Crossfade(specialSource, themeSource, themeVolume));
+        StopAllCoroutines();
+        hasMuted = true;
+        if (loseMusic != null)
+        {
+            StartCoroutine(FadeOutAndPlaySpecial(loseMusic));
+        }
+        else
+        {
+            StartCoroutine(FadeOutThemeOnly());
+        }
     }
 
-    /// <summary>
-    /// Coroutine để mờ dần
-    /// </summary>
-    private IEnumerator Crossfade(AudioSource sourceOut, AudioSource sourceIn, float targetInVolume)
+    // 🔥 Fade out nhạc nền và phát special
+    private IEnumerator FadeOutAndPlaySpecial(AudioClip clip)
     {
         float timer = 0f;
-        float startOutVolume = sourceOut.volume;
-        float startInVolume = sourceIn.volume;
-
-        // Bật sourceIn nếu nó chưa bật (như themeSource)
-        if (!sourceIn.isPlaying)
-            sourceIn.Play();
+        float startVolume = themeSource.volume;
 
         while (timer < crossfadeDuration)
         {
             timer += Time.deltaTime;
             float t = timer / crossfadeDuration;
-
-            sourceOut.volume = Mathf.Lerp(startOutVolume, 0f, t);
-            sourceIn.volume = Mathf.Lerp(startInVolume, targetInVolume, t);
-
+            themeSource.volume = Mathf.Lerp(startVolume, 0f, t);
             yield return null;
         }
 
-        // Đảm bảo kết quả chính xác
-        sourceOut.volume = 0f;
-        sourceOut.Stop();
-        sourceIn.volume = targetInVolume;
+        themeSource.Stop();
 
+        PlaySpecialMusic(clip);
+    }
+
+    private IEnumerator FadeOutThemeOnly()
+    {
+        float timer = 0f;
+        float startVolume = themeSource.volume;
+
+        while (timer < crossfadeDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / crossfadeDuration;
+            themeSource.volume = Mathf.Lerp(startVolume, 0f, t);
+            yield return null;
+        }
+
+        themeSource.Stop();
+    }
+
+    public void PlaySpecialMusic(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        isPlayingSpecial = true;
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        specialSource.clip = clip;
+        specialSource.loop = false;
+        specialSource.volume = 0f;
+        specialSource.Play();
+
+        fadeCoroutine = StartCoroutine(FadeInSpecial());
+    }
+
+    private IEnumerator FadeInSpecial()
+    {
+        float timer = 0f;
+        while (timer < crossfadeDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / crossfadeDuration;
+            specialSource.volume = Mathf.Lerp(0f, specialVolume, t);
+            yield return null;
+        }
+
+        specialSource.volume = specialVolume;
         fadeCoroutine = null;
     }
 
-    // Hàm xáo trộn danh sách (nếu bật shuffle)
     private void ShufflePlaylist()
     {
         for (int i = 0; i < themePlaylist.Length - 1; i++)
@@ -179,4 +189,21 @@ public class ThemeAudio : MonoBehaviour
             themePlaylist[i] = temp;
         }
     }
+
+    public void StopMusic()
+    {
+        themeSource.Stop();
+        specialSource.Stop();
+    }
+    private void OnDestroy()
+    {
+        // Rất quan trọng: Hủy đăng ký các sự kiện khi script này bị hủy
+        if (GameEvent.Instance != null)
+        {
+            // Bạn sẽ cần thêm các hàm Unsubscribe vào GameEvent
+            GameEvent.Instance.UnsubscribeWinStage(OnGameWin);
+            GameEvent.Instance.UnsubscribeGameOver(OnGameOver);
+        }
+    }
+
 }
