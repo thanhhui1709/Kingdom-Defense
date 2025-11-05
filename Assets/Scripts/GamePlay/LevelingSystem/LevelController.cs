@@ -56,14 +56,14 @@ public class LevelController : MonoBehaviour
         LevelStats levelStats = statsList[subLevel];
 
         // --- KIỂM TRA TIỀN (SUB-LEVEL) ---
-        if (!Currency.Instance.CheckBalance(levelStats.cost))
+        if (!InGameMoney.Instance.CheckBalance(levelStats.cost))
         {
             Debug.Log("Không đủ tiền để nâng cấp (sub-level)!");
             return; 
         }
 
         // Đủ tiền, trừ tiền
-        Currency.Instance.SubMoney(levelStats.cost);
+        InGameMoney.Instance.SubMoney(levelStats.cost);
 
         // Cập nhật tổng tiền đầu tư
         stats.TotalInvestedMoney += levelStats.cost;
@@ -101,7 +101,7 @@ public class LevelController : MonoBehaviour
             Debug.Log("Đã max cấp, không thể tiến hóa.");
             return;
         }
-        if (!Currency.Instance.CheckBalance(cost))
+        if (!InGameMoney.Instance.CheckBalance(cost))
         {
             Debug.Log("Không đủ tiền để tiến hóa (evolve)!");
             return; // Dừng lại
@@ -115,7 +115,7 @@ public class LevelController : MonoBehaviour
         if (nextLevelPrefab != null)
         {
             // Đã kiểm tra, giờ trừ tiền
-            Currency.Instance.SubMoney(cost);
+            InGameMoney.Instance.SubMoney(cost);
 
             // Spawn trụ mới
             GameObject newTower = ObjectPoolManager.SpawnObject(

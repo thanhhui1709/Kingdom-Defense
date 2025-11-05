@@ -1387,6 +1387,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   showDuration: 2.5
+  floatingMoneyPrefab: {fileID: 1096232864388555252, guid: 717c279d404c8fa4ba99fd99f4d3cffe, type: 3}
 --- !u!1001 &8325190703793189210
 PrefabInstance:
   m_ObjectHideFlags: 0

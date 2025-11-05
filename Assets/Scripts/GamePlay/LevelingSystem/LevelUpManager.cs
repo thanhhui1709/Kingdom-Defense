@@ -109,6 +109,21 @@ public class LevelUpManager : MonoBehaviour
                 return null;
         }
     }
+    public List<List<LevelUpData>> GetLevelUpDatas()
+    {
+        return new List<List<LevelUpData>>()
+        {
+            ArcherTowerData,
+            BallistaTowerData,
+            CannonTowerData,
+            WizardTowerData,
+            PoisonTowerData,
+            BarbarianData,
+            ArcherData,
+            KnightData,
+            MageData
+        };
+    }
 }
 
 [System.Serializable]
@@ -118,6 +133,7 @@ public class LevelUpData
     public int level;
     public int cost;
     public bool isUnlocked;
+    public Sprite avartar;
     public GameObject prefab;
 }
 

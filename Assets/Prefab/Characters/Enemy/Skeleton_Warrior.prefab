@@ -1476,6 +1476,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   showDuration: 3
+  floatingMoneyPrefab: {fileID: 1096232864388555252, guid: 717c279d404c8fa4ba99fd99f4d3cffe, type: 3}
 --- !u!4 &4470464273914421855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 730fb4efc0ab8f44ea4a6cbc6ce8418c, type: 3}

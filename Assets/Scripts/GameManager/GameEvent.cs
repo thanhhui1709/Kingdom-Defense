@@ -19,6 +19,8 @@ public class GameEvent : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private Action onWinStage;
+    private Action onWinGame;
 
     private Action<int> onEnemyDie;
 
@@ -26,6 +28,22 @@ public class GameEvent : MonoBehaviour
 
     private Action onGameOver;
 
+    public void SubscribeWinStage(Action callback)
+    {
+        onWinStage += callback;
+    }
+    public void OnTriggerWinStage()
+    {
+        onWinStage?.Invoke();
+    }
+    public void SubscribeWinGame(Action callback)
+    {
+        onWinGame += callback;
+    }
+    public void OnTriggerWinGame()
+    {
+        onWinGame?.Invoke();
+    }
     public void SubscribeGameOver(Action callback)
     {
         onGameOver += callback;

@@ -43,8 +43,7 @@ public class ThemeAudio : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Giữ MusicManager khi chuyển scene
-
+      
         // --- Tự động tạo 2 AudioSource ---
         themeSource = gameObject.AddComponent<AudioSource>();
         specialSource = gameObject.AddComponent<AudioSource>();
