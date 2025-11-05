@@ -171,8 +171,8 @@ MonoBehaviour:
   attackDamage: 70
   attackSpeed: 1
   moveSpeed: 0
-  attackRange: 10
-  triggerRange: 10
+  attackRange: 15
+  triggerRange: 15
   money: 0
   attackList: []
   totalInvestedMoney: 0
