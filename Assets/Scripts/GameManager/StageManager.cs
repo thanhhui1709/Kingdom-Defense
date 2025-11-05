@@ -28,15 +28,13 @@ public class StageManager : MonoBehaviour
         // Bắt đầu Coroutine để kiểm tra điều kiện thắng
         StartCoroutine(CheckWinConditions());
 
-        // Cập nhật vị trí ban đầu (0%)
-        UpdateProgressBar();
+        InvokeRepeating(nameof(UpdateProgressBar), 2, 1f);
     }
 
     // --- THÊM MỚI: HÀM UPDATE ---
     void Update()
     {
-        // Cập nhật thanh progress mỗi frame
-        UpdateProgressBar();
+      
     }
 
     /// <summary>
