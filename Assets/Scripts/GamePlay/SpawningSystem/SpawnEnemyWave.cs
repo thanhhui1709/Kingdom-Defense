@@ -17,6 +17,14 @@ public class SpawnEnemyWave : MonoBehaviour
 
     private EnemyWave currentWave;
     private int currentWaveIndex = 0;
+
+    public bool isDoneAllWaveSpawned
+    {
+        get
+        {
+            return currentWaveIndex >= enemyWaves.Count;
+        }
+    }
     void Awake()
     {
 

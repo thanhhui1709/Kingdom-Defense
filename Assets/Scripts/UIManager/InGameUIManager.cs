@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-using System; // Cần cho .ToList()
+using System;
+using UnityEngine.PlayerLoop; // Cần cho .ToList()
 
 // 1. Định nghĩa class UI Nâng cấp
 [System.Serializable]
@@ -61,12 +62,17 @@ public class InGameUIManager : MonoBehaviour
     private List<GameObject> buyTowerBtns= new List<GameObject>();
     private List<List<LevelUpData>> unitData=new();
 
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        GameManager.Instance.InGameUIManager = this;
+    }
     void Start()
     {
         // Ẩn tất cả các panel khi bắt đầu
         unitData = LevelUpManager.Instance.GetLevelUpDatas().Where(list=>list.Any(data=>data.type==LevelUpType.Unit)).ToList();
-        ToggleBuyTowerPanel(false);
-        ToggleUpgradeTowerPanel(false);
+       
         PopulateUnitSpawnMenu();
         GameEvent.Instance.SubscribeGameOver(OnGameOver);
         GameEvent.Instance.SubscribeWinStage(OnGameVictory);
@@ -88,7 +94,7 @@ public class InGameUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
-            PauseMenu.SetActive(!PauseMenu.activeSelf);
+            TogglePause(PauseMenu);
         }
     }
 
@@ -371,4 +377,62 @@ public class InGameUIManager : MonoBehaviour
             // foreach (UnitButtonInfo info in towerButtons) { ... }
         }
     }
+    public void TogglePause(GameObject panel)
+    {
+        bool isActive = panel.activeSelf;
+        if(isActive)
+        {
+            Time.timeScale = 1f;
+            panel.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            panel.SetActive(true);
+        }
+    }
+    public void HandleRestartButton()
+    {
+        // GameManager sẽ tự động reset Time.timeScale
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ReloadScene();
+            DisablePanel();
+        }
+    }
+
+    /// <summary>
+    /// Hàm này được gọi bởi nút "Về Menu" (Back to Menu)
+    /// </summary>
+    public void HandleMenuButton()
+    {
+        if (GameManager.Instance != null)
+        {
+            // (Bạn có thể đổi "MainMenu" thành tên scene menu của bạn)
+            GameManager.Instance.LoadScene("WaitScene");
+            DisablePanel();
+        }
+    }
+
+    /// <summary>
+    /// Hàm này được gọi bởi nút "Màn kế" (Next Level)
+    /// </summary>
+    public void HandleNextLevelButton()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GoToNextScene();
+            DisablePanel();
+        }
+    }
+    public void DisablePanel()
+    {
+        ToggleBuyTowerPanel(false);
+        ToggleUpgradeTowerPanel(false);
+        VictoryPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
+        PauseMenu.SetActive(false);
+
+    }
+
 }

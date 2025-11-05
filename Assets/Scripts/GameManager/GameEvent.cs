@@ -17,7 +17,9 @@ public class GameEvent : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        GameManager.Instance.GameEvent = this;
     }
+
 
     private Action onWinStage;
     private Action onWinGame;
