@@ -109,7 +109,7 @@ public class StageManager : MonoBehaviour
                 if (progressBarContainer != null)
                     progressBarContainer.SetActive(false);
                 GameEvent.Instance.OnTriggerWinGame();
-                yield break;
+                yield return new WaitForSeconds(3f);
 
             }
 
