@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Time.timeScale = 1.0f;
-        CheckInGameUIActive(scene.name);
+    
         if (InGameUIManager != null)
         {
             InGameUIManager.InitData();
@@ -82,19 +82,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 🧩 Hàm kiểm tra scene hiện tại có phải stage hợp lệ không
-    private void CheckInGameUIActive(string sceneName)
-    {
-        bool isStageScene = stageNames.Contains(sceneName);
 
-        if (_inGameUIManager != null)
-        {
-            _inGameUIManager.gameObject.SetActive(isStageScene);
-        }
-        else
-        {
-            Debug.LogWarning("InGameUIManager reference is missing in GameManager!");
-        }
-    }
 
     public void WinGame()
     {
