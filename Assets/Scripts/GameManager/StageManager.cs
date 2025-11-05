@@ -11,66 +11,98 @@ public class StageManager : MonoBehaviour
     [Tooltip("Tag (nhãn) của tất cả các GameObject kẻ địch")]
     [SerializeField] private string enemyTag = "Enemy";
 
-    // --- THÊM MỚI: UI CHO PROGRESS BAR ---
     [Header("Progress Bar UI")]
-    [Tooltip("Icon (Image) sẽ di chuyển")]
     [SerializeField] private Image progressBarIcon;
-    [Tooltip("Transform của điểm đầu (bên trái) thanh ngang")]
     [SerializeField] private Transform startPoint;
-    [Tooltip("Transform của điểm cuối (bên phải) thanh ngang")]
     [SerializeField] private Transform endPoint;
-    [Tooltip("GameObject cha chứa toàn bộ thanh progress (để ẩn khi thắng)")]
     [SerializeField] private GameObject progressBarContainer;
-    // --- KẾT THÚC THÊM MỚI ---
+
+    // --- BIẾN ĐẾM (MỚI) ---
+    private int totalWaveSpawners = 0;
+    private int completedWaveSpawners = 0;
+    private int activeEnemyCount = 0;
+    private bool hasWon = false; // Guard để tránh thắng 2 lần
 
     void Start()
     {
-        // Bắt đầu Coroutine để kiểm tra điều kiện thắng
-        StartCoroutine(CheckWinConditions());
+        if (waves == null || waves.Count == 0) return;
 
-        InvokeRepeating(nameof(UpdateProgressBar), 2, 1f);
-    }
+        // 1. Lấy tổng số spawner
+        totalWaveSpawners = waves.Count;
+        completedWaveSpawners = 0;
+        activeEnemyCount = 0;
+        hasWon = false;
 
-    // --- THÊM MỚI: HÀM UPDATE ---
-    void Update()
-    {
-      
-    }
+        // 2. Đăng ký các sự kiện
 
-    /// <summary>
-    /// Tính toán tiến độ (từ 0.0 đến 1.0)
-    /// </summary>
-    private float CalculateProgress()
-    {
-        if (waves == null || waves.Count == 0) return 0f;
+        // a. Đăng ký vào sự kiện "EnemyDie" (bạn đã có sẵn)
+        // (Giả sử EnemyHealth gọi GameEvent.Instance.OnTriggerEnemyDie)
+        GameEvent.Instance.SubscribeEnemyDie(OnEnemyDied);
 
-        float completedWaves = 0;
-        foreach (var wave in waves)
+        // b. Yêu cầu từng Spawner báo cáo khi nó hoàn thành
+        foreach (var waveSpawner in waves)
         {
-            // Đếm số spawner đã hoàn thành
-            if (wave.isDoneAllWaveSpawned)
-            {
-                completedWaves++;
-            }
+            // Báo cho spawner biết "tôi" là ai (để nó gọi lại)
+            waveSpawner.SetManager(this);
         }
 
-        // Trả về tỷ lệ (ví dụ: 3 / 10 = 0.3)
-        return completedWaves / (float)waves.Count;
+        // 3. Cập nhật UI lần đầu
+        UpdateProgressBar();
+    }
+
+    // Hủy đăng ký khi tắt
+    private void OnDestroy()
+    {
+        GameEvent.Instance.UnSubscribeEnemyDie(OnEnemyDied); // (Bạn nên thêm hàm Unsubscribe)
+    }
+
+    // --- CÁC HÀM "BÁO CÁO" (MỚI) ---
+
+    /// <summary>
+    /// Được gọi bởi SpawnEnemyWave khi nó spawn 1 con
+    /// </summary>
+    public void ReportEnemySpawned()
+    {
+        activeEnemyCount++;
     }
 
     /// <summary>
-    /// Cập nhật vị trí của Icon dựa trên tiến độ
+    /// Được gọi bởi GameEvent khi 1 con quái chết
     /// </summary>
+    private void OnEnemyDied(int money) // (Hoặc 'OnEnemyDied()')
+    {
+        if (hasWon) return; // Đã thắng, không đếm nữa
+
+        activeEnemyCount--;
+
+        // An toàn: Đảm bảo số quái không bao giờ âm
+        if (activeEnemyCount < 0) activeEnemyCount = 0;
+
+        CheckWinConditions(); // Kiểm tra lại
+    }
+
+    /// <summary>
+    /// Được gọi bởi SpawnEnemyWave khi nó hoàn thành
+    /// </summary>
+    public void ReportWaveSpawnerCompleted()
+    {
+        if (hasWon) return;
+
+        completedWaveSpawners++;
+        UpdateProgressBar(); // Cập nhật thanh progress
+        CheckWinConditions(); // Kiểm tra lại
+    }
+
+    // --- LOGIC CŨ (ĐÃ SỬA) ---
+
     private void UpdateProgressBar()
     {
         if (progressBarIcon == null || startPoint == null || endPoint == null)
-            return; // Chưa gán UI, bỏ qua
+            return;
 
-        // 1. Lấy tiến độ (ví dụ: 0.3)
-        float progress = CalculateProgress();
+        // Tính toán (rất nhanh)
+        float progress = (float)completedWaveSpawners / (float)totalWaveSpawners;
 
-        // 2. Dùng Lerp để tìm vị trí mới
-        // (Nó sẽ nội suy 30% quãng đường từ Start đến End)
         progressBarIcon.transform.position = Vector3.Lerp(
             startPoint.position,
             endPoint.position,
@@ -78,43 +110,24 @@ public class StageManager : MonoBehaviour
         );
     }
 
-    // (Hàm CheckDoneSpawn giữ nguyên)
-    private bool CheckDoneSpawn()
+    /// <summary>
+    /// Kiểm tra thắng (chỉ được gọi khi có sự kiện)
+    /// </summary>
+    private void CheckWinConditions()
     {
-        foreach (var wave in waves)
+        // Đã thắng rồi, bỏ qua
+        if (hasWon) return;
+
+        // Điều kiện: Đã spawn hết VÀ không còn quái
+        if (completedWaveSpawners == totalWaveSpawners && activeEnemyCount == 0)
         {
-            if (!wave.isDoneAllWaveSpawned)
-            {
-                return false;
-            }
+            hasWon = true;
+            Debug.Log("YOU WIN! (Event-Driven)");
+
+            if (progressBarContainer != null)
+                progressBarContainer.SetActive(false);
+
+            GameEvent.Instance.OnTriggerWinStage();
         }
-        return true;
-    }
-
-    // (Hàm CheckWinConditions giữ nguyên, chỉ thêm logic ẩn UI)
-    IEnumerator CheckWinConditions()
-    {
-        yield return new WaitForSeconds(3f);
-
-        while (true)
-        {
-            bool allWavesSpawned = CheckDoneSpawn();
-            bool noEnemiesLeft = (GameObject.FindGameObjectWithTag(enemyTag) == null);
-
-            if (allWavesSpawned && noEnemiesLeft)
-            {
-                Debug.Log("YOU WIN! Đã spawn hết và dọn sạch địch!");
-
-                // Ẩn thanh progress khi thắng
-                if (progressBarContainer != null)
-                    progressBarContainer.SetActive(false);
-                GameEvent.Instance.OnTriggerWinGame();
-                yield return new WaitForSeconds(3f);
-
-            }
-
-        }
-
-
     }
 }

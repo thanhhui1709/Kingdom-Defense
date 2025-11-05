@@ -72,4 +72,8 @@ public class GameEvent : MonoBehaviour
     {
         onEnemyDie?.Invoke(cost);
     }
+    public void UnSubscribeEnemyDie(Action<int> callback )
+    {
+        onEnemyDie -= callback;
+    }
 }
