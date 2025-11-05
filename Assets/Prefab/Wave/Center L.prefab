@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac07d05d02e429f45928831595d42b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTime: 2
+  activeTime: 1
   enemyWaves:
   - {fileID: 11400000, guid: c00af193297baa746a2f8e3fae5afde7, type: 2}
   - {fileID: 11400000, guid: 5eb4f9188c4aba64a8c0748c9f857a59, type: 2}

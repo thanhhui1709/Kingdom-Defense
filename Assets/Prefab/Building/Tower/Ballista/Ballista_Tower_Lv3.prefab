@@ -280,8 +280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 55a5e95fa2922234aa85d8a73eac6237, type: 3}
-  heath: 210
-  ammor: 25
+  heath: 340
+  ammor: 35
   attackDamage: 100
   attackSpeed: 1.1
   moveSpeed: 0
@@ -323,31 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Ballista_Tower
   evolutionLevel: 3
-  statsList:
-  - cost: 100
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 175
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 250
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
+  statsList: []
 --- !u!114 &5219317454247416373
 MonoBehaviour:
   m_ObjectHideFlags: 0

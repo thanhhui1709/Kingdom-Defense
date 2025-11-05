@@ -1119,11 +1119,11 @@ MonoBehaviour:
   heath: 8000
   ammor: 80
   attackDamage: 150
-  attackSpeed: 1
+  attackSpeed: 0.7
   moveSpeed: 1.5
   attackRange: 5
   triggerRange: 10
-  money: 500
+  money: 1236
   attackList:
   - {fileID: 11400000, guid: f912d7cbf64f7a542bb0e58593de418e, type: 2}
   - {fileID: 11400000, guid: c33811c696ef6d748a39b39a783689b2, type: 2}

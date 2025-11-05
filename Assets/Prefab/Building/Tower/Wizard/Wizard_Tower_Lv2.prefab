@@ -433,8 +433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: fd2c82a3c61e65142925ff285b5c3aca, type: 3}
-  heath: 120
-  ammor: 90
+  heath: 190
+  ammor: 15
   attackDamage: 130
   attackSpeed: 1.25
   moveSpeed: 0
@@ -476,23 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Wizard_Tower
   evolutionLevel: 2
-  statsList:
-  - cost: 100
-    heath: 200
-    ammor: 10
-    attackDamage: 5
-    attackSpeed: 0.1
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 200
-    heath: 200
-    ammor: 10
-    attackDamage: 5
-    attackSpeed: 0.1
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
+  statsList: []
 --- !u!114 &22982402692124561
 MonoBehaviour:
   m_ObjectHideFlags: 0

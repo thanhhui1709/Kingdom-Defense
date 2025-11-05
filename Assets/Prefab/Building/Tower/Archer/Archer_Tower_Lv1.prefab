@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 378973ca0a92f1f4eb22d5f2cf1b1b96, type: 3}
-  heath: 100
-  ammor: 10
+  heath: 200
+  ammor: 20
   attackDamage: 70
   attackSpeed: 1
   moveSpeed: 0
@@ -209,31 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Archer_Tower
   evolutionLevel: 1
-  statsList:
-  - cost: 100
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 175
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 250
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
+  statsList: []
 --- !u!114 &5693089683288687135
 MonoBehaviour:
   m_ObjectHideFlags: 0

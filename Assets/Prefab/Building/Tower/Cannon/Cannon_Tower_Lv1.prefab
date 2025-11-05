@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4e638a61966f3844e9e8093e44e27b37, type: 3}
-  heath: 500
-  ammor: 100
+  heath: 300
+  ammor: 40
   attackDamage: 100
   attackSpeed: 0.4
   moveSpeed: 0
@@ -323,31 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Cannon_Tower
   evolutionLevel: 1
-  statsList:
-  - cost: 100
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 175
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
-  - cost: 250
-    heath: 100
-    ammor: 10
-    attackDamage: 10
-    attackSpeed: 0
-    moveSpeed: 0
-    attackRange: 0
-    triggerRange: 0
+  statsList: []
 --- !u!114 &-7344496337540544185
 MonoBehaviour:
   m_ObjectHideFlags: 0
