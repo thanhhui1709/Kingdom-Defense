@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         get => _inGameUIManager;
         set => _inGameUIManager = value;
     }
-
+    [SerializeField]
     private int numberOfWinStage = 0;
 
     private void Awake()

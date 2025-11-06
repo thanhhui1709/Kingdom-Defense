@@ -1309,7 +1309,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270945292999820586}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b872db8845abd4b4e9b4574f9a85eda4, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   ammor: 10
   attackDamage: 70
   attackSpeed: 1
-  moveSpeed: 3
+  moveSpeed: 10
   attackRange: 3
   triggerRange: 12
   money: 30
