@@ -20,6 +20,7 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
     public event Action<float, float> OnHealthChanged;
     public AudioClip destroySound;
     // 2. Thêm "getters" để script bên ngoài có thể đọc giá trị
+    private ContinuousBeamManager beamManager; // Sẽ là null nếu không phải trụ sét
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
 
@@ -28,6 +29,7 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
         stats = GetComponent<Stats>();
         maxHealth = stats.Heath; // Giả sử Stats có biến Heath
         towerController = GetComponent<TowerController>();
+        TryGetComponent<ContinuousBeamManager>(out beamManager);
     }
 
     private void OnEnable()
@@ -52,6 +54,11 @@ public class TowerHealth : MonoBehaviour, IHealthSystem
 
       
         towerController.enabled = false; // Vô hiệu hóa hành vi trụ
+
+        if (beamManager != null)
+        {
+            beamManager.StopBeam();
+        }
         if (hurtEffect != null) hurtEffect.SetActive(false);
      
 

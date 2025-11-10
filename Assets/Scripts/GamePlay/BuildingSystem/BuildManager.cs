@@ -42,7 +42,7 @@ public class BuildManager : MonoBehaviour
             {
                 BuildableTile tile = hit.collider.GetComponent<BuildableTile>();
 
-                if (tile != null)
+                if (tile != null && !tile.isLocked)
                 {
                     if (tile.towerOnTile != null)
                     {

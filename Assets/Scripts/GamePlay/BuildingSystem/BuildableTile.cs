@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class BuildableTile : MonoBehaviour
 {
     // Biến này sẽ lưu trữ tham chiếu đến cái trụ đang được xây trên ô đất này.
     public GameObject towerOnTile = null;
+    public bool isLocked;
 
     private void Start()
     {
@@ -16,7 +18,14 @@ public class BuildableTile : MonoBehaviour
         if (health.HasDie())
         {
             towerOnTile = null; // Xóa tham chiếu khi trụ chết
+            isLocked=true;
+            StartCoroutine(UnlockTileAfterDelay(11.5f)); // Mở khóa sau 2 giây
         }
+    }
+    private IEnumerator UnlockTileAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isLocked = false;
     }
 }
 

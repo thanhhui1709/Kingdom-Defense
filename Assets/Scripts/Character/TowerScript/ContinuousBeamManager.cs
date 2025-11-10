@@ -19,12 +19,12 @@ public class ContinuousBeamManager : MonoBehaviour
 
     // --- CÁC BIẾN TRẠNG THÁI ---
     private Dictionary<GameObject, GameObject> activeBeams = new Dictionary<GameObject, GameObject>();
-   
+
     // --- CÁC BIẾN CÀI ĐẶT ---
     [Tooltip("Prefab của tia sét")]
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Vector3 offsetPos=new Vector3(0,2,0);
-
+    [SerializeField] private Vector3 offsetPos = new Vector3(0, 2, 0);
+    private bool isDisabled = false;
     void Awake()
     {
 
@@ -46,22 +46,24 @@ public class ContinuousBeamManager : MonoBehaviour
     private void OnEnable()
     {
         InvokeRepeating(nameof(CheckEnemyExist), 0f, 0.25f);
+        isDisabled = false;
     }
 
     // Update chạy mỗi frame, không còn phụ thuộc vào DoAttack
     void Update()
     {
+        if (isDisabled) return;
         // Lấy danh sách mục tiêu mới nhất trực tiếp từ TowerController
         // Chuyển từ HashSet sang List để dễ làm việc
         List<GameObject> currentTargets = towerController.GetCurrentTargets().ToList();
 
-    
+
         List<GameObject> targetsToRemove = new List<GameObject>();
         foreach (var pair in activeBeams)
         {
             GameObject target = pair.Key;
 
-          
+
             if (target == null || !target.activeInHierarchy || !currentTargets.Contains(target))
             {
                 targetsToRemove.Add(target);
@@ -87,7 +89,7 @@ public class ContinuousBeamManager : MonoBehaviour
                 if (beamScript != null)
                 {
                     // Ra lệnh cho tia sét tấn công
-                    beamScript.Launch(shooterTransform.position+offsetPos, target, stats.AttackDamage);
+                    beamScript.Launch(shooterTransform.position + offsetPos, target, stats.AttackDamage);
                     // Lưu lại để quản lý
                     activeBeams.Add(target, beamGO);
                 }
@@ -114,8 +116,8 @@ public class ContinuousBeamManager : MonoBehaviour
     }
     private void CheckEnemyExist()
     {
-     
-        if(towerController.GetCurrentTargets().Count == 0)
+
+        if (towerController.GetCurrentTargets().Count == 0)
         {
             laserAudioSource.Pause();
             laserEffect.Stop();
@@ -125,7 +127,7 @@ public class ContinuousBeamManager : MonoBehaviour
             if (!laserEffect.isPlaying)
             {
 
-               
+
                 laserEffect.Play();
             }
             if (!laserAudioSource.isPlaying)
@@ -133,5 +135,18 @@ public class ContinuousBeamManager : MonoBehaviour
                 laserAudioSource.Play();
             }
         }
+    }
+    public void StopBeam()
+    {
+        isDisabled = true;
+        foreach (var pair in activeBeams)
+        {
+            if (pair.Value != null)
+            {
+                ObjectPoolManager.ReturnObject(pair.Value);
+            }
+        }
+        activeBeams.Clear();
+
     }
 }
