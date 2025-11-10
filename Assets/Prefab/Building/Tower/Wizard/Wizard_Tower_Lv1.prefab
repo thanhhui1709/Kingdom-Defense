@@ -389,7 +389,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 15
   triggerRange: 15
-  money: 550
+  money: 0
   attackList: []
   totalInvestedMoney: 0
 --- !u!114 &-6161547250157671784
@@ -425,7 +425,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Wizard_Tower
   evolutionLevel: 1
-  statsList: []
+  statsList:
+  - cost: 100
+    heath: 0
+    ammor: 0
+    attackDamage: 20
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 120
+    heath: 0
+    ammor: 0
+    attackDamage: 20
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0.5
+    triggerRange: 0
 --- !u!114 &8457081955314244701
 MonoBehaviour:
   m_ObjectHideFlags: 0

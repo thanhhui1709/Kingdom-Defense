@@ -431,7 +431,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 20
   triggerRange: 15
-  money: 210
+  money: 0
   attackList: []
   totalInvestedMoney: 0
 --- !u!114 &-5102995705080859859
@@ -448,7 +448,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Ballista_Tower
   evolutionLevel: 1
-  statsList: []
+  statsList:
+  - cost: 35
+    heath: 0
+    ammor: 0
+    attackDamage: 10
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0.5
+    triggerRange: 0
+  - cost: 40
+    heath: 0
+    ammor: 0
+    attackDamage: 0
+    attackSpeed: 0.05
+    moveSpeed: 0
+    attackRange: 0.5
+    triggerRange: 0
 --- !u!114 &-414892576345174176
 MonoBehaviour:
   m_ObjectHideFlags: 0

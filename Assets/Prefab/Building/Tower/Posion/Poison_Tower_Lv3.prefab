@@ -179,7 +179,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 17
   triggerRange: 15
-  money: 1520
+  money: 820
   attackList: []
   totalInvestedMoney: 0
 --- !u!114 &4383418024705102239
@@ -215,7 +215,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Poison_Tower
   evolutionLevel: 3
-  statsList: []
+  statsList:
+  - cost: 200
+    heath: 0
+    ammor: 0
+    attackDamage: 15
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 230
+    heath: 0
+    ammor: 0
+    attackDamage: 0
+    attackSpeed: 0.05
+    moveSpeed: 0
+    attackRange: 0.5
+    triggerRange: 0
 --- !u!114 &-8361510247227988167
 MonoBehaviour:
   m_ObjectHideFlags: 0

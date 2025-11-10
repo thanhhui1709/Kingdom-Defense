@@ -1302,7 +1302,7 @@ MonoBehaviour:
   ammor: 25
   attackDamage: 18
   attackSpeed: 0.3
-  moveSpeed: 10
+  moveSpeed: 4
   attackRange: 10
   triggerRange: 10
   money: 60

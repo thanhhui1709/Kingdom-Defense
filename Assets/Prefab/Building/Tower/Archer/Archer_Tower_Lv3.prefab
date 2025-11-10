@@ -266,7 +266,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 17
   triggerRange: 15
-  money: 560
+  money: 280
   attackList: []
   totalInvestedMoney: 0
 --- !u!114 &2107264887265957695
@@ -302,7 +302,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Archer_Tower
   evolutionLevel: 3
-  statsList: []
+  statsList:
+  - cost: 80
+    heath: 0
+    ammor: 0
+    attackDamage: 40
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 90
+    heath: 0
+    ammor: 0
+    attackDamage: 0
+    attackSpeed: 0.05
+    moveSpeed: 0
+    attackRange: 0.5
+    triggerRange: 0
 --- !u!114 &8322135697704700283
 MonoBehaviour:
   m_ObjectHideFlags: 0

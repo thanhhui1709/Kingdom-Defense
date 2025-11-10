@@ -1326,10 +1326,10 @@ MonoBehaviour:
   ammor: 50
   attackDamage: 32
   attackSpeed: 0.8
-  moveSpeed: 10
+  moveSpeed: 3.5
   attackRange: 3
   triggerRange: 12
-  money: 30
+  money: 60
   attackList:
   - {fileID: 11400000, guid: ceabc34a40225b34189e036782d6a634, type: 2}
   - {fileID: 11400000, guid: e5d6aa2f8a230e44680662f17a0cdbdd, type: 2}
