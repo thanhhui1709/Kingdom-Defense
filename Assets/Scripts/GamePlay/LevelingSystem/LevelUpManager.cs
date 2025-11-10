@@ -80,7 +80,7 @@ public class LevelUpManager : MonoBehaviour
         LevelUpData nextLevelData = list.Find(data => data.level == currentLevel + 1 &&data.isUnlocked == true);
 
         // Trả về cost nếu tìm thấy, ngược lại trả về 0
-        return nextLevelData?.cost ?? 0;
+        return nextLevelData?.inGameBuyCost ?? 0;
     }
 
     private List<LevelUpData> GetListFromName(string name)
@@ -132,6 +132,7 @@ public class LevelUpData
     public LevelUpType type;
     public int level;
     public int cost;
+    public int inGameBuyCost;
     public bool isUnlocked;
     public Sprite avartar;
     public GameObject prefab;
