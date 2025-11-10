@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraFov: 10
   minOrthographicSize: 7
-  maxOrthographicSize: 40
+  maxOrthographicSize: 18
   zoomSensitivity: 10
   screenEdgeSize: 20
-  cameraMoveSpeed: 50
-  xMin: -50
-  xMax: 50
+  cameraMoveSpeed: 45
+  xMin: -40
+  xMax: 40
   zMin: -100
-  zMax: 37
+  zMax: 18

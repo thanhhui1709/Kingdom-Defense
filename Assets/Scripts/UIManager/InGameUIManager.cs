@@ -54,6 +54,16 @@ public class InGameUIManager : MonoBehaviour
     [Header("Health Bar Settings")]
     [SerializeField] private Gradient panelHealthGradient; // Gradient cho thanh máu trên panel
 
+
+    [Header("Time Scale Settings")]
+    public Button scaleUpBtn;
+    public Button scaleDownBtn;
+    public TextMeshProUGUI timeScaleText;
+    private float currentTimeScale = 1f;
+    public float timeScaleStep = 0.5f;
+    public float maxTimeScale = 2f;
+    public float minTimeScale = 1f;
+
     // Tham chiếu đến các Manager
     private BuildManager buildManager;
 
@@ -452,6 +462,27 @@ public class InGameUIManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         PauseMenu.SetActive(false);
 
+    }
+
+    public void AdjustTimeScale(bool increase)
+    {
+        if (increase)
+        {
+            currentTimeScale += timeScaleStep;
+        }
+        else
+        {
+            currentTimeScale -= timeScaleStep;
+        }
+        // Giới hạn trong khoảng min và max
+        currentTimeScale = Mathf.Clamp(currentTimeScale, minTimeScale, maxTimeScale);
+        // Cập nhật Time.timeScale
+        Time.timeScale = currentTimeScale;
+        // Cập nhật văn bản hiển thị
+        timeScaleText.text = currentTimeScale.ToString("0.0") + "x";
+        // Cập nhật trạng thái nút
+        scaleUpBtn.interactable = currentTimeScale < maxTimeScale;
+        scaleDownBtn.interactable = currentTimeScale > minTimeScale;
     }
 
 }

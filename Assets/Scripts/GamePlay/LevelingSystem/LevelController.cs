@@ -17,9 +17,12 @@ public class LevelController : MonoBehaviour
         stats = GetComponent<Stats>();
     }
 
-    void Start()
+    void OnEnable()
     {
-        UpdateLevelState();
+        // Reset lại trạng thái về ban đầu
+        // mỗi khi trụ được spawn (hoặc tái sử dụng từ pool)
+        subLevel = 0;
+        UpdateLevelState(); // Hàm này sẽ tự động set isReadyToEvolve = false
     }
 
     public bool IsReadyToEvolve()
