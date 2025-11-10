@@ -236,7 +236,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Poison_Tower
   evolutionLevel: 1
-  statsList: []
+  statsList:
+  - cost: 70
+    heath: 0
+    ammor: 0
+    attackDamage: 7
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 80
+    heath: 0
+    ammor: 0
+    attackDamage: 0
+    attackSpeed: 0.05
+    moveSpeed: 0
+    attackRange: 0.5
+    triggerRange: 0
 --- !u!114 &-1006701071779531046
 MonoBehaviour:
   m_ObjectHideFlags: 0

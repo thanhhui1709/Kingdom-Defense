@@ -391,7 +391,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 21
   triggerRange: 15
-  money: 300
+  money: 280
   attackList: []
   totalInvestedMoney: 0
 --- !u!114 &5587350028848958973
@@ -408,7 +408,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameKey: Cannon_Tower
   evolutionLevel: 2
-  statsList: []
+  statsList:
+  - cost: 90
+    heath: 0
+    ammor: 0
+    attackDamage: 40
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
+  - cost: 110
+    heath: 100
+    ammor: 5
+    attackDamage: 0
+    attackSpeed: 0
+    moveSpeed: 0
+    attackRange: 0
+    triggerRange: 0
 --- !u!114 &-5331390117765686269
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -286,7 +286,7 @@ MonoBehaviour:
   moveSpeed: 0
   attackRange: 25
   triggerRange: 15
-  money: 0
+  money: 870
   attackList: []
   totalInvestedMoney: 0
 --- !u!114 &4149911505232975085
