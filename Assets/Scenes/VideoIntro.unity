@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoPath: Video/1030.mp4
-  nextSceneName: Menu
+  nextSceneName: WaitScene
   skipText: {fileID: 1050010572}
   allowSkip: 1
   videoVolume: 1

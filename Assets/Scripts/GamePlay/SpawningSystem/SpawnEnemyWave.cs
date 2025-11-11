@@ -16,15 +16,21 @@ public class SpawnEnemyWave : MonoBehaviour
     // --- Biến nội bộ ---
     private StageManager stageManager; // Tham chiếu đến Manager
     private int currentWaveIndex = 0;
-
-    // --- Biến "Báo cáo" ---
-    // Được truy cập bởi StageManager
     public bool isDoneAllWaveSpawned { get; private set; } = false;
 
     // Hàm này được gọi bởi StageManager lúc Start()
     public void SetManager(StageManager manager)
     {
         this.stageManager = manager;
+    }
+
+    // --- HÀM MỚI ---
+    /// <summary>
+    /// Báo cho StageManager biết spawner này có bao nhiêu wave
+    /// </summary>
+    public int GetTotalWaveCount()
+    {
+        return enemyWaves.Count;
     }
 
     private void Start()
@@ -40,27 +46,28 @@ public class SpawnEnemyWave : MonoBehaviour
     {
         yield return new WaitForSeconds(activeTime);
 
-     
         for (currentWaveIndex = 0; currentWaveIndex < enemyWaves.Count; currentWaveIndex++)
         {
             EnemyWave currentWave = enemyWaves[currentWaveIndex];
 
-            // 3. Bắt đầu spawn các wave con (WaveData) bên trong EnemyWave
+            // 1. Chờ spawn xong 1 wave (ví dụ: wave 1/10)
             yield return StartCoroutine(SpawnWave(currentWave));
 
-            // 4. Chờ thời gian nghỉ (delay) trước khi bắt đầu Wave tiếp theo
+            // 2. Chờ thời gian nghỉ
             yield return new WaitForSeconds(currentWave.delayForTheNextWave);
+
+            // 3. --- SỬA LỖI TẠI ĐÂY ---
+            // BÁO CÁO CHO MANAGER: "Wave 1/10 đã xong!"
+            // (Chúng ta đã di chuyển report vào BÊN TRONG vòng lặp)
+            if (stageManager != null)
+            {
+                stageManager.ReportOneWaveCompleted();
+            }
         }
 
-        // 5. ĐÃ HOÀN THÀNH
-        // Đặt cờ báo hiệu đã xong
+        // 4. Đã xong TẤT CẢ
         isDoneAllWaveSpawned = true;
-
-        // BÁO CÁO CHO MANAGER: "Tôi đã spawn xong!"
-        if (stageManager != null)
-        {
-            stageManager.ReportWaveSpawnerCompleted();
-        }
+        // (Không cần báo cáo ở đây nữa, vì đã báo cáo từng cái)
     }
 
     /// <summary>
@@ -72,15 +79,11 @@ public class SpawnEnemyWave : MonoBehaviour
         foreach (var waveData in currentWave.waveData)
         {
             // Bắt đầu spawn wave con (vd: 10 lính A)
-            // Chúng ta không 'yield' ở đây nếu không muốn chờ
-           yield return StartCoroutine(SpawnSingleWaveData(waveData));
+            yield return StartCoroutine(SpawnSingleWaveData(waveData));
 
             // Chờ (delay) trước khi bắt đầu wave con tiếp theo
             yield return new WaitForSeconds(waveData.delayForTheNextWaveData);
         }
-
-        // (Không cần 'currentWave.isDoneSpawned' nữa,
-        // vì chúng ta chỉ quan tâm khi 'isDoneAllWaveSpawned')
     }
 
     /// <summary>
@@ -112,17 +115,10 @@ public class SpawnEnemyWave : MonoBehaviour
     }
 
     // --- CÁC HÀM CŨ (Load/Reset) ---
-    // (Những hàm này có thể cần được xem lại,
-    // vì chúng không còn phù hợp với logic Coroutine mới)
-
     public void Load(StageData stageData)
     {
-        // Cảnh báo: Logic 'Load' phức tạp với Coroutine.
-        // Cách đơn giản nhất là BẮT ĐẦU LẠI TỪ ĐẦU wave hiện tại.
         currentWaveIndex = stageData.index;
         if (currentWaveIndex < 0) currentWaveIndex = 0;
-
-        // (Cần code phức tạp hơn để "resume" Coroutine)
     }
 
     public void ResetWaveAfterClearStage()
@@ -134,8 +130,6 @@ public class SpawnEnemyWave : MonoBehaviour
     [System.Serializable]
     public struct StageData
     {
-        // (EnemyWave là class, có thể gây lỗi khi lưu/tải)
-        // public EnemyWave currentWave; 
         public int index;
     }
 }

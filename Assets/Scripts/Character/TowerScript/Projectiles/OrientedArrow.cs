@@ -16,6 +16,7 @@ public class OrientedArrow : MonoBehaviour, IProjectile
     [Tooltip("Độ xoay bù trừ cho model (ví dụ: (90, 0, 0))")]
     [SerializeField] private Vector3 rotationFix = new Vector3(90, 0, 0);
     private Quaternion fixQuaternion;
+    private IHealthSystem heath;
     // --- KẾT THÚC SỬA ---
 
     private bool isLaunched = false;
@@ -40,7 +41,7 @@ public class OrientedArrow : MonoBehaviour, IProjectile
     void FixedUpdate()
     {
         // Chỉ bay khi đã được Launch và có mục tiêu
-        if (!isLaunched || target == null || !target.activeInHierarchy)
+        if (!isLaunched || target == null || !target.activeInHierarchy||heath.HasDie())
         {
             // Nếu mất mục tiêu, bay thẳng
             rb.linearVelocity = transform.forward * speed;
@@ -108,6 +109,7 @@ public class OrientedArrow : MonoBehaviour, IProjectile
         }
 
         this.target = closestTarget;
+        heath = target.GetComponent<IHealthSystem>();
         // --- KẾT THÚC TỐI ƯU ---
 
         this.damage = damage;

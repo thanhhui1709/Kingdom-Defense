@@ -22,7 +22,7 @@ public class ExplosionArrow : MonoBehaviour, IProjectile
     [SerializeField] private Vector3 rotationFix = new Vector3(0, 0, 0);
     public AudioClip explosionSound;
     private Quaternion fixQuaternion;
-
+    private IHealthSystem health;
     private bool hasExploded = false;
     private Collider myCollider;
 
@@ -48,7 +48,7 @@ public class ExplosionArrow : MonoBehaviour, IProjectile
     {
         if (hasExploded) return;
 
-        if (target == null || !target.activeInHierarchy)
+        if (target == null || !target.activeInHierarchy ||health.HasDie())
         {
             // Nếu mất mục tiêu, bay thẳng
             rb.linearVelocity = transform.forward * speed;
@@ -136,6 +136,7 @@ public class ExplosionArrow : MonoBehaviour, IProjectile
         }
 
         this.target = closestTarget;
+        this.health = target.GetComponentInParent<IHealthSystem>();
         // --- KẾT THÚC TỐI ƯU ---
 
         this.damage = damage;

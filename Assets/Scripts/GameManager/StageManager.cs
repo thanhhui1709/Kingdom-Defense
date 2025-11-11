@@ -5,7 +5,7 @@ using UnityEngine.UI; // Cần cho Image
 
 public class StageManager : MonoBehaviour
 {
-    public List<SpawnEnemyWave> waves;
+    public List<SpawnEnemyWave> waves; // Kéo các spawner vào đây
 
     [Header("Win Condition")]
     [Tooltip("Tag (nhãn) của tất cả các GameObject kẻ địch")]
@@ -17,47 +17,47 @@ public class StageManager : MonoBehaviour
     [SerializeField] private Transform endPoint;
     [SerializeField] private GameObject progressBarContainer;
 
-    // --- BIẾN ĐẾM (MỚI) ---
-    private int totalWaveSpawners = 0;
-    private int completedWaveSpawners = 0;
+    // --- BIẾN ĐẾM (Đã sửa) ---
+    private int totalWavesInLevel = 0; // Tổng số wave (ví dụ: 10)
+    private int completedWaves = 0;  // Số wave đã hoàn thành (ví dụ: 3/10)
     private int activeEnemyCount = 0;
-    private bool hasWon = false; // Guard để tránh thắng 2 lần
+    private bool hasWon = false;
 
     void Start()
     {
         if (waves == null || waves.Count == 0) return;
 
-        // 1. Lấy tổng số spawner
-        totalWaveSpawners = waves.Count;
-        completedWaveSpawners = 0;
+        // --- SỬA LẠI START ---
+        totalWavesInLevel = 0;
+        completedWaves = 0;
         activeEnemyCount = 0;
         hasWon = false;
 
-        // 2. Đăng ký các sự kiện
-
-        // a. Đăng ký vào sự kiện "EnemyDie" (bạn đã có sẵn)
-        // (Giả sử EnemyHealth gọi GameEvent.Instance.OnTriggerEnemyDie)
+        // 1. Đăng ký sự kiện chết (Giữ nguyên)
+        // (Bạn cần thêm hàm UnSubscribeEnemyDie vào GameEvent)
         GameEvent.Instance.SubscribeEnemyDie(OnEnemyDied);
 
-        // b. Yêu cầu từng Spawner báo cáo khi nó hoàn thành
+        // 2. ĐẾM TỔNG SỐ WAVE
         foreach (var waveSpawner in waves)
         {
-            // Báo cho spawner biết "tôi" là ai (để nó gọi lại)
+            // Hỏi spawner xem nó có bao nhiêu wave
+            totalWavesInLevel += waveSpawner.GetTotalWaveCount();
             waveSpawner.SetManager(this);
         }
+        // --- KẾT THÚC SỬA START ---
 
-        // 3. Cập nhật UI lần đầu
-        UpdateProgressBar();
-        InvokeRepeating(nameof(CheckWinConditions), 5, 5f);
+        UpdateProgressBar(); // Cập nhật UI lần đầu
     }
 
-    // Hủy đăng ký khi tắt
     private void OnDestroy()
     {
-        GameEvent.Instance.UnSubscribeEnemyDie(OnEnemyDied); // (Bạn nên thêm hàm Unsubscribe)
+        // Nhớ hủy đăng ký
+        if (GameEvent.Instance != null)
+        {
+            // (Bạn cần thêm hàm UnSubscribeEnemyDie vào GameEvent)
+            // GameEvent.Instance.UnSubscribeEnemyDie(OnEnemyDied); 
+        }
     }
-
-    // --- CÁC HÀM "BÁO CÁO" (MỚI) ---
 
     /// <summary>
     /// Được gọi bởi SpawnEnemyWave khi nó spawn 1 con
@@ -70,39 +70,38 @@ public class StageManager : MonoBehaviour
     /// <summary>
     /// Được gọi bởi GameEvent khi 1 con quái chết
     /// </summary>
-    private void OnEnemyDied(int money) // (Hoặc 'OnEnemyDied()')
+    private void OnEnemyDied(int money)
     {
-        if (hasWon) return; // Đã thắng, không đếm nữa
-
+        if (hasWon) return;
         activeEnemyCount--;
-
-        // An toàn: Đảm bảo số quái không bao giờ âm
         if (activeEnemyCount < 0) activeEnemyCount = 0;
 
-        CheckWinConditions(); // Kiểm tra lại
+        CheckWinConditions(); // Kiểm tra lại khi quái chết
     }
 
     /// <summary>
-    /// Được gọi bởi SpawnEnemyWave khi nó hoàn thành
+    /// Được gọi bởi SpawnEnemyWave khi 1 EnemyWave hoàn thành
     /// </summary>
-    public void ReportWaveSpawnerCompleted()
+    public void ReportOneWaveCompleted() // Đổi tên
     {
         if (hasWon) return;
 
-        completedWaveSpawners++;
-        UpdateProgressBar(); // Cập nhật thanh progress
-        CheckWinConditions(); // Kiểm tra lại
+        completedWaves++;         // Đếm
+        UpdateProgressBar();      // Cập nhật UI
+        CheckWinConditions();   // Kiểm tra
     }
-
-    // --- LOGIC CŨ (ĐÃ SỬA) ---
 
     private void UpdateProgressBar()
     {
         if (progressBarIcon == null || startPoint == null || endPoint == null)
             return;
 
-        // Tính toán (rất nhanh)
-        float progress = (float)completedWaveSpawners / (float)totalWaveSpawners;
+        float progress = 0f;
+        if (totalWavesInLevel > 0) // Tránh chia cho 0
+        {
+            // Bây giờ nó sẽ là 1/10, 2/10, 3/10...
+            progress = (float)completedWaves / (float)totalWavesInLevel;
+        }
 
         progressBarIcon.transform.position = Vector3.Lerp(
             startPoint.position,
@@ -116,11 +115,10 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private void CheckWinConditions()
     {
-        // Đã thắng rồi, bỏ qua
         if (hasWon) return;
 
-        // Điều kiện: Đã spawn hết VÀ không còn quái
-        if (completedWaveSpawners == totalWaveSpawners && activeEnemyCount == 0)
+        // Điều kiện: Đã hoàn thành TẤT CẢ wave VÀ không còn quái
+        if (completedWaves == totalWavesInLevel && activeEnemyCount == 0)
         {
             hasWon = true;
             Debug.Log("YOU WIN! (Event-Driven)");
@@ -128,7 +126,7 @@ public class StageManager : MonoBehaviour
             if (progressBarContainer != null)
                 progressBarContainer.SetActive(false);
 
-            GameEvent.Instance.OnTriggerWinStage();
+            GameEvent.Instance.OnTriggerWinStage(); // (Hoặc WinGame)
         }
     }
 }

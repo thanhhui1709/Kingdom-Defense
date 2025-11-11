@@ -133,4 +133,14 @@ public class GameManager : MonoBehaviour
         }
         return true;
     }
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        // Nếu đang chạy trong Editor, dừng Play Mode
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        // Nếu là bản build (PC, WebGL, Mobile), thoát ứng dụng
+        Application.Quit();
+#endif
+    }
 }
