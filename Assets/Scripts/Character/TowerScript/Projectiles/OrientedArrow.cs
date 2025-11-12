@@ -45,6 +45,7 @@ public class OrientedArrow : MonoBehaviour, IProjectile
         {
             // Nếu mất mục tiêu, bay thẳng
             rb.linearVelocity = transform.forward * speed;
+            ObjectPoolManager.ReturnObject(gameObject); 
             return;
         }
 

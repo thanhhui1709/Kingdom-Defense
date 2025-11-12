@@ -390,8 +390,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4e638a61966f3844e9e8093e44e27b37, type: 3}
   heath: 900
-  ammor: 75
-  attackDamage: 400
+  ammor: 100
+  attackDamage: 280
   attackSpeed: 0.55
   moveSpeed: 0
   attackRange: 24

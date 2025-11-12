@@ -450,16 +450,16 @@ MonoBehaviour:
   evolutionLevel: 1
   statsList:
   - cost: 35
-    heath: 0
-    ammor: 0
-    attackDamage: 10
+    heath: 35
+    ammor: 5
+    attackDamage: 5
     attackSpeed: 0
     moveSpeed: 0
     attackRange: 0.5
     triggerRange: 0
   - cost: 40
-    heath: 0
-    ammor: 0
+    heath: 65
+    ammor: 5
     attackDamage: 0
     attackSpeed: 0.05
     moveSpeed: 0

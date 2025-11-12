@@ -8,9 +8,6 @@ using UnityEngine.UI;
 /// </summary>
 public class VideoIntroController : MonoBehaviour
 {
-    [Header("Video Settings")]
-    [Tooltip("Đường dẫn video trong Assets (ví dụ: Video/1030.mp4)")]
-    public string videoPath = "Video/1030.mp4";
     
     [Tooltip("Tên scene sẽ load sau khi video kết thúc (ví dụ: Menu)")]
     public string nextSceneName = "Menu";
@@ -27,59 +24,44 @@ public class VideoIntroController : MonoBehaviour
     [Range(0f, 1f)]
     public float videoVolume = 1f;
 
-    private VideoPlayer videoPlayer;
+    public VideoPlayer videoPlayer;
     private bool hasVideoStarted = false;
     private bool isVideoEnded = false;
 
     void Start()
     {
-        SetupVideoPlayer();
-        
-        // Hiển thị text hướng dẫn skip nếu có
-        if (skipText != null)
-        {
-            skipText.text = allowSkip ? "Nhấn SPACE hoặc Click để bỏ qua" : "";
-        }
-    }
 
-    void SetupVideoPlayer()
-    {
-        // Lấy hoặc thêm VideoPlayer component
-        videoPlayer = GetComponent<VideoPlayer>();
-        if (videoPlayer == null)
-        {
-            videoPlayer = gameObject.AddComponent<VideoPlayer>();
-        }
+       
+            if (videoPlayer == null)
+            {
+                Debug.LogError("VideoPlayer chưa được gán!", this);
+                LoadNextScene(); // Không có video, bỏ qua
+                return;
+            }
 
-        // Cấu hình VideoPlayer
-        videoPlayer.playOnAwake = false;
-        videoPlayer.renderMode = VideoRenderMode.CameraFarPlane; // Phát full screen ở background
-        videoPlayer.targetCamera = Camera.main;
-        videoPlayer.aspectRatio = VideoAspectRatio.Stretch; // Kéo giãn full màn hình
-        
-        // Set video clip từ Resources hoặc StreamingAssets
-        videoPlayer.source = VideoSource.Url;
-        videoPlayer.url = System.IO.Path.Combine(Application.dataPath, videoPath);
-        
-        // Cấu hình audio
-        videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
-        videoPlayer.SetDirectAudioVolume(0, videoVolume);
-        
-        // Đăng ký sự kiện khi video kết thúc
-        videoPlayer.loopPointReached += OnVideoEnd;
-        
-        // Đăng ký sự kiện khi video sẵn sàng
-        videoPlayer.prepareCompleted += OnVideoPrepared;
-        
-        // Chuẩn bị video
-        videoPlayer.Prepare();
-    }
+            // 1. Cài đặt âm thanh
+            // (Giả sử bạn đã kéo AudioSource vào videoPlayer)
+            if (videoPlayer.audioOutputMode == VideoAudioOutputMode.AudioSource)
+            {
+                videoPlayer.SetDirectAudioVolume(0, videoVolume);
+            }
 
-    void OnVideoPrepared(VideoPlayer source)
-    {
-        Debug.Log("Video prepared, starting playback...");
-        videoPlayer.Play();
-        hasVideoStarted = true;
+            // 2. Đăng ký sự kiện KHI KẾT THÚC
+            videoPlayer.loopPointReached += OnVideoEnd;
+
+            // 3. Bật video
+            videoPlayer.Play();
+
+            // 4. Đặt cờ cho phép SKIP
+            hasVideoStarted = true;
+            isVideoEnded = false;
+
+            // Hiển thị text hướng dẫn skip nếu có
+            if (skipText != null)
+            {
+                skipText.text = allowSkip ? "Nhấn SPACE hoặc Click để bỏ qua" : "";
+            }
+        
     }
 
     void Update()
@@ -87,7 +69,7 @@ public class VideoIntroController : MonoBehaviour
         // Cho phép skip video
         if (allowSkip && hasVideoStarted && !isVideoEnded)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
+            if (Input.anyKeyDown)
             {
                 SkipVideo();
             }
@@ -133,7 +115,6 @@ public class VideoIntroController : MonoBehaviour
         if (videoPlayer != null)
         {
             videoPlayer.loopPointReached -= OnVideoEnd;
-            videoPlayer.prepareCompleted -= OnVideoPrepared;
         }
     }
 }

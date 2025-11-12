@@ -1117,10 +1117,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   heath: 8000
-  ammor: 80
+  ammor: 200
   attackDamage: 150
   attackSpeed: 0.6
-  moveSpeed: 8
+  moveSpeed: 2
   attackRange: 5
   triggerRange: 10
   money: 1236

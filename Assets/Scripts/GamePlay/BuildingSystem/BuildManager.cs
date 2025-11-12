@@ -171,6 +171,17 @@ public class BuildManager : MonoBehaviour
             // LevelUp() sẽ tự bắn sự kiện -> OnTowerUpgradedOrEvolved() sẽ bắt
         }
     }
+    public void HealthTower(float amount)
+    {
+        if (selectedTileForDemolish == null || selectedTileForDemolish.towerOnTile == null) return;
+
+        TowerHealth health = selectedTileForDemolish.towerOnTile.GetComponent<TowerHealth>();
+        if (health != null)
+        {
+            health.Heal(amount);
+           
+        }
+    }
 
     public void SellSelectedTower()
     {

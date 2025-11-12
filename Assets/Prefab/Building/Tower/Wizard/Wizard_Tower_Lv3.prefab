@@ -369,9 +369,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: fd2c82a3c61e65142925ff285b5c3aca, type: 3}
-  heath: 235
-  ammor: 20
-  attackDamage: 210
+  heath: 800
+  ammor: 80
+  attackDamage: 130
   attackSpeed: 1.5
   moveSpeed: 0
   attackRange: 17
@@ -395,17 +395,17 @@ MonoBehaviour:
   evolutionLevel: 3
   statsList:
   - cost: 280
-    heath: 0
+    heath: 100
     ammor: 0
-    attackDamage: 60
+    attackDamage: 15
     attackSpeed: 0
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
   - cost: 320
-    heath: 0
+    heath: 100
     ammor: 0
-    attackDamage: 60
+    attackDamage: 15
     attackSpeed: 0
     moveSpeed: 0
     attackRange: 0.5

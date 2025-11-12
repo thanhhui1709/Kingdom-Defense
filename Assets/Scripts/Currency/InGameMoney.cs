@@ -11,6 +11,7 @@ public class InGameMoney : MonoBehaviour
     public float countDuration = 0.5f;
     public float punchScale = 1.2f;
 
+    [SerializeField]
     private int balance = 100; // Khởi tạo số dư ban đầu
     private int displayedBalance;
 

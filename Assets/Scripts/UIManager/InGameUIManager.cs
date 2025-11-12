@@ -14,8 +14,10 @@ public class UpgradeTowerUI
     public TMP_Text towerName;
     public TMP_Text upgradeCostText;
     public TMP_Text sellCostText;
+    public TMP_Text healthText;
     public Button upgradeButton;
     public Button sellButton;
+    public Button healthButton;
     public Image avatar;
 
     // Thêm các tham chiếu thanh máu cho panel
@@ -266,9 +268,13 @@ public class InGameUIManager : MonoBehaviour
         upgradeTowerUI.towerName.text = towerOnTile.name;
         upgradeTowerUI.avatar.sprite = towerStats.sprite;
 
+
         // Hiển thị 70% giá trị bán
         int sellCost = (int)(towerStats.TotalInvestedMoney * 0.7f);
         upgradeTowerUI.sellCostText.text = sellCost.ToString();
+        //hiển thị giá tiền health (1 máu = 1 tiền)
+        int healthCost = Mathf.FloorToInt(towerHealth.MaxHealth - towerHealth.CurrentHealth);
+        upgradeTowerUI.healthText.text = "$"+ healthCost.ToString();
 
         // --- 2. KIỂM TRA TRẠNG THÁI NÂNG CẤP (ĐÃ CẬP NHẬT) ---
         int playerMoney = InGameMoney.Instance.GetBalance();
@@ -298,6 +304,9 @@ public class InGameUIManager : MonoBehaviour
 
         upgradeTowerUI.sellButton.onClick.RemoveAllListeners();
         upgradeTowerUI.sellButton.onClick.AddListener(buildManager.SellSelectedTower);
+
+        upgradeTowerUI.healthButton.onClick.RemoveAllListeners();
+        upgradeTowerUI.healthButton.onClick.AddListener(() => buildManager.HealthTower(healthCost));
 
         // --- 4. HIỂN THỊ PANEL (Giữ nguyên) ---
         ToggleUpgradeTowerPanel(true);
@@ -407,6 +416,13 @@ public class InGameUIManager : MonoBehaviour
 
             // 3. (Tương lai) Cập nhật các nút mua trụ
             // foreach (UnitButtonInfo info in towerButtons) { ... }
+        }
+        if (upgradeTowerUI.UpgradePanel.activeSelf)
+        {
+            int.TryParse(upgradeTowerUI.upgradeCostText.text, out int u);
+            upgradeTowerUI.upgradeButton.interactable = (currentMoney >= u);
+            int.TryParse(upgradeTowerUI.healthText.text.Replace("$", ""), out int h);
+            upgradeTowerUI.healthButton.interactable = (currentMoney >= h&& h>0);
         }
     }
     public void TogglePause(GameObject panel)

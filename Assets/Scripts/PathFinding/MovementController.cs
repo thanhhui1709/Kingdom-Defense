@@ -73,16 +73,7 @@ public class MovementController : MonoBehaviour
     public void MoveTowards(Vector3 targetPosition)
     {
         isMovingOnPath = false; // Ngừng di chuyển theo path
-        Vector3 offsetTargetPosition = targetPosition + movementOffset;
-        Vector3 direction = (offsetTargetPosition - transform.position).normalized;
-        direction.y = 0;
-
-        Vector3 newPosition = rb.position + direction * stats.MoveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(newPosition);
-
-        // Quay mặt về phía mục tiêu (vẫn quay mặt vào mục tiêu GỐC)
-        transform.LookAt(targetPosition);
-        anim.Play(AnimationType.Walk, stats.MoveSpeed);
+        InternalMoveTowards(targetPosition);
     }
 
     /// <summary>
