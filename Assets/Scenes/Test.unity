@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   heath: 0
   ammor: 0
   attackDamage: 0
@@ -432,6 +433,8 @@ MonoBehaviour:
   attackRange: 0
   triggerRange: 0
   money: 0
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!1001 &484456550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1367,6 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01940d95c2ae64c946608b512d4f56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
   heath: 0
   ammor: 0
   attackDamage: 0
@@ -1375,6 +1379,8 @@ MonoBehaviour:
   attackRange: 0
   triggerRange: 0
   money: 0
+  attackList: []
+  totalInvestedMoney: 0
 --- !u!136 &2008499204
 CapsuleCollider:
   m_ObjectHideFlags: 0
