@@ -2,16 +2,14 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class BuildManager : MonoBehaviour
 {
     [Header("Sound Effect")]
     public AudioClip buildSound;
-  
-    public AudioClip sellSound;
-    [Header("Tower Data")]
-    public List<TowerData> availableTowers = new List<TowerData>();
 
+    public AudioClip sellSound;
     [Header("Core References")]
     [SerializeField] private InGameUIManager uiManager;
     [SerializeField] private LayerMask targetLayer;
@@ -22,6 +20,19 @@ public class BuildManager : MonoBehaviour
 
     void Start()
     {
+        List<LevelUpDataSO> availableTowers = LevelUpManager.Instance.GetLevelUpDatas()
+
+     // 1. Lấy dữ liệu "Level 1" (phần tử đầu tiên) từ MỖI danh sách con
+     .Select(towerList => towerList.FirstOrDefault())
+
+     // 2. Lọc kết quả:
+     .Where(lv1Data =>
+         lv1Data != null &&                  // Bỏ qua nếu danh sách con bị rỗng
+         lv1Data.isUnlocked == true &&       // Phải được mở khóa
+         lv1Data.type == LevelUpType.Tower)  // Phải là Tower (để cho an toàn)
+
+     // 3. Chuyển thành một danh sách
+     .ToList();
         // Yêu cầu UIManager tạo các nút, truyền vào danh sách trụ và CHÍNH NÓ
         uiManager.PopulateBuyTowerMenu(availableTowers, this);
 
@@ -113,12 +124,12 @@ public class BuildManager : MonoBehaviour
     }
 
     // --- Logic Xây ---
-    public void SelectAndPlaceTower(TowerData towerToBuild)
+    public void SelectAndPlaceTower(LevelUpDataSO towerToBuild)
     {
         if (selectedBuildableTile == null) return;
 
         // Lấy chi phí xây dựng từ prefab
-        int buildCost = towerToBuild.buildCost;
+        int buildCost = towerToBuild.prefab.GetComponent<Stats>().Money;
 
         // --- KIỂM TRA TIỀN (XÂY MỚI) ---
         if (!InGameMoney.Instance.CheckBalance(buildCost))
@@ -131,7 +142,7 @@ public class BuildManager : MonoBehaviour
         InGameMoney.Instance.SubMoney(buildCost);
         // --- KẾT THÚC LOGIC TIỀN ---
 
-        GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.towerPrefab, selectedBuildableTile.position, Quaternion.identity, ObjectPoolManager.PoolType.Tower);
+        GameObject newTower = ObjectPoolManager.SpawnObject(towerToBuild.prefab, selectedBuildableTile.position, Quaternion.identity, ObjectPoolManager.PoolType.Tower);
         ObjectPoolManager.PlayAudio(buildSound, selectedBuildableTile.position, 1.0f);
 
         // --- GÁN TIỀN ĐẦU TƯ BAN ĐẦU ---

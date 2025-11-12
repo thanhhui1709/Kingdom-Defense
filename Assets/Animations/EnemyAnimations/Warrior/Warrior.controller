@@ -268,6 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628e756351fefb34d8c1ac13298d498a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalSpeed: 3
 --- !u!1101 &-236637851166921545
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -399,6 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628e756351fefb34d8c1ac13298d498a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalSpeed: 3
 --- !u!1101 &5451573054898434334
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

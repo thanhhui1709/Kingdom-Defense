@@ -18,10 +18,6 @@ public class FireBall : MonoBehaviour, IProjectile
     {
         rb = GetComponent<Rigidbody>();
     }
-    private void OnEnable()
-    {
-        rb.angularVelocity = Random.onUnitSphere * rotationSpeed * Mathf.Deg2Rad;
-    }
 
 
 

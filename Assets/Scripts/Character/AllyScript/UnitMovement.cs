@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(Stats))]
 public class UnitMovement : MonoBehaviour
 {
     private List<PathNode> path;
@@ -9,20 +10,24 @@ public class UnitMovement : MonoBehaviour
 
     private int currentPathIndex;
     private bool isMovingOnPath = false;
-    private Vector3 finalDestination; // Đích cuối cùng (vị trí click)
+    private Vector3 finalDestination;
     private AnimationController animationController;
+
+    // --- THÊM MỚI ---
+    // Biến này sẽ được "não" (Unit.cs) đọc
+    public float CurrentSpeed { get; private set; }
+    // --- KẾT THÚC THÊM MỚI ---
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         stats = GetComponent<Stats>();
-        animationController = GetComponent<AnimationController>();  
+        animationController = GetComponent<AnimationController>();
     }
 
     void Start()
     {
         rb.freezeRotation = true;
-   
     }
 
     void FixedUpdate()
@@ -30,39 +35,37 @@ public class UnitMovement : MonoBehaviour
         if (isMovingOnPath)
         {
             UpdatePathMovement();
-        
-            Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            float currentSpeed = horizontalVelocity.magnitude;
 
-            animationController.Play(AnimationType.Walk, currentSpeed);
-            Debug.Log("Current Speed: " + currentSpeed);
+            Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+            // --- SỬA LỖI ---
+            CurrentSpeed = horizontalVelocity.magnitude; // Cập nhật tốc độ
+            animationController.Play(AnimationType.Walk, CurrentSpeed);
+            // --- KẾT THÚC SỬA ---
         }
         else
         {
             animationController.Play(AnimationType.Walk, 0);
+
+            // --- THÊM MỚI ---
+            CurrentSpeed = 0f; // Đảm bảo tốc độ là 0 khi đứng yên
+            // --- KẾT THÚC THÊM MỚI ---
         }
     }
 
-    //-----------------------------------------------------
-    // HÀM NHẬN LỆNH (Từ Unit.cs)
-    //-----------------------------------------------------
-
-    /// <summary>
-    /// Nhận đường đi và 1 điểm click chính xác.
-    /// Sẽ tự động bỏ qua node đầu tiên.
-    /// </summary>
+    // (Các hàm SetPath, MoveTowards giữ nguyên)
     public void SetPath(List<PathNode> newPath, Vector3 finalClickPosition)
     {
-        this.finalDestination = finalClickPosition; // Lưu vị trí click
+        this.finalDestination = finalClickPosition;
 
         if (newPath == null || newPath.Count == 0)
         {
-            path = null; // Không có path, sẽ đi thẳng
+            path = null;
         }
         else if (newPath.Count == 1)
         {
             path = newPath;
-            currentPathIndex = 0; // Click gần, đi tới tâm
+            currentPathIndex = 0;
         }
         else
         {
@@ -70,53 +73,40 @@ public class UnitMovement : MonoBehaviour
             currentPathIndex = 1; // BỎ QUA node đầu tiên
         }
 
-        isMovingOnPath = true; // Bắt đầu di chuyển
+        isMovingOnPath = true;
     }
 
-    /// <summary>
-    /// Dành cho Unit.cs gọi khi đuổi theo mục tiêu
-    /// </summary>
     public void MoveTowards(Vector3 targetPosition)
     {
-        isMovingOnPath = false; // Ngừng di chuyển theo path
+        isMovingOnPath = false;
         InternalMoveTowards(targetPosition);
     }
 
-    /// <summary>
-    /// Dừng mọi chuyển động
-    /// </summary>
+    // --- SỬA LẠI HÀM NÀY ---
     public void StopMovement()
     {
         isMovingOnPath = false;
         rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-      
+        CurrentSpeed = 0f; // Đặt tốc độ về 0
     }
 
-    /// <summary>
-    /// Hàm để Unit.cs (não) biết khi nào đã đi hết đường
-    /// </summary>
     public bool IsMoving()
     {
         return isMovingOnPath;
     }
 
-    //-----------------------------------------------------
-    // LOGIC NỘI BỘ
-    //-----------------------------------------------------
-
+    // (UpdatePathMovement, MoveTowardsPosition, InternalMoveTowards giữ nguyên)
     private void UpdatePathMovement()
     {
-        // Trường hợp 1: Không có đường đi (click gần) -> Đi thẳng tới đích
         if (path == null)
         {
             if (MoveTowardsPosition(finalDestination))
             {
-                StopMovement(); // Tới nơi, dừng lại
+                StopMovement();
             }
             return;
         }
 
-        // Trường hợp 2: Có đường đi
         if (currentPathIndex >= path.Count)
         {
             StopMovement();
@@ -128,41 +118,30 @@ public class UnitMovement : MonoBehaviour
 
         if (isFinalNodeInPath)
         {
-            // Nếu là node cuối, mục tiêu là vị trí click CHÍNH XÁC
             targetPos = finalDestination;
         }
         else
         {
-            // Nếu là node trung gian, mục tiêu là TÂM của node
             targetPos = path[currentPathIndex].transform.position;
         }
 
-        // Kiểm tra xem đã đến gần mục tiêu chưa
         if (MoveTowardsPosition(targetPos))
         {
-            // Đã đến gần targetPos
             if (isFinalNodeInPath)
             {
-                // Tới nơi rồi
                 StopMovement();
                 return;
             }
             else
             {
-                // Tới node trung gian, chuyển sang node tiếp theo
                 currentPathIndex++;
             }
         }
     }
 
-    /// <summary>
-    /// Di chuyển tới 1 vị trí và trả về TRUE nếu đã đến nơi
-    /// </summary>
     private bool MoveTowardsPosition(Vector3 targetPosition)
     {
         InternalMoveTowards(targetPosition);
-
-        // Kiểm tra khoảng cách
         float distanceThreshold = 0.5f;
         if ((transform.position - targetPosition).sqrMagnitude < distanceThreshold * distanceThreshold)
         {
@@ -171,20 +150,14 @@ public class UnitMovement : MonoBehaviour
         return false; // Vẫn đang di chuyển
     }
 
-    /// <summary>
-    /// Hàm di chuyển vật lý
-    /// </summary>
     private void InternalMoveTowards(Vector3 targetPosition)
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         direction.y = 0;
-
         Vector3 targetVelocity = direction * stats.MoveSpeed;
         targetVelocity.y = rb.linearVelocity.y; // Giữ trọng lực
         rb.linearVelocity = targetVelocity;
-      
 
-        // Quay mặt về phía mục tiêu
         Vector3 lookTarget = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
         transform.LookAt(lookTarget);
     }

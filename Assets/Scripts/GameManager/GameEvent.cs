@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class GameEvent : MonoBehaviour
@@ -7,10 +7,9 @@ public class GameEvent : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
-
         }
         else
         {
@@ -20,70 +19,44 @@ public class GameEvent : MonoBehaviour
         GameManager.Instance.GameEvent = this;
     }
 
-
     private Action onWinStage;
     private Action onWinGame;
-
     private Action<int> onEnemyDie;
-
     private Action<GameObject> onTowerLevelUp;
-
     private Action onGameOver;
 
-    public void SubscribeWinStage(Action callback)
+    // --- Win Stage ---
+    public void SubscribeWinStage(Action callback) { onWinStage += callback; }
+    public void OnTriggerWinStage() { onWinStage?.Invoke(); }
+
+    // --- SỬA LẠI HÀM NÀY ---
+    public void UnsubscribeWinStage(Action callback)
     {
-        onWinStage += callback;
-    }
-    public void OnTriggerWinStage()
-    {
-        onWinStage?.Invoke();
-    }
-    public void SubscribeWinGame(Action callback)
-    {
-        onWinGame += callback;
-    }
-    public void OnTriggerWinGame()
-    {
-        onWinGame?.Invoke();
-    }
-    public void SubscribeGameOver(Action callback)
-    {
-        onGameOver += callback;
-    }
-    public void OnTriggerGameOver()
-    {
-        onGameOver?.Invoke();
+        onWinStage -= callback; // Dùng 'callback'
     }
 
-    public void SubscribeTowerLevelUp(Action<GameObject> callback)
+    // --- Win Game ---
+    public void SubscribeWinGame(Action callback) { onWinGame += callback; }
+    public void OnTriggerWinGame() { onWinGame?.Invoke(); }
+    // (Bạn cũng nên thêm UnsubscribeWinGame)
+
+    // --- Game Over ---
+    public void SubscribeGameOver(Action callback) { onGameOver += callback; }
+    public void OnTriggerGameOver() { onGameOver?.Invoke(); }
+
+    // --- SỬA LẠI HÀM NÀY ---
+    public void UnsubscribeGameOver(Action callback)
     {
-        onTowerLevelUp += callback;
-    }
-    public void OnTriggerTowerLevelUp(GameObject tower)
-    {
-        onTowerLevelUp?.Invoke(tower);
+        onGameOver -= callback; // Dùng 'callback'
     }
 
-    public void SubscribeEnemyDie(Action<int> callback)
-    {
-        onEnemyDie += callback;
-    }
-    public void OnTriggerEnemyDie(int cost)
-    {
-        onEnemyDie?.Invoke(cost);
-    }
-    public void UnSubscribeEnemyDie(Action<int> callback )
-    {
-        onEnemyDie -= callback;
-    }
+    // --- Tower Level Up ---
+    public void SubscribeTowerLevelUp(Action<GameObject> callback) { onTowerLevelUp += callback; }
+    public void OnTriggerTowerLevelUp(GameObject tower) { onTowerLevelUp?.Invoke(tower); }
+    // (Bạn cũng nên thêm UnsubscribeTowerLevelUp)
 
-    internal void UnsubscribeWinStage(Action onGameWin)
-    {
-         onWinStage-=onGameWin;
-    }
-
-    internal void UnsubscribeGameOver(Action onGameOver)
-    {
-         onGameOver -=onGameOver;
-    }
+    // --- Enemy Die ---
+    public void SubscribeEnemyDie(Action<int> callback) { onEnemyDie += callback; }
+    public void OnTriggerEnemyDie(int cost) { onEnemyDie?.Invoke(cost); }
+    public void UnSubscribeEnemyDie(Action<int> callback) { onEnemyDie -= callback; }
 }

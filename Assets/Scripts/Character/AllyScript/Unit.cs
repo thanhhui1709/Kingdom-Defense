@@ -20,24 +20,29 @@ public class Unit : MonoBehaviour
 
     [Header("AI Behavior")]
     [SerializeField] private LayerMask enemyLayer;
+    [Tooltip("Lính sẽ tản ra trong bán kính này khi di chuyển")]
+    [SerializeField] private float formationSpread = 1.5f; // Logic chống chồng chéo
 
     // State Management
     private UnitState currentState;
     private GameObject currentTarget;
+    private Collider currentTargetCollider; // <-- Dùng để sửa lỗi "tâm sâu"
 
     // Cooldown timers
-    private float searchCooldown = 0.25f; // Chỉ tìm địch 4 lần/giây
+    private float searchCooldown = 0.25f; // Chỉ tìm địch/cập nhật path 4 lần/giây
     private float searchTimer = 0f;
-
-    // --- THÊM MỚI: SỬA LỖI SPAM ANIMATION ---
     private float attackCooldownTimer = 0f;
+
+    // Logic chống kẹt
+    private float stuckTimer = 0f;
+    private const float MAX_STUCK_TIME = 2.0f; // Giây
 
     void Awake()
     {
         mover = GetComponent<UnitMovement>();
         stats = GetComponent<Stats>();
         pathFinder = new PathFinding();
-        health = GetComponent<UnitHealth>(); // Giả sử UnitHealth tồn tại
+        health = GetComponent<UnitHealth>();
         anim = GetComponent<AnimationController>();
     }
 
@@ -58,14 +63,8 @@ public class Unit : MonoBehaviour
     void Update()
     {
         // Luôn đếm ngược các timer
-        if (searchTimer > 0)
-        {
-            searchTimer -= Time.deltaTime;
-        }
-        if (attackCooldownTimer > 0)
-        {
-            attackCooldownTimer -= Time.deltaTime;
-        }
+        if (searchTimer > 0) searchTimer -= Time.deltaTime;
+        if (attackCooldownTimer > 0) attackCooldownTimer -= Time.deltaTime;
 
         // Chạy State Machine
         switch (currentState)
@@ -73,19 +72,9 @@ public class Unit : MonoBehaviour
             case UnitState.Idle:
                 HandleIdleState();
                 break;
-
             case UnitState.Moving:
-                if (!mover.IsMoving())
-                {
-                    currentState = UnitState.Idle;
-                   
-                }
-                else
-                {
-                    anim.Play(AnimationType.Walk); // Đảm bảo đi
-                }
+                HandleMovingState(); // <-- SỬA
                 break;
-
             case UnitState.Attacking:
                 HandleAttackingState();
                 break;
@@ -96,155 +85,216 @@ public class Unit : MonoBehaviour
 
     private void HandleIdleState()
     {
-     
         if (searchTimer <= 0)
         {
             GameObject nearbyEnemy = FindClosestEnemyInRange();
             if (nearbyEnemy != null)
             {
-                currentTarget = nearbyEnemy;
-                currentState = UnitState.Attacking;
+                // Tự động tấn công
+                ReceiveAttackCommand(nearbyEnemy);
             }
             searchTimer = searchCooldown;
         }
     }
 
-    private void HandleAttackingState()
+    // --- SỬA LẠI HÀM NÀY (Logic chống kẹt) ---
+    private void HandleMovingState()
     {
-        // --- SỬA LỖI CHÍNH: KIỂM TRA MỤC TIÊU ---
-
-        // 1. Kiểm tra mục tiêu có hợp lệ không
-        bool isTargetInvalid = false;
-        if (currentTarget == null || !currentTarget.activeInHierarchy)
+        if (!mover.IsMoving()) // 1. Đã đến nơi
         {
-            isTargetInvalid = true;
+            currentState = UnitState.Idle;
+            stuckTimer = 0f; // Reset
         }
-        else
+        else // 2. Vẫn đang trên đường
         {
-            // Lấy IHealthSystem (an toàn, dùng GetComponentInParent)
-            IHealthSystem targetHealth = currentTarget.GetComponentInParent<IHealthSystem>();
+            anim.Play(AnimationType.Walk); // Đảm bảo đi
 
-            // Nếu mục tiêu đã chết -> coi như không hợp lệ
-            if (targetHealth != null && targetHealth.HasDie())
+            // 3. Kiểm tra xem có bị kẹt không
+            if (mover.CurrentSpeed < 0.1f)
             {
-                isTargetInvalid = true;
+                stuckTimer += Time.deltaTime;
+                if (stuckTimer > MAX_STUCK_TIME)
+                {
+                    // Bị kẹt -> Hủy lệnh và tự tìm địch
+                    currentState = UnitState.Idle;
+                    mover.StopMovement();
+                    stuckTimer = 0f;
+                }
+            }
+            else
+            {
+                stuckTimer = 0f;
             }
         }
+    }
 
-        // 2. Nếu không hợp lệ, quay về Idle
-        if (isTargetInvalid)
+    // --- SỬA LẠI HÀM NÀY (Logic "tâm sâu" và cập nhật path) ---
+    private void HandleAttackingState()
+    {
+        // 1. Kiểm tra mục tiêu có hợp lệ không
+        if (IsTargetInvalid())
         {
             currentTarget = null;
+            currentTargetCollider = null;
             currentState = UnitState.Idle;
             mover.StopMovement();
             return;
         }
-        // --- KẾT THÚC SỬA ---
 
-        // 3. Kiểm tra khoảng cách (Mục tiêu HỢP LỆ)
-        Vector3 directionVector = currentTarget.transform.position - transform.position;
-        directionVector.y = 0;
-        float sqrDistance = directionVector.sqrMagnitude;
+        // 2. Kiểm tra khoảng cách (SỬA LỖI "TÂM SÂU")
+        // Tính từ mép collider địch, chứ không phải tâm
+        Vector3 closestPointOnTarget = currentTargetCollider.ClosestPoint(transform.position);
+        float sqrDistance = (transform.position - closestPointOnTarget).sqrMagnitude;
         float attackRangeSqr = stats.AttackRange * stats.AttackRange;
 
-        // 4. Hành động
+        // 3. Hành động
         if (sqrDistance <= attackRangeSqr)
         {
-            // Trong tầm: Dừng lại và tấn công
-            mover.StopMovement();
-            transform.LookAt(currentTarget.transform); // Xoay mặt
+            // --- TRONG TẦM ---
+            mover.StopMovement(); // Dừng pathfinding
+            stuckTimer = 0f; // Reset
+            transform.LookAt(currentTarget.transform);
 
-            // --- SỬA LỖI SPAM ANIMATION ---
             if (attackCooldownTimer <= 0)
             {
                 anim.PlaySpecialAnimation(AnimationType.Attack);
-                attackCooldownTimer = 1f / stats.AttackSpeed; // Reset cooldown
+                attackCooldownTimer = 1f / stats.AttackSpeed;
             }
-           
         }
         else
         {
-            // Ngoài tầm: Đuổi theo
-            mover.MoveTowards(currentTarget.transform.position);
-            anim.Play(AnimationType.Walk,stats.MoveSpeed); // Chơi anim đi
+            // --- NGOÀI TẦM (Đuổi theo) ---
+            anim.Play(AnimationType.Walk, stats.MoveSpeed); // Chơi anim đi
+
+            // Kiểm tra bị kẹt (giống hệt HandleMovingState)
+            if (mover.CurrentSpeed < 0.1f)
+            {
+                stuckTimer += Time.deltaTime;
+                if (stuckTimer > MAX_STUCK_TIME)
+                {
+                    currentState = UnitState.Idle;
+                    mover.StopMovement();
+                    stuckTimer = 0f;
+                    return;
+                }
+            }
+            else
+            {
+                stuckTimer = 0f;
+            }
+
+            // Cập nhật lại đường đi 4 lần/giây (nếu địch di chuyển)
+            if (searchTimer <= 0)
+            {
+                IssuePathfindCommand(currentTarget.transform.position, false);
+                searchTimer = searchCooldown; // Reset timer
+            }
         }
     }
 
     /// <summary>
-    /// MỚI: Hàm quét tìm kẻ địch xung quanh
+    /// Hàm kiểm tra mục tiêu có còn "tươi" không
     /// </summary>
+    private bool IsTargetInvalid()
+    {
+        if (currentTarget == null || !currentTarget.activeInHierarchy)
+            return true;
+
+        if (currentTargetCollider == null) // (Lấy collider nếu chưa có)
+            currentTargetCollider = currentTarget.GetComponentInChildren<Collider>();
+
+        IHealthSystem targetHealth = currentTarget.GetComponentInParent<IHealthSystem>();
+        if (targetHealth != null && targetHealth.HasDie())
+            return true;
+
+        return false;
+    }
+
+    // --- HÀM TÌM ĐỊCH (SỬA LẠI) ---
     private GameObject FindClosestEnemyInRange()
     {
         Collider[] enemies = Physics.OverlapSphere(transform.position, stats.TriggerRange, enemyLayer);
-
         GameObject closestEnemy = null;
         float minSqrDistance = float.MaxValue;
 
         foreach (var col in enemies)
         {
             if (col.transform == this.transform) continue;
-
-            // --- SỬA LỖI CHÍNH: KIỂM TRA MỤC TIÊU ---
-            // Phải lấy IHealthSystem để kiểm tra
             IHealthSystem health = col.GetComponentInParent<IHealthSystem>();
 
-            // Chỉ coi là mục tiêu nếu nó còn sống
             if (health != null && !health.HasDie())
             {
                 float sqrDist = (col.transform.position - transform.position).sqrMagnitude;
                 if (sqrDist < minSqrDistance)
                 {
                     minSqrDistance = sqrDist;
-                    // Gán GameObject cha (nơi có script Health) làm mục tiêu
                     closestEnemy = (health as Component).gameObject;
                 }
             }
-            // --- KẾT THÚC SỬA ---
         }
         return closestEnemy;
     }
 
-
     // --- CÁC HÀM NHẬN LỆNH TỪ UNIT MANAGER ---
 
-    public void Select()
-    {
-        if (health != null) health.ShowHealthBar();
-    }
+    public void Select() { if (health != null) health.ShowHealthBar(); }
+    public void Deselect() { if (health != null) health.HideHealthBar(); }
 
-    public void Deselect()
-    {
-        if (health != null) health.HideHealthBar();
-    }
-
+    // --- SỬA LẠI HÀM NÀY (Logic chống chồng chéo) ---
     public void ReceiveMoveCommand(Vector3 destination)
     {
         currentState = UnitState.Moving;
-        currentTarget = null; // Hủy lệnh tấn công
+        currentTarget = null;
+        currentTargetCollider = null;
+        stuckTimer = 0f;
 
-        PathNode startNode = PathNodeManager.Instance.FindClosestNode(transform.position);
-        PathNode endNode = PathNodeManager.Instance.FindClosestNode(destination);
-        if (startNode == null || endNode == null) return;
+        // 1. Tạo vị trí lệch ngẫu nhiên
+        Vector3 randomOffset = Random.insideUnitSphere * formationSpread;
+        randomOffset.y = 0;
+        Vector3 finalDestination = destination + randomOffset;
 
-        List<PathNode> newPath = pathFinder.FindPath(startNode, endNode);
-        mover.SetPath(newPath, destination);
+        // 2. Ra lệnh tìm đường
+        IssuePathfindCommand(finalDestination, true);
     }
 
+    // --- SỬA LẠI HÀM NÀY (Logic pathfind khi tấn công) ---
     public void ReceiveAttackCommand(GameObject target)
     {
         currentState = UnitState.Attacking;
         currentTarget = target;
+        currentTargetCollider = target.GetComponentInChildren<Collider>(); // Lấy collider ngay
+        stuckTimer = 0f;
+
+        // Ra lệnh tìm đường (không có offset)
+        IssuePathfindCommand(target.transform.position, true);
     }
 
-    // Hàm này được gọi bởi Animation Event
+    /// <summary>
+    /// Hàm nội bộ: Tìm và gán đường đi
+    /// </summary>
+    private void IssuePathfindCommand(Vector3 destination, bool isNewCommand)
+    {
+        // Nếu là lệnh mới (click) thì hủy di chuyển cũ
+        if (isNewCommand) mover.StopMovement();
+
+        PathNode startNode = PathNodeManager.Instance.FindClosestNode(transform.position);
+        PathNode endNode = PathNodeManager.Instance.FindClosestNode(destination);
+
+        List<PathNode> newPath = null;
+        if (startNode != null && endNode != null)
+        {
+            newPath = pathFinder.FindPath(startNode, endNode);
+        }
+
+        // Gửi path cho "chân"
+        mover.SetPath(newPath, destination);
+    }
+
+    // (Hàm AttackEnemy giữ nguyên)
     public void AttackEnemy(int animationIndex)
     {
-        // Kiểm tra mục tiêu lần cuối trước khi gây sát thương
-        if (currentTarget == null) return;
-        var health = currentTarget.GetComponentInParent<IHealthSystem>();
-        if (health != null && health.HasDie()) return;
+        if (IsTargetInvalid()) return; // Kiểm tra lần cuối
 
-        // Gây sát thương
         AttackBehavior attackBehavior = stats.GetAttack(animationIndex);
         attackBehavior = Instantiate(attackBehavior);
         attackBehavior.Execute(this, stats, currentTarget);

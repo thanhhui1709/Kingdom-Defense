@@ -1203,9 +1203,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551875180090516271}
   serializedVersion: 5
-  m_Mass: 60
+  m_Mass: 100
   m_LinearDamping: 5
-  m_AngularDamping: 1
+  m_AngularDamping: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1229,7 +1229,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551875180090516271}
-  m_Material: {fileID: 13400000, guid: b872db8845abd4b4e9b4574f9a85eda4, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1301,9 +1301,9 @@ MonoBehaviour:
   heath: 450
   ammor: 25
   attackDamage: 18
-  attackSpeed: 0.3
+  attackSpeed: 0.7
   moveSpeed: 4
-  attackRange: 10
+  attackRange: 8
   triggerRange: 10
   money: 60
   attackList:

@@ -26,6 +26,7 @@ public class CombatAI : MonoBehaviour
 
     // Tối ưu hóa: Bộ đệm (buffer) để tìm mục tiêu
     private Collider[] targetBuffer = new Collider[50];
+    private Collider currentTargetCollider; // <-- THÊM MỚI
     private float triggerRangeSqr;
     private float attackRangeSqr;
     private EnemyHealth enemyHealth;
@@ -57,62 +58,65 @@ public class CombatAI : MonoBehaviour
     }
     private void UpdateStateAndTarget()
     {
-       
-        GameObject idealTarget = FindBestTarget();
-        currentTarget = idealTarget; // Ghi đè mục tiêu cũ (nếu có)
+        // --- 1. TÌM MỤC TIÊU (GIỜ TRẢ VỀ COLLIDER) ---
+        currentTargetCollider = FindBestTarget(); // Gán collider mới
 
         // --- 2. NẾU KHÔNG CÓ MỤC TIÊU -> ĐI ĐƯỜNG ---
-        if (currentTarget == null)
+        if (currentTargetCollider == null)
         {
-            // Nếu vừa mất mục tiêu, quay về path
+            currentTarget = null; // Đảm bảo clear target
+
             if (currentState != AIState.MovingOnPath)
             {
-                mover.UpdatePathToClosestNode();
+                mover.ResumePathMovement();
                 currentState = AIState.MovingOnPath;
             }
             return; // Không có mục tiêu, không làm gì nữa
         }
 
-        // --- 3. NẾU CÓ MỤC TIÊU -> QUYẾT ĐỊNH TRẠNG THÁI ---
+        // Lấy GameObject cha từ collider (nơi có script Health)
+        IHealthSystem health = currentTargetCollider.GetComponentInParent<IHealthSystem>();
 
-        // Lấy vị trí phẳng của AI
-        Vector3 myFlatPos = transform.position;
-        myFlatPos.y = 0;
+        // Lấy GameObject bằng cách ép kiểu về Component
+        currentTarget = (health as Component).gameObject;
 
-        // Lấy vị trí phẳng của mục tiêu
-        Vector3 currentTargetFlatPos = currentTarget.transform.position;
-        currentTargetFlatPos.y = 0;
+        // --- 3. NẾU CÓ MỤC TIÊU -> TÍNH TOÁN KHOẢNG CÁCH CHÍNH XÁC ---
 
-        // Tính khoảng cách bình phương
-        float currentFlatSqrDist = (myFlatPos - currentTargetFlatPos).sqrMagnitude;
-
-        // --- Logic Golem đã được làm rõ ---
-        float effectiveAttackRangeSqr = attackRangeSqr; // Mặc định là tầm đánh thường
-
+        // Lấy tầm đánh hiệu dụng (với logic Golem)
+        float effectiveAttackRange = stats.AttackRange;
         if (transform.gameObject.name.Equals("Golem(Clone)"))
         {
-            // Golem có tầm đánh = tầm thường * 1.5
-            float golemRange = stats.AttackRange * 1.5f;
-            effectiveAttackRangeSqr = golemRange * golemRange; // (tương đương attackRangeSqr * 2.25)
+            effectiveAttackRange *= 1.5f;
         }
-        // --- Kết thúc logic Golem ---
+        float attackRangeSqr = effectiveAttackRange * effectiveAttackRange;
 
-        // So sánh với tầm đánh hiệu dụng
-        if (currentFlatSqrDist <= effectiveAttackRangeSqr)
+        // --- SỬA LỖI LOGIC TÍNH KHOẢNG CÁCH ---
+        // Thay vì tính (Tâm-đến-Tâm),
+        // chúng ta tính (Tâm-của-TA đến MÉP-gần-nhất-của-ĐỊCH)
+
+        // 1. Tìm điểm gần nhất trên BỀ MẶT collider của địch
+        Vector3 closestPointOnTarget = currentTargetCollider.ClosestPoint(transform.position);
+
+        // 2. Tính khoảng cách bình phương từ TA (tâm) đến điểm đó
+        // (Không cần làm phẳng Y, vì ClosestPoint đã xử lý 3D)
+        float currentSqrDist = (transform.position - closestPointOnTarget).sqrMagnitude;
+        // --- KẾT THÚC SỬA ---
+
+        // So sánh
+        if (currentSqrDist <= attackRangeSqr)
         {
             currentState = AIState.Attacking;
         }
         else
         {
-            // Mục tiêu vẫn còn, nhưng ngoài tầm đánh -> Đuổi theo
             currentState = AIState.ChasingTarget;
         }
     }
 
     /// <summary>
-    /// (TỐI ƯU & ĐÃ SỬA) Tìm mục tiêu tốt nhất dùng sqrMagnitude
+    /// (SỬA LẠI) Tìm mục tiêu tốt nhất, TRẢ VỀ COLLIDER
     /// </summary>
-    private GameObject FindBestTarget()
+    private Collider FindBestTarget() // <-- ĐỔI KIỂU TRẢ VỀ
     {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, stats.TriggerRange, targetBuffer, targetLayer);
         if (hitCount == 0) return null;
@@ -120,51 +124,49 @@ public class CombatAI : MonoBehaviour
         Vector3 myFlatPos = transform.position;
         myFlatPos.y = 0;
 
-        GameObject bestUnit = null;
+        // --- Đổi kiểu biến ---
+        Collider bestUnit = null;
         float minUnitDist = float.MaxValue;
-        GameObject bestTower = null;
+        Collider bestTower = null;
         float minTowerDist = float.MaxValue;
-        GameObject bestBase = null;
+        Collider bestBase = null;
         float minBaseDist = float.MaxValue;
 
         for (int i = 0; i < hitCount; i++)
         {
-            var col = targetBuffer[i];
+            var col = targetBuffer[i]; // 'col' chính là collider
             var health = col.GetComponentInParent<IHealthSystem>();
 
             if (health == null || health.HasDie()) continue;
 
-            // Lấy GameObject cha (nơi có script health)
             GameObject targetObject = (health as Component).gameObject;
 
-            // --- SỬA LỖI TÍNH TOÁN ---
-            // Luôn so sánh khoảng cách 2D (đã làm phẳng)
+            // (Tính toán sqrDist vẫn giữ nguyên)
             Vector3 targetFlatPos = targetObject.transform.position;
             targetFlatPos.y = 0;
-
-            // SỬ DỤNG (A - B).sqrMagnitude
             float sqrDist = (myFlatPos - targetFlatPos).sqrMagnitude;
 
+            // --- Gán 'col' thay vì 'targetObject' ---
             if (targetObject.CompareTag("Unit"))
             {
-                if (sqrDist < minUnitDist) { minUnitDist = sqrDist; bestUnit = targetObject; }
+                if (sqrDist < minUnitDist) { minUnitDist = sqrDist; bestUnit = col; }
             }
             else if (targetObject.CompareTag("Tower"))
             {
-                if (sqrDist < minTowerDist) { minTowerDist = sqrDist; bestTower = targetObject; }
+                if (sqrDist < minTowerDist) { minTowerDist = sqrDist; bestTower = col; }
             }
             else if (targetObject.CompareTag("Castle"))
             {
-                if (sqrDist < minBaseDist) { minBaseDist = sqrDist; bestBase = targetObject; }
+                if (sqrDist < minBaseDist) { minBaseDist = sqrDist; bestBase = col; }
             }
         }
 
+        // Trả về collider ưu tiên
         if (bestUnit != null) return bestUnit;
         if (bestTower != null) return bestTower;
         if (bestBase != null) return bestBase;
         return null;
     }
-
 
     /// <summary>
     /// Thực thi hành động tương ứng với trạng thái.

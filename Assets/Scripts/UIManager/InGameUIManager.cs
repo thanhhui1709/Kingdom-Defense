@@ -165,7 +165,7 @@ public class InGameUIManager : MonoBehaviour
     /// <summary>
     /// Tạo các nút mua trụ dựa trên danh sách trụ có sẵn.
     /// </summary>
-    public void PopulateBuyTowerMenu(List<TowerData> availableTowers, BuildManager builder)
+    public void PopulateBuyTowerMenu(List<LevelUpDataSO> availableTowers, BuildManager builder)
     {
         SetBuildManager(builder); // Lưu tham chiếu BuildManager
 
@@ -176,7 +176,7 @@ public class InGameUIManager : MonoBehaviour
         }
 
         // 2. Tạo các nút mới
-        foreach (TowerData towerData in availableTowers)
+        foreach (LevelUpDataSO towerData in availableTowers)
         {
             if (!towerData.isUnlocked) continue; // Bỏ comment nếu bạn có logic này
 
@@ -188,9 +188,9 @@ public class InGameUIManager : MonoBehaviour
             TMP_Text costText = buttonGO.transform.Find("CostText").GetComponent<TMP_Text>();
 
             //(Giả sử TowerData có các biến này)
-            icon.sprite = towerData.towerIcon;
+            icon.sprite = towerData.avatar;
           
-            costText.text = towerData.buildCost.ToString();
+            costText.text = towerData.prefab.GetComponent<Stats>().Money.ToString();
 
             // 4. Gán sự kiện OnClick
             newButton.onClick.AddListener(() =>

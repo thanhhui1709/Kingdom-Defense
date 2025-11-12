@@ -13,12 +13,14 @@ public class MovementController : MonoBehaviour
     private int currentPathIndex;
     private bool isMovingOnPath = false;
     private AnimationController anim;
-
+    private Vector3 movementOffset; // Offset ngẫu nhiên, cố định
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         stats = GetComponent<Stats>();
         anim = GetComponent<AnimationController>();
+        movementOffset = Random.insideUnitSphere * 2.5f;
+        movementOffset.y = 0; // Chỉ làm phẳng
     }
 
     void Start()
@@ -71,16 +73,16 @@ public class MovementController : MonoBehaviour
     public void MoveTowards(Vector3 targetPosition)
     {
         isMovingOnPath = false; // Ngừng di chuyển theo path
-
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        direction.y = 0; // Chỉ di chuyển trên mặt phẳng XZ
+        Vector3 offsetTargetPosition = targetPosition + movementOffset;
+        Vector3 direction = (offsetTargetPosition - transform.position).normalized;
+        direction.y = 0;
 
         Vector3 newPosition = rb.position + direction * stats.MoveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(newPosition);
 
-        // Quay mặt về phía mục tiêu
+        // Quay mặt về phía mục tiêu (vẫn quay mặt vào mục tiêu GỐC)
         transform.LookAt(targetPosition);
-        anim.Play(AnimationType.Walk,stats.MoveSpeed);
+        anim.Play(AnimationType.Walk, stats.MoveSpeed);
     }
 
     /// <summary>

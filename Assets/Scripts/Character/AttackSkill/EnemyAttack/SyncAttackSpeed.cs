@@ -15,7 +15,7 @@ public class SyncAttackSpeed : StateMachineBehaviour
         // 2. Đồng bộ tốc độ của Animator với Tốc độ đánh của Stats
         // (Giả sử 1.0 là tốc độ gốc, 2.0 là nhanh gấp đôi)
         if (stats != null)
-            animator.speed = stats.AttackSpeed;
+            animator.speed = stats.AttackSpeed*originalSpeed;
     }
 
     // OnStateExit được gọi MỘT LẦN khi animation TẤN CÔNG KẾT THÚC
