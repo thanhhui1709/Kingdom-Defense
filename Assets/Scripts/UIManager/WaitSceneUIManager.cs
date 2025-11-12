@@ -41,7 +41,7 @@ public class WaitSceneUIManager : MonoBehaviour
     public Button prevBtn;
     public Button playBtn;
 
-    private List<List<LevelUpData>> datas;
+    private List<List<LevelUpDataSO>> datas;
     private int currentStageIndex = 0;
     private GameObject currentStageObj;
 
@@ -97,11 +97,11 @@ public class WaitSceneUIManager : MonoBehaviour
 
         foreach (var group in listGroups)
         {
-            LevelUpData unlockedLevel = group.Where(x => x.isUnlocked)
+            LevelUpDataSO unlockedLevel = group.Where(x => x.isUnlocked)
                                              .OrderByDescending(x => x.level)
                                              .FirstOrDefault();
 
-            LevelUpData shownLevel;
+            LevelUpDataSO shownLevel;
             Sprite lvSprite;
 
             if (unlockedLevel != null)
@@ -119,10 +119,10 @@ public class WaitSceneUIManager : MonoBehaviour
         }
     }
 
-    private void SpawnItemUI(LevelUpData data, Sprite levelBarSprite, GameObject container)
+    private void SpawnItemUI(LevelUpDataSO data, Sprite levelBarSprite, GameObject container)
     {
         GameObject item = Instantiate(upgradeItemPrefab, container.transform);
-        item.transform.Find("Avarta").GetComponent<Image>().sprite = data.avartar;
+        item.transform.Find("Avarta").GetComponent<Image>().sprite = data.avatar;
         item.transform.Find("LevelImg").GetComponent<Image>().sprite = levelBarSprite;
 
         Transform costPanel = item.transform.Find("CostPanel");
@@ -139,7 +139,7 @@ public class WaitSceneUIManager : MonoBehaviour
         StartCoroutine(AutoCheckButtonState(data, buyBtn));
     }
 
-    private void OnBuyClicked(LevelUpData data, GameObject container)
+    private void OnBuyClicked(LevelUpDataSO data, GameObject container)
     {
         if (!TrySpendMoney(data.cost))
         {
@@ -152,7 +152,7 @@ public class WaitSceneUIManager : MonoBehaviour
         RefreshPanel(data.type, container);
     }
 
-    private void UnlockNextLevel(LevelUpData data)
+    private void UnlockNextLevel(LevelUpDataSO data)
     {
         var group = datas.First(g => g.Contains(data));
         var next = group.FirstOrDefault(x => x.level == data.level + 1);
@@ -174,7 +174,7 @@ public class WaitSceneUIManager : MonoBehaviour
         return true;
     }
 
-    private IEnumerator AutoCheckButtonState(LevelUpData data, Button buyBtn)
+    private IEnumerator AutoCheckButtonState(LevelUpDataSO data, Button buyBtn)
     {
         while (buyBtn != null)
         {
@@ -287,7 +287,7 @@ public class WaitSceneUIManager : MonoBehaviour
 
         foreach (var group in datas)
         {
-            LevelUpData best = group
+            LevelUpDataSO best = group
                 .Where(x => x.isUnlocked)
                 .OrderByDescending(x => x.level)
                 .FirstOrDefault();
@@ -322,7 +322,7 @@ public class WaitSceneUIManager : MonoBehaviour
             avatarGO.transform.SetParent(maskGO.transform, false);
 
             Image avatarImg = avatarGO.GetComponent<Image>();
-            avatarImg.sprite = best.avartar;
+            avatarImg.sprite = best.avatar;
             avatarImg.preserveAspect = true;
 
             RectTransform art = avatarGO.GetComponent<RectTransform>();

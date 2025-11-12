@@ -10,7 +10,7 @@ public class FireBall : MonoBehaviour, IProjectile
     Rigidbody rb;
     GameObject target;
     float damage;
-    Collider collider;
+    Collider hitCollider;
     [Tooltip("Tốc độ xoay ngẫu nhiên (độ/giây)")]
     [SerializeField] private float rotationSpeed = 360f;
 
@@ -45,12 +45,12 @@ public class FireBall : MonoBehaviour, IProjectile
     {
         this.target = target.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
 
-        collider = this.target.GetComponentInChildren<Collider>();
+        hitCollider = this.target.GetComponentInChildren<Collider>();
         this.damage = damage;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other == collider)
+        if (other == hitCollider)
         {
             IHealthSystem heath = other.GetComponentInParent<IHealthSystem>();
             if (heath != null)

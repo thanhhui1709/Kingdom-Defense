@@ -6,23 +6,23 @@ using System.Linq;
 public class LevelUpManager : MonoBehaviour
 {
     [SerializeField]
-    private List<LevelUpData> ArcherTowerData = new List<LevelUpData>();
+    private List<LevelUpDataSO> ArcherTowerData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> BallistaTowerData = new List<LevelUpData>();
+    private List<LevelUpDataSO> BallistaTowerData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> CannonTowerData = new List<LevelUpData>();
+    private List<LevelUpDataSO> CannonTowerData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> WizardTowerData = new List<LevelUpData>();
+    private List<LevelUpDataSO> WizardTowerData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> PoisonTowerData = new List<LevelUpData>();
+    private List<LevelUpDataSO> PoisonTowerData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> BarbarianData = new List<LevelUpData>();
+    private List<LevelUpDataSO> BarbarianData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> ArcherData = new List<LevelUpData>();
+    private List<LevelUpDataSO> ArcherData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> KnightData = new List<LevelUpData>();
+    private List<LevelUpDataSO> KnightData = new List<LevelUpDataSO>();
     [SerializeField]
-    private List<LevelUpData> MageData = new List<LevelUpData>();
+    private List<LevelUpDataSO> MageData = new List<LevelUpDataSO>();
 
     public static LevelUpManager Instance;
 
@@ -44,15 +44,15 @@ public class LevelUpManager : MonoBehaviour
     /// </summary>
     public GameObject GetNextLevelPrefab(LevelUpType type, string name, int currentLevel)
     {
-        List<LevelUpData> list = GetListFromName(name);
+        List<LevelUpDataSO> list = GetListFromName(name);
         if (list == null)
         {
             Debug.LogWarning("Không tìm thấy LevelUpData list cho: " + name);
             return null;
         }
 
-   
-        LevelUpData nextLevelData = list.Find(data => data.type == type && data.level == currentLevel + 1);
+
+        LevelUpDataSO nextLevelData = list.Find(data => data.type == type && data.level == currentLevel + 1);
 
         if (nextLevelData == null)
         {
@@ -74,16 +74,16 @@ public class LevelUpManager : MonoBehaviour
     /// </summary>
     public int GetLevelUpCost(string name, int currentLevel)
     {
-        List<LevelUpData> list = GetListFromName(name);
+        List<LevelUpDataSO> list = GetListFromName(name);
         if (list == null) return 0;
 
-        LevelUpData nextLevelData = list.Find(data => data.level == currentLevel + 1 &&data.isUnlocked == true);
+        LevelUpDataSO nextLevelData = list.Find(data => data.level == currentLevel + 1 &&data.isUnlocked == true);
 
         // Trả về cost nếu tìm thấy, ngược lại trả về 0
         return nextLevelData?.inGameBuyCost ?? 0;
     }
 
-    private List<LevelUpData> GetListFromName(string name)
+    private List<LevelUpDataSO> GetListFromName(string name)
     {
         switch (name)
         {
@@ -109,9 +109,9 @@ public class LevelUpManager : MonoBehaviour
                 return null;
         }
     }
-    public List<List<LevelUpData>> GetLevelUpDatas()
+    public List<List<LevelUpDataSO>> GetLevelUpDatas()
     {
-        return new List<List<LevelUpData>>()
+        return new List<List<LevelUpDataSO>>()
         {
             ArcherTowerData,
             BallistaTowerData,
@@ -126,17 +126,7 @@ public class LevelUpManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public class LevelUpData
-{
-    public LevelUpType type;
-    public int level;
-    public int cost;
-    public int inGameBuyCost;
-    public bool isUnlocked;
-    public Sprite avartar;
-    public GameObject prefab;
-}
+
 
 public enum LevelUpType
 {

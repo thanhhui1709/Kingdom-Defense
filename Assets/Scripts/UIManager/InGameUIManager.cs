@@ -71,7 +71,7 @@ public class InGameUIManager : MonoBehaviour
     private TowerHealth currentSelectedTowerHealth;
     private List<UnitButtonInfo> unitButtons = new List<UnitButtonInfo>();
     private List<GameObject> buyTowerBtns= new List<GameObject>();
-    private List<List<LevelUpData>> unitData=new();
+    private List<List<LevelUpDataSO>> unitData=new();
 
 
     private void Awake()
@@ -310,11 +310,14 @@ public class InGameUIManager : MonoBehaviour
             return;
         }
 
-         List<LevelUpData> list = new List<LevelUpData>();
+         List<LevelUpDataSO> list = new List<LevelUpDataSO>();
          foreach(var obj in unitData)
         {
-            LevelUpData highestUnlocked = obj.Count > 0 ? obj.Where(data => data.type == LevelUpType.Unit && data.isUnlocked).OrderByDescending(data => data.level).FirstOrDefault() : null;
+            LevelUpDataSO highestUnlocked = obj.Count > 0 ? obj.Where(data => data.type == LevelUpType.Unit && data.isUnlocked).OrderByDescending(data => data.level).FirstOrDefault() : null;
+            if (highestUnlocked != null)
+            {
             list.Add(highestUnlocked);
+            }
         }
 
         // 2. Xóa các nút cũ
@@ -343,7 +346,7 @@ public class InGameUIManager : MonoBehaviour
             Image iconImg = buttonGO.transform.Find("KnightBtn/Icon").GetComponentInChildren<Image>();
             TMP_Text costText = buttonGO.transform.Find("Price/CostText").GetComponentInChildren<TMP_Text>();
 
-            iconImg.sprite = unit.avartar;
+            iconImg.sprite = unit.avatar;
             costText.text = stats.Money.ToString();
 
             // tao unit button infor
