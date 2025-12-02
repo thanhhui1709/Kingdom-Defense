@@ -28,6 +28,7 @@ public class PoisonDamageProjectile : MonoBehaviour, IProjectile
 
     public Color debuffColor = Color.green;
     public AudioClip burnSound;
+    private EnemyHealth health;
 
     public void Launch(List<GameObject> targets,float damage)
     {
@@ -35,6 +36,7 @@ public class PoisonDamageProjectile : MonoBehaviour, IProjectile
         {
             this.target = targets[0].transform;
             damagePerTick = damage;
+            health=target.GetComponent<EnemyHealth>();
         }
         else
         {
@@ -46,7 +48,7 @@ public class PoisonDamageProjectile : MonoBehaviour, IProjectile
     void Update()
     {
         // ... (Logic di chuyển vẫn giữ nguyên)
-        if (target == null || !target.gameObject.activeInHierarchy)
+        if (target == null || !target.gameObject.activeInHierarchy||health.HasDie())
         {
             ObjectPoolManager.ReturnObject(gameObject);
             return;
