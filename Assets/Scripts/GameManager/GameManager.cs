@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     private CutsceneManager _cutsceneManager;
     private ThemeAudio _themeAudio;
 
+    [SerializeField]
+    private List<SceneReward> rewardList;
+    
   
 
     public GameEvent GameEvent
@@ -90,7 +93,14 @@ public class GameManager : MonoBehaviour
         if (numberOfWinStage == index)
         {
             numberOfWinStage++;
-            StartMoney.Instance.AddMoney(13);
+            foreach (var reward in rewardList)
+            {
+                if (reward.sceneName == SceneManager.GetActiveScene().name)
+                {
+                    Star.Instance.AddMoney(reward.starReward);
+                    break;
+                }
+            }
         }
     }
 
@@ -143,4 +153,10 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 #endif
     }
+}
+[System.Serializable]
+public class SceneReward
+{
+    public string sceneName;
+    public int starReward;
 }

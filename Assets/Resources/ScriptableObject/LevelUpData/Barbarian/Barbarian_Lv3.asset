@@ -19,3 +19,4 @@ MonoBehaviour:
   isUnlocked: 0
   avatar: {fileID: 21300000, guid: d318fc2b4be1d7b49b13390d6eb0dc63, type: 3}
   prefab: {fileID: 270945292999820586, guid: a5e2677d338fc474583c0416283b1de0, type: 3}
+  spawnCoolDown: 5

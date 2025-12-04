@@ -93,24 +93,42 @@ public class SpawnEnemyWave : MonoBehaviour
     {
         for (int i = 0; i < wave.numberPerWave; i++)
         {
-            // 1. Spawn quái
             var enemy = ObjectPoolManager.SpawnObject(wave.enemyPrefab, transform.position, Quaternion.identity, ObjectPoolManager.PoolType.Enemy);
 
-            // 2. Gán đường đi (Path)
-            MovementController enemyMovement = enemy.GetComponent<MovementController>();
-            if (enemyMovement != null)
+            // 1. Lấy tên chuẩn
+            string enemyName = enemy.name.Replace("(Clone)", "").Trim();
+
+            // 2. Lấy dữ liệu Buff
+            BuffData buffData = new BuffData(1f, 1f, 1f); // Mặc định
+            if (DifficultyManager.Instance != null)
             {
-                enemyMovement.SetPath(pathNodes);
+                buffData = DifficultyManager.Instance.GetBuffData(enemyName);
             }
 
-            // 3. BÁO CÁO CHO MANAGER: "1 con vừa ra lò!"
+            // 3. Áp dụng vào Stats
+            Stats enemyStats = enemy.GetComponent<Stats>();
+            if (enemyStats != null)
+            {
+                enemyStats.Initialize(buffData);
+            }
+
+            // 4. Cập nhật thanh máu (Sau khi Stats đã có máu mới)
+            EnemyHealth healthSystem = enemy.GetComponent<EnemyHealth>();
+            if (healthSystem != null && enemyStats != null)
+            {
+                // Truyền Stats.Heath (đã được buff) vào
+                healthSystem.SetHealth(enemyStats.Heath);
+            }
+
+            // (Các phần Movement, Báo cáo giữ nguyên...)
+            MovementController movement = enemy.GetComponent<MovementController>();
+            movement.SetPath(pathNodes);
             if (stageManager != null)
             {
                 stageManager.ReportEnemySpawned();
             }
 
-            // 4. Chờ (delay) giữa các con quái
-            yield return new WaitForSeconds(wave.delaySpawnPrefab);
+                yield return new WaitForSeconds(wave.delaySpawnPrefab);
         }
     }
 

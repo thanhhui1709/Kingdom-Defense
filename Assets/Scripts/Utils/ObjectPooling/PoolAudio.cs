@@ -8,6 +8,7 @@ public class PoolAudio : MonoBehaviour
     private void Awake()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = AudioManager.Instance.GetSFXGroup();
         AdjustAudioSource();
     }
 

@@ -46,6 +46,7 @@ public class ThemeAudio : MonoBehaviour
         source.loop = false;
         source.spatialBlend = 0f;
         source.volume = initialVolume;
+        source.outputAudioMixerGroup = AudioManager.Instance.GetMusicGroup();
     }
 
     private void Start()

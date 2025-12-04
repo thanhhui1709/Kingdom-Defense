@@ -15,7 +15,8 @@ MonoBehaviour:
   type: 0
   level: 4
   cost: 5
-  inGameBuyCost: 220
-  isUnlocked: 0
+  inGameBuyCost: 330
+  isUnlocked: 1
   avatar: {fileID: 21300000, guid: 4e638a61966f3844e9e8093e44e27b37, type: 3}
   prefab: {fileID: 7588703837290691769, guid: 9664ab23f83d07240bc026d26b4eb7da, type: 3}
+  spawnCoolDown: 0

@@ -1304,7 +1304,7 @@ MonoBehaviour:
     hasSecondaryParameter: 1
     secondaryParameterName: AttackIndex
     secondaryParameterType: 2
-    numberOfVariants: 0
+    numberOfVariants: 2
   - type: 2
     primaryParameterName: bool_HasDie
     primaryParameterType: 1
@@ -1399,7 +1399,7 @@ MonoBehaviour:
   attackList:
   - {fileID: 11400000, guid: bc83d1b2f9f0a904dad0eaf3b3622a7c, type: 2}
   - {fileID: 11400000, guid: 33dafb272267bab46ae6567810424bde, type: 2}
-  totalInvestedMoney: 0
+  TotalInvestedMoney: 0
 --- !u!114 &3738967906231964877
 MonoBehaviour:
   m_ObjectHideFlags: 0

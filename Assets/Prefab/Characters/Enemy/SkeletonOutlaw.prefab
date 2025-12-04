@@ -1722,11 +1722,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  heath: 250
+  heath: 400
   ammor: 25
   attackDamage: 36
   attackSpeed: 0.75
-  moveSpeed: 6.5
+  moveSpeed: 5.5
   attackRange: 2.5
   triggerRange: 10
   money: 18
@@ -1734,7 +1734,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5d6aa2f8a230e44680662f17a0cdbdd, type: 2}
   - {fileID: 11400000, guid: 312da54fa7a18c5438ec044812b32d68, type: 2}
   - {fileID: 11400000, guid: 1351d85e6bdfa1946b3f3d41c143204b, type: 2}
-  totalInvestedMoney: 0
+  TotalInvestedMoney: 0
 --- !u!114 &3667106102743287531
 MonoBehaviour:
   m_ObjectHideFlags: 0

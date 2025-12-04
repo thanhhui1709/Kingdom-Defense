@@ -34,9 +34,13 @@ public class InGameUIManager : MonoBehaviour
     {
         public Button button;
         public int cost;
+        public Image cooldownOverlay;
+        public float maxCooldown;    // Thời gian hồi chiêu gốc (từ SO)
+        public float currentTimer;   // Bộ đếm lùi thời gian hiện tại
     }
     [Header("UI References")]
     public GameObject PauseMenu;
+    public GameObject AudioMenu;
     public GameObject GameOverPanel;
     public GameObject VictoryPanel;
 
@@ -100,6 +104,14 @@ public class InGameUIManager : MonoBehaviour
 
         // Lưu ý: BuildManager sẽ tự gán nó khi gọi PopulateBuyTowerMenu
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause(PauseMenu);
+        }
+        UpdateAllButtonStates();
+    }
     private void OnDestroy()
     {
         GameEvent.Instance.UnsubscribeGameOver(OnGameOver);
@@ -121,13 +133,7 @@ public class InGameUIManager : MonoBehaviour
         GameOverPanel.SetActive(true);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-        {
-            TogglePause(PauseMenu);
-        }
-    }
+
 
     /// <summary>
     /// Lưu tham chiếu BuildManager khi nó tự giới thiệu
@@ -139,7 +145,10 @@ public class InGameUIManager : MonoBehaviour
     }
 
     // --- Các hàm Bật/Tắt Panel ---
-
+    public void TogglePanel(GameObject panel)
+    {
+        panel.SetActive(!panel.activeSelf);
+    }
     public void ToggleBuyTowerPanel(bool isActive)
     {
         buyTowerButtonContainer.gameObject.SetActive(isActive);
@@ -306,7 +315,15 @@ public class InGameUIManager : MonoBehaviour
         upgradeTowerUI.sellButton.onClick.AddListener(buildManager.SellSelectedTower);
 
         upgradeTowerUI.healthButton.onClick.RemoveAllListeners();
-        upgradeTowerUI.healthButton.onClick.AddListener(() => buildManager.HealthTower(healthCost));
+        upgradeTowerUI.healthButton.onClick.AddListener(
+            () =>
+            {
+                buildManager.HealthTower(healthCost);
+                InGameMoney.Instance.SubMoney(healthCost);
+            }
+
+            ); 
+
 
         // --- 4. HIỂN THỊ PANEL (Giữ nguyên) ---
         ToggleUpgradeTowerPanel(true);
@@ -362,7 +379,9 @@ public class InGameUIManager : MonoBehaviour
             UnitButtonInfo unitButtonInfo = new()
             {
                 button = newButton,
-                cost =stats.Money
+                cost = stats.Money,
+                cooldownOverlay = buttonGO.transform.Find("KnightBtn/ImageOverlay").GetComponentInChildren<Image>(),
+                maxCooldown = unit.spawnCoolDown,
 
 
             };
@@ -374,15 +393,11 @@ public class InGameUIManager : MonoBehaviour
             {
                 // Khi nhấn nút, gọi hàm logic trong SpawnUnit
                 spawnUnit.AttemptToSpawnUnit(unit.prefab);
-            });
-            // --- THÊM MỚI ---
-            // Chạy kiểm tra 1 lần ngay lập tức
-            UpdateAllButtonStates();
+                unitButtonInfo.currentTimer = unitButtonInfo.maxCooldown;
 
-            // Bắt đầu 1 bộ đếm lặp, gọi hàm "UpdateAllButtonStates"
-            // lặp lại mỗi 0.25 giây.
-            InvokeRepeating(nameof(UpdateAllButtonStates), 0.25f, 0.25f);
-            // --- KẾT THÚC THÊM MỚI ---
+                // Cập nhật UI ngay lập tức
+                UpdateAllButtonStates();
+            });
         }
     }
     private void UpdateAllButtonStates()
@@ -393,10 +408,28 @@ public class InGameUIManager : MonoBehaviour
         // 2. Cập nhật các nút mua lính
         foreach (UnitButtonInfo info in unitButtons)
         {
-            if (info.button != null) // Kiểm tra an toàn
+            if (info.button != null)
             {
-                // Nút chỉ có thể nhấn nếu tiền >= giá
-                info.button.interactable = (currentMoney >= info.cost);
+                // --- A. XỬ LÝ ĐẾM NGƯỢC ---
+                if (info.currentTimer > 0)
+                {
+                    info.currentTimer -= Time.deltaTime;
+                    if (info.currentTimer < 0) info.currentTimer = 0;
+                }
+
+                // --- B. CẬP NHẬT HIỆU ỨNG HÌNH ẢNH (Optional) ---
+                // Nếu bạn có ảnh overlay kiểu Filled Radial
+                if (info.cooldownOverlay != null)
+                {
+                    info.cooldownOverlay.fillAmount = info.currentTimer / info.maxCooldown;
+                }
+
+                // --- C. KIỂM TRA ĐIỀU KIỆN ---
+                bool isAffordable = (currentMoney >= info.cost);
+                bool isReady = (info.currentTimer <= 0);
+
+                // Nút chỉ sáng khi: Đủ tiền VÀ Hết hồi chiêu
+                info.button.interactable = isAffordable && isReady;
             }
         }
 
@@ -430,7 +463,7 @@ public class InGameUIManager : MonoBehaviour
         bool isActive = panel.activeSelf;
         if(isActive)
         {
-            Time.timeScale = 1f;
+            Time.timeScale = currentTimeScale;
             panel.SetActive(false);
         }
         else

@@ -10,4 +10,5 @@ public class LevelUpDataSO : ScriptableObject
     public bool isUnlocked;
     public Sprite avatar;
     public GameObject prefab;
+    public float spawnCoolDown;
 }

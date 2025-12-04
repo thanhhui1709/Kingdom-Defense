@@ -12,6 +12,9 @@ public class Const
     public const string WIZARD_TOWER_NAME = "Wizard_Tower";
     public const string UNIT_MAGE_NAME = "Mage";
     public const string UNIT_KNIGHT_NAME = "Knight";
-    public const string UNIT_ARCHER_NAME = "Rogue";
-    public const string UNIT_BARBARIAN_NAME = "RogueHooded";
+    public const string UNIT_ARCHER_NAME = "RogueHooded";
+    public const string UNIT_BARBARIAN_NAME = "Barbarian";
+
+    public const string MIXER_MUSIC_VOL = "MusicVol";
+    public const string MIXER_SFX_VOL = "SFXVol";
 }

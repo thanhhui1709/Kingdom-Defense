@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3311912308468275614}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.384418, y: 5.0500007, z: 0.3}
+  m_LocalPosition: {x: 0, y: 5.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: d457eccf176f8034884b536c7b6708de, type: 3}
-  heath: 550
+  heath: 1000
   ammor: 80
   attackDamage: 170
   attackSpeed: 1.2
@@ -268,7 +268,7 @@ MonoBehaviour:
   triggerRange: 15
   money: 280
   attackList: []
-  totalInvestedMoney: 0
+  TotalInvestedMoney: 0
 --- !u!114 &2107264887265957695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,16 +303,16 @@ MonoBehaviour:
   towerNameKey: Archer_Tower
   evolutionLevel: 3
   statsList:
-  - cost: 80
-    heath: 50
+  - cost: 150
+    heath: 100
     ammor: 0
     attackDamage: 15
     attackSpeed: 0.1
     moveSpeed: 0
     attackRange: 0
     triggerRange: 0
-  - cost: 90
-    heath: 100
+  - cost: 200
+    heath: 150
     ammor: 0
     attackDamage: 20
     attackSpeed: 0.2

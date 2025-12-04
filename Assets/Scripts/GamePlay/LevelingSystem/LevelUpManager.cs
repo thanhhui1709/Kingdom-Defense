@@ -31,6 +31,7 @@ public class LevelUpManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            InitializeData();
         }
         else
         {
@@ -38,7 +39,47 @@ public class LevelUpManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
+    private void InitializeData()
+    {
+        // 1. Nhóm mặc định: Unlock Level 1, khóa các level cao hơn
+        ResetListState(ArcherTowerData, true);
+        ResetListState(BallistaTowerData, true);
+        ResetListState(CannonTowerData, true);
+        ResetListState(PoisonTowerData, true);
+        ResetListState(ArcherData, true);
+        ResetListState(KnightData, true);
+        ResetListState(MageData, true);
 
+        // 2. Nhóm đặc biệt (Wizard & Barbarian): Khóa TOÀN BỘ (kể cả Level 1)
+        ResetListState(WizardTowerData, false);
+        ResetListState(BarbarianData, false);
+    }
+
+    /// <summary>
+    /// Hàm reset trạng thái unlock cho một danh sách.
+    /// </summary>
+    /// <param name="list">Danh sách cần reset</param>
+    /// <param name="unlockLevelOne">True: Mở khóa Lv1. False: Khóa tất cả.</param>
+    private void ResetListState(List<LevelUpDataSO> list, bool unlockLevelOne)
+    {
+        if (list == null) return;
+
+        foreach (var data in list)
+        {
+            if (data == null) continue;
+
+            // Nếu cho phép mở khóa Lv1 VÀ đây đúng là Lv1
+            if (unlockLevelOne && data.level == 1)
+            {
+                data.isUnlocked = true;
+            }
+            else
+            {
+                // Các trường hợp còn lại (Lv > 1 hoặc nhóm bị cấm) đều khóa
+                data.isUnlocked = false;
+            }
+        }
+    }
     /// <summary>
     /// Lấy Prefab của cấp tiếp theo
     /// </summary>
@@ -81,6 +122,17 @@ public class LevelUpManager : MonoBehaviour
 
         // Trả về cost nếu tìm thấy, ngược lại trả về 0
         return nextLevelData?.inGameBuyCost ?? 0;
+    }
+    public int GetLevelUpCost(LevelUpDataSO data)
+    {
+        List<LevelUpDataSO> list = GetListFromName(data.prefab.name.Substring(0,data.prefab.name.Length-4));
+        if (list == null) return 0;
+        LevelUpDataSO nextLockedLevel = list.OrderBy(x => x.level)
+                                          .FirstOrDefault(data => !data.isUnlocked);
+
+        // Nếu tìm thấy (còn cấp để lên) -> trả về giá
+        // Nếu nextLockedLevel là null (tức là đã unlock hết sạch, max cấp) -> trả về 0
+        return nextLockedLevel?.cost ?? 0;
     }
 
     private List<LevelUpDataSO> GetListFromName(string name)

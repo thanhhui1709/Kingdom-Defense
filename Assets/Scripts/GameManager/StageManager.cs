@@ -126,7 +126,13 @@ public class StageManager : MonoBehaviour
             if (progressBarContainer != null)
                 progressBarContainer.SetActive(false);
 
-            GameEvent.Instance.OnTriggerWinStage(); // (Hoặc WinGame)
+            StartCoroutine(WinAfterTime(3f)); // Delay 1 giây trước khi win
         }
+    }
+    IEnumerator WinAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Debug.Log("YOU WIN! (After Time)");
+        GameEvent.Instance.OnTriggerWinStage(); // (Hoặc WinGame)
     }
 }

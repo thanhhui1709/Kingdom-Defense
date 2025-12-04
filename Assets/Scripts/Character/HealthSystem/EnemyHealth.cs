@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -231,5 +232,11 @@ public class EnemyHealth : MonoBehaviour, IHealthSystem
     {
         yield return new WaitForSeconds(delay);
         ObjectPoolManager.ReturnObject(gameObject);
+    }
+
+    internal void SetHealth(float heath)
+    {
+        maxHealth = heath;
+        currentHealth = maxHealth;
     }
 }

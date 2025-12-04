@@ -41,6 +41,10 @@ public class WaitSceneUIManager : MonoBehaviour
     public Button prevBtn;
     public Button playBtn;
 
+    [Header("Menu")]
+    public GameObject menuPanel;
+    public GameObject audioPanel;
+
     private List<List<LevelUpDataSO>> datas;
     private int currentStageIndex = 0;
     private GameObject currentStageObj;
@@ -50,7 +54,7 @@ public class WaitSceneUIManager : MonoBehaviour
         datas = LevelUpManager.Instance.GetLevelUpDatas();
         RefreshPanel(LevelUpType.Tower, buyTowerContainer);
         RefreshPanel(LevelUpType.Unit, buyUnitContainer);
-        moneyText.text = StartMoney.Instance.GetBalance().ToString();
+        moneyText.text = Star.Instance.GetBalance().ToString();
         CloseAllPanel();
     }
 
@@ -84,6 +88,21 @@ public class WaitSceneUIManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void ToggleAudioPanel()
+    {
+        ObjectPoolManager.PlayAudio2D(clickSound, 1f);
+        audioPanel.SetActive(!audioPanel.activeSelf);
+    }
+    public void ToggleMenu()
+    {
+        ObjectPoolManager.PlayAudio2D(clickSound, 1f);
+        menuPanel.SetActive(!menuPanel.activeSelf);
+    }
+    public void ExitToMenu()
+    {
+        ObjectPoolManager.PlayAudio2D(clickSound, 1f);
+        SceneManager.LoadScene("Menu");
     }
 
     // ---------------- UPGRADE PANEL ---------------- //
@@ -128,20 +147,21 @@ public class WaitSceneUIManager : MonoBehaviour
         Transform costPanel = item.transform.Find("CostPanel");
         Image costIcon = costPanel.Find("CostImg").GetComponent<Image>();
 
-        for (int i = 1; i < data.cost; i++)
+        int upgradeCost = LevelUpManager.Instance.GetLevelUpCost(data);
+        for (int i = 1; i < upgradeCost; i++)
             Instantiate(costIcon, costPanel);
 
         Button buyBtn = item.transform.Find("BuyBtn").GetComponent<Button>();
-        buyBtn.onClick.AddListener(() => OnBuyClicked(data, container));
+        buyBtn.onClick.AddListener(() => OnBuyClicked(data, container,upgradeCost));
 
         AddHoverEffect(buyBtn.transform);
 
-        StartCoroutine(AutoCheckButtonState(data, buyBtn));
+        StartCoroutine(AutoCheckButtonState(data, buyBtn, upgradeCost));
     }
 
-    private void OnBuyClicked(LevelUpDataSO data, GameObject container)
+    private void OnBuyClicked(LevelUpDataSO data, GameObject container,int cost)
     {
-        if (!TrySpendMoney(data.cost))
+        if (!TrySpendMoney(cost))
         {
             ObjectPoolManager.PlayAudio2D(notEnoughMoneySound, 1f);
             return;
@@ -154,19 +174,30 @@ public class WaitSceneUIManager : MonoBehaviour
 
     private void UnlockNextLevel(LevelUpDataSO data)
     {
+        // 1. Tìm cái danh sách chứa loại trụ/lính này
         var group = datas.First(g => g.Contains(data));
-        var next = group.FirstOrDefault(x => x.level == data.level + 1);
-        if (next != null)
-            next.isUnlocked = true;
+
+        // 2. Tìm thằng ĐẦU TIÊN chưa được mở khóa (!isUnlocked)
+        // Sắp xếp theo level tăng dần để đảm bảo không bị nhảy cóc
+        var nextToUnlock = group.OrderBy(x => x.level)
+                                .FirstOrDefault(x => !x.isUnlocked);
+
+        // 3. Mở khóa nó
+        if (nextToUnlock != null)
+        {
+            nextToUnlock.isUnlocked = true;
+
+            // (Lưu ý: Bạn nên thêm code Save game ở đây để lưu lại việc đã unlock)
+        }
     }
 
     private bool TrySpendMoney(int cost)
     {
-        if (!StartMoney.Instance.CheckBalance(cost)) return false;
+        if (!Star.Instance.CheckBalance(cost)) return false;
 
-        int oldMoney = StartMoney.Instance.GetBalance();
-        StartMoney.Instance.RemoveMoney(cost);
-        int newMoney = StartMoney.Instance.GetBalance();
+        int oldMoney = Star.Instance.GetBalance();
+        Star.Instance.RemoveMoney(cost);
+        int newMoney = Star.Instance.GetBalance();
 
         DOTween.To(() => oldMoney, x => moneyText.text = x.ToString(), newMoney, 0.4f)
                .SetEase(Ease.OutQuad);
@@ -174,13 +205,13 @@ public class WaitSceneUIManager : MonoBehaviour
         return true;
     }
 
-    private IEnumerator AutoCheckButtonState(LevelUpDataSO data, Button buyBtn)
+    private IEnumerator AutoCheckButtonState(LevelUpDataSO data, Button buyBtn,int upgradeCost)
     {
         while (buyBtn != null)
         {
             var group = datas.First(g => g.Contains(data));
             bool hasNext = group.Any(x => x.level == data.level + 1);
-            bool enoughMoney = StartMoney.Instance.CheckBalance(data.cost);
+            bool enoughMoney = Star.Instance.CheckBalance(upgradeCost);
 
             buyBtn.interactable = hasNext && enoughMoney;
             yield return new WaitForSeconds(0.1f);

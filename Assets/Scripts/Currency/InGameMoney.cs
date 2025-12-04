@@ -7,6 +7,7 @@ public class InGameMoney : MonoBehaviour
     public static InGameMoney Instance;
     public TextMeshProUGUI coinText;
 
+    public int moneyPerSecond = 2;
     [Header("Cài đặt Animation")]
     public float countDuration = 0.5f;
     public float punchScale = 1.2f;
@@ -14,7 +15,7 @@ public class InGameMoney : MonoBehaviour
     [SerializeField]
     private int balance = 100; // Khởi tạo số dư ban đầu
     private int displayedBalance;
-
+    private float timer = 0f;
     private void Awake()
     {
         if (Instance == null)
@@ -36,13 +37,25 @@ public class InGameMoney : MonoBehaviour
         {
             GameEvent.Instance.SubscribeEnemyDie(AddMoney);
         }
+
     }
 
     // (Hàm Update test của bạn được giữ nguyên)
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { SubMoney(10); }
-        if (Input.GetKeyDown(KeyCode.Escape)) { AddMoney(100); }
+     
+        if (Input.GetKeyDown(KeyCode.Space)) { AddMoney(100); }
+        timer += Time.deltaTime; 
+
+        if (timer >= 1f) 
+        {
+            AddMoney(moneyPerSecond); 
+
+            // Trừ đi 1 giây để bắt đầu đếm cho giây tiếp theo
+            // (Dùng phép trừ tốt hơn gán = 0 để tránh sai số thời gian lâu dài)
+            timer -= 1f;
+        }
+
     }
 
     // --- CÁC HÀM MỚI ---
