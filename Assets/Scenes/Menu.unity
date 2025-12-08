@@ -878,9 +878,9 @@ MonoBehaviour:
   - Lv3
   rewardList:
   - sceneName: Lv1
-    starReward: 30
+    starReward: 35
   - sceneName: Lv2
-    starReward: 40
+    starReward: 50
   - sceneName: Lv3
     starReward: 0
   numberOfWinStage: 0
