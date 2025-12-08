@@ -2831,7 +2831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &459958612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2849,6 +2849,8 @@ MonoBehaviour:
   contentText: {fileID: 1152141752}
   nextButton: {fileID: 453649725}
   skipButton: {fileID: 904948421}
+  tutorialKey: HasPlayedTutorial
+  slidePaperSound: {fileID: 8300000, guid: 7f09739e98a00944db437c71e7f30d8f, type: 3}
   steps:
   - note: 
     instructionText: "S\u1EED d\u1EE5ng sao \u0111\u1EC3 n\xE2ng c\u1EA5p tuy\u1EBFn

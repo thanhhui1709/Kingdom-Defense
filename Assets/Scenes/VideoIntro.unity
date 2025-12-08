@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4a6722dd06a9b49a226cf6de610b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: WaitScene
+  nextSceneName: Menu
   skipText: {fileID: 1050010572}
   allowSkip: 1
   videoVolume: 1

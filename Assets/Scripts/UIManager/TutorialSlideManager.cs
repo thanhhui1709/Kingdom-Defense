@@ -12,7 +12,9 @@ public class TutorialSlideManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI contentText; // Nơi hiện chữ
     [SerializeField] private Button nextButton; // Nút Next
     [SerializeField] private Button skipButton; // Nút Skip (tùy chọn)
+    [SerializeField] private string tutorialKey = "HasPlayedTutorial";
 
+    public AudioClip slidePaperSound; // Âm thanh lật trang
     [Header("Data")]
     // Danh sách các bước hướng dẫn
     [SerializeField] private List<TutorialStep> steps = new List<TutorialStep>();
@@ -21,17 +23,30 @@ public class TutorialSlideManager : MonoBehaviour
 
     private void Start()
     {
-      
         // Gán sự kiện cho nút
         nextButton.onClick.AddListener(NextStep);
 
         if (skipButton != null)
             skipButton.onClick.AddListener(EndTutorial);
 
-        // Bắt đầu ngay khi vào game (hoặc bạn có thể gọi hàm này từ nơi khác)
-        StartTutorial();
+        // --- ĐOẠN CODE KIỂM TRA MỚI ---
 
+        // Kiểm tra xem chìa khóa "tutorialKey" đã có giá trị là 1 chưa?
+        // 0 là giá trị mặc định nếu chưa từng lưu (chưa chơi)
+        if (PlayerPrefs.GetInt(tutorialKey, 0) == 1)
+        {
+            // Nếu đã chơi rồi (giá trị là 1) -> Tắt panel và không làm gì cả
+            tutorialPanel.SetActive(false);
+            return; // Thoát khỏi hàm Start luôn
+        }
+
+        // -------------------------------
+
+        // Nếu chưa chơi (giá trị là 0), code sẽ chạy xuống đây
+        ObjectPoolManager.PlayAudio2D(slidePaperSound,1f);
+        StartTutorial();
     }
+
 
     public void StartTutorial()
     {
@@ -60,7 +75,7 @@ public class TutorialSlideManager : MonoBehaviour
         contentText.text = currentStep.instructionText;
         // 2. Cập nhật ảnh
         tutorialImage.sprite = currentStep.image;
-
+         
     }
 
     public void EndTutorial()
@@ -70,7 +85,7 @@ public class TutorialSlideManager : MonoBehaviour
       
 
         // Lưu lại là người chơi đã xem hướng dẫn xong (để lần sau không hiện nữa)
-        PlayerPrefs.SetInt("HasPlayedTutorial", 1);
+        PlayerPrefs.SetInt(tutorialKey, 1);
     }
 }
 
